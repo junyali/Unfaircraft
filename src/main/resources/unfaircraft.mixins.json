@@ -2,7 +2,9 @@
   "required": true,
   "package": "io.github.junyali.unfaircraft.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "BedBlockMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
