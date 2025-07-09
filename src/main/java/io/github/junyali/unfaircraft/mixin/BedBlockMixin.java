@@ -9,13 +9,17 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BedBlock.class)
 public class BedBlockMixin {
+	@Unique
 	private static final float EXPLOSION_CHANCE = 0.05f;
+
+	@Unique
 	private static final float EXPLOSION_RADIUS = 5.0f;
 
 	@Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)
