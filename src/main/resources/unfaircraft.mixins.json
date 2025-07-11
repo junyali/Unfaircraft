@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BedBlockMixin",
-    "ShieldItemMixin"
+    "ShieldItemMixin",
+    "PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
