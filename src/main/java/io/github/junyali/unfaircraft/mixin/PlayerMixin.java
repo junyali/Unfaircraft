@@ -2,7 +2,6 @@ package io.github.junyali.unfaircraft.mixin;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.SwordItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +24,7 @@ public class PlayerMixin {
 				!player.isInWater() &&
 				!player.isPassenger();
 
-		if (isCritical && player.getMainHandItem().getItem() instanceof SwordItem) {
+		if (isCritical) {
 			if (player.level().random.nextFloat() < CRIT_FAIL_CHANCE) {
 				ci.cancel();
 			}
