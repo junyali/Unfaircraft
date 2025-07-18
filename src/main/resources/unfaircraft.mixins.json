@@ -6,7 +6,8 @@
     "BedBlockMixin",
     "ShieldItemMixin",
     "PlayerMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "BowItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
