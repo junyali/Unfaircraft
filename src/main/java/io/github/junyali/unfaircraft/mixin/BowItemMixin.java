@@ -4,6 +4,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -26,7 +27,16 @@ public class BowItemMixin {
 	private static final double PROJECTILE_DEVIATION = 0.8;
 
 	@Unique
-	private static final float MISFIRE_PROBABILITY = 0.1f;
+	private static final float MISFIRE_PROBABILITY = 0.8f;
+
+	@Unique
+	private static final float BACKFIRE_PROBABILITY = 0.3f;
+
+	@Unique
+	private static final float BACKFIRE_DAMAGE_MIN = 2.0f;
+
+	@Unique
+	private static final float BACKFIRE_DAMAGE_MAX = 6.0f;
 
 	@Inject(
 			method = "releaseUsing",
@@ -68,9 +78,23 @@ public class BowItemMixin {
 			cancellable = true
 	)
 	private void onBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
-		if (!level.isClientSide && entity instanceof Player) {
+		if (!level.isClientSide && entity instanceof Player player) {
 			if (level.random.nextFloat() < MISFIRE_PROBABILITY) {
 				ci.cancel();
+
+				if (level.random.nextFloat() < BACKFIRE_PROBABILITY) {
+					// maths idk
+					float damage = BACKFIRE_DAMAGE_MIN + level.random.nextFloat() * (BACKFIRE_DAMAGE_MAX - BACKFIRE_DAMAGE_MIN);
+
+					player.hurt(level.damageSources().generic(), damage);
+					level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1.0f, 1.0f);
+
+					InteractionHand hand = player.getUsedItemHand();
+
+					player.invulnerableTime = 0;
+				}
+
+				level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0f, 0.8f);
 			}
 		}
 	}
