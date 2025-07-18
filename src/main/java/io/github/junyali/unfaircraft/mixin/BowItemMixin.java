@@ -89,8 +89,6 @@ public class BowItemMixin {
 					player.hurt(level.damageSources().generic(), damage);
 					level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1.0f, 1.0f);
 
-					InteractionHand hand = player.getUsedItemHand();
-
 					player.invulnerableTime = 0;
 				}
 
