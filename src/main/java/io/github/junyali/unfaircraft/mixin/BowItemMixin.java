@@ -21,16 +21,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BowItem.class)
 public class BowItemMixin {
 	@Unique
-	private static final float WONKY_PROBABILITY = 0.6f;
+	private static final float WONKY_CHANCE = 0.6f;
 
 	@Unique
 	private static final double PROJECTILE_DEVIATION = 0.8;
 
 	@Unique
-	private static final float MISFIRE_PROBABILITY = 0.8f;
+	private static final float MISFIRE_CHANCE = 0.8f;
 
 	@Unique
-	private static final float BACKFIRE_PROBABILITY = 0.3f;
+	private static final float BACKFIRE_CHANCE = 0.3f;
 
 	@Unique
 	private static final float BACKFIRE_DAMAGE_MIN = 2.0f;
@@ -44,7 +44,7 @@ public class BowItemMixin {
 	)
 	private void afterBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
 		if (!level.isClientSide && entity instanceof Player player) {
-			if (level.random.nextFloat() < WONKY_PROBABILITY) {
+			if (level.random.nextFloat() < WONKY_CHANCE) {
 				MinecraftServer server = ((ServerLevel) level).getServer();
 				for (int delay = 1; delay <= 5; delay++) {
 					final int tickDelay = delay;
@@ -79,10 +79,10 @@ public class BowItemMixin {
 	)
 	private void onBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
 		if (!level.isClientSide && entity instanceof Player player) {
-			if (level.random.nextFloat() < MISFIRE_PROBABILITY) {
+			if (level.random.nextFloat() < MISFIRE_CHANCE) {
 				ci.cancel();
 
-				if (level.random.nextFloat() < BACKFIRE_PROBABILITY) {
+				if (level.random.nextFloat() < BACKFIRE_CHANCE) {
 					// maths idk
 					float damage = BACKFIRE_DAMAGE_MIN + level.random.nextFloat() * (BACKFIRE_DAMAGE_MAX - BACKFIRE_DAMAGE_MIN);
 
