@@ -1,9 +1,9 @@
 package io.github.junyali.unfaircraft;
 
+import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -22,6 +22,8 @@ public class UnfairCraft {
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
+
+        modContainer.registerConfig(ModConfig.Type.COMMON, UnfairCraftConfig.SPEC);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
