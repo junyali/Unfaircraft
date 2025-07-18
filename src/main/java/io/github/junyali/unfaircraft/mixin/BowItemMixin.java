@@ -25,6 +25,9 @@ public class BowItemMixin {
 	@Unique
 	private static final double PROJECTILE_DEVIATION = 0.8;
 
+	@Unique
+	private static final float MISFIRE_PROBABILITY = 0.1f;
+
 	@Inject(
 			method = "releaseUsing",
 			at = @At("TAIL")
@@ -55,6 +58,19 @@ public class BowItemMixin {
 								});
 					}));
 				}
+			}
+		}
+	}
+
+	@Inject(
+			method = "releaseUsing",
+			at = @At("HEAD"),
+			cancellable = true
+	)
+	private void onBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
+		if (!level.isClientSide && entity instanceof Player) {
+			if (level.random.nextFloat() < MISFIRE_PROBABILITY) {
+				ci.cancel();
 			}
 		}
 	}
