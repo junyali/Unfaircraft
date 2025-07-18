@@ -23,7 +23,7 @@ public class UnfairCraft {
 
         NeoForge.EVENT_BUS.register(this);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, UnfairCraftConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, UnfairCraftConfig.SPEC, "unfaircraft.toml");
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
