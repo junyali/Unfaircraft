@@ -15,7 +15,13 @@ public class PlayerMixin {
 	@Unique
 	private static final float CRIT_FAIL_CHANCE = 0.25f;
 
-	@Redirect(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+	@Redirect(
+			method = "attack",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+			)
+	)
 	private boolean redirectHurt(LivingEntity target, DamageSource damageSource, float damage) {
 		Player player = (Player) (Object) this;
 
