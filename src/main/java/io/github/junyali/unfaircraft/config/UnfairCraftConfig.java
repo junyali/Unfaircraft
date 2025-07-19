@@ -31,6 +31,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Bow Item mixin")
 			.define("bow_item_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_CHEST_BLOCK_MIXIN = BUILDER
+			.comment("Enable Chest Block mixin")
+			.define("chest_block_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction (default: 0.25; range: 0.0 to 1.0)")
@@ -103,6 +107,18 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> BOW_BACKFIRE_DAMAGE_MAX = BUILDER
 			.comment("Maximum damage from bow backfire (default: 20.0")
 			.define("bow_backfire_damage_max", 20.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> CHEST_EAT_CHANCE = BUILDER
+			.comment("Chance for a chest to eat items when opened (default: 0.15; range: 0.0 to 1.0)")
+			.defineInRange("chest_eat_chance", 0.15, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Integer> CHEST_EAT_ITEM_MIN = BUILDER
+			.comment("Minimum number of items a chest will eat at once (default: 1)")
+			.define("chest_eat_item_min", 1);
+
+	public static final ModConfigSpec.ConfigValue<Integer> CHEST_EAT_ITEM_MAX = BUILDER
+			.comment("Maximum number of items a chest will eat at once (default: 32)")
+			.define("chest_eat_item_max", 32);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
