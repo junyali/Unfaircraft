@@ -64,6 +64,10 @@ public class UnfairCraftConfig {
 			.comment("Chance for player attacks to cause exhaustion upon themself (default: 0.2; range: 0.0 to 1.0)")
 			.defineInRange("player_attack_exhaustion_chance", 0.2, 0.0, 1.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> PLAYER_RANDOM_DROP_CHANCE = BUILDER
+			.comment("Chance per tick for a player to randomly drop their held item (default: 0.0000005; range: 0.0 to 1.0)")
+			.defineInRange("player_random_drop_chance", 0.0000005, 0.0, 1.0);
+
 	public static final ModConfigSpec.ConfigValue<Double> ITEM_DURABILITY_LOSS_CHANCE = BUILDER
 			.comment("Chance for tiered items to lose extra durability (default: 0.05; range: 0.0 to 1.0)")
 			.defineInRange("item_durability_loss_chance", 0.05, 0.0, 1.0);
