@@ -16,7 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BedBlock.class)
 public class BedBlockMixin {
-	@Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)
+	@Inject(
+			method = "useWithoutItem",
+			at = @At("HEAD"),
+			cancellable = true
+	)
 	private void onBedUse(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
 		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_BED_BLOCK_MIXIN.get()) {
 			return;

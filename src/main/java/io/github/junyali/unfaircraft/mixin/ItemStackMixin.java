@@ -9,7 +9,12 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
-	@ModifyVariable(method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V", at = @At("HEAD"), argsOnly = true, ordinal = 0)
+	@ModifyVariable(
+			method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V",
+			at = @At("HEAD"),
+			argsOnly = true,
+			ordinal = 0
+	)
 	private int modifyDurabilityDamage(int amount) {
 		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_ITEM_STACK_MIXIN.get()) {
 			return amount;

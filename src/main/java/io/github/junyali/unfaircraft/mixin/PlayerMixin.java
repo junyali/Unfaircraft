@@ -16,7 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
 public class PlayerMixin {
-	@Inject(method = "attack", at = @At("HEAD"), cancellable = true)
+	@Inject(
+			method = "attack",
+			at = @At("HEAD"),
+			cancellable = true
+	)
 	private void beforeAttack(Entity target, CallbackInfo ci) {
 		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_PLAYER_MIXIN.get()) {
 			return;

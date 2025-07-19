@@ -14,7 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ShieldItem.class)
 public class ShieldItemMixin {
-	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
+	@Inject(
+			method = "use",
+			at = @At("HEAD"),
+			cancellable = true
+	)
 	private void onShieldUse(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
 		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_SHIELD_ITEM_MIXIN.get()) {
 			return;
