@@ -8,7 +8,7 @@
     "PlayerMixin",
     "ItemStackMixin",
     "BowItemMixin",
-    "ChestBlockMixin"
+    "ChestBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

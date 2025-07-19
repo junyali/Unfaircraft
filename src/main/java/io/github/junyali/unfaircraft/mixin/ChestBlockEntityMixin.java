@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ChestBlockEntity.class)
-public class ChestBlockMixin {
+public class ChestBlockEntityMixin {
 	@Inject(
 			method = "startOpen",
 			at = @At("TAIL")
