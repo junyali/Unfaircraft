@@ -39,6 +39,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Anvil Menu mixin")
 			.define("anvil_menu_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_MINECART_MIXIN = BUILDER
+			.comment("Enable Minecart Mixin")
+			.define("minecat_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction (default: 0.25; range: 0.0 to 1.0)")
@@ -139,6 +143,18 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> ANVIL_COST_MULTIPLIER_MAX = BUILDER
 			.comment("Maximum multiplier for increased anvil repair costs (default: 6.0)")
 			.define("anvil_cost_multiplier_max", 6.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> MINECART_SLOWDOWN_FACTOR = BUILDER
+			.comment("Factor to reduce minecart speed, lower = slow (default: 0.5; range: 0.0 to 1.0)")
+			.defineInRange("minecart_slowdown_factor", 0.5, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> MINECART_STOP_CHANCE = BUILDER
+			.comment("Chance for minecarts to randomly stop each tick (default: 0.05; range: 0.0 to 1.0)")
+			.defineInRange("minecart_stop_chance", 0.05, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> MINECART_REVERSE_CHANCE = BUILDER
+			.comment("Chance for minecarts to randomly reverse direction each tick (default: 0.01; range: 0.0 to 1.0)")
+			.defineInRange("minecart_reverse_chance", 0.01, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
