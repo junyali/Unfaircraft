@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin;
 
+import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -12,38 +13,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BowItem.class)
 public class BowItemMixin {
-	@Unique
-	private static final float WONKY_CHANCE = 0.6f;
-
-	@Unique
-	private static final double PROJECTILE_DEVIATION = 0.8;
-
-	@Unique
-	private static final float MISFIRE_CHANCE = 0.8f;
-
-	@Unique
-	private static final float BACKFIRE_CHANCE = 0.3f;
-
-	@Unique
-	private static final float BACKFIRE_DAMAGE_MIN = 2.0f;
-
-	@Unique
-	private static final float BACKFIRE_DAMAGE_MAX = 6.0f;
-
 	@Inject(
 			method = "releaseUsing",
 			at = @At("TAIL")
 	)
 	private void afterBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_BOW_ITEM_MIXIN.get()) {
+			return;
+		}
+
 		if (!level.isClientSide && entity instanceof Player player) {
-			if (level.random.nextFloat() < WONKY_CHANCE) {
+			if (level.random.nextFloat() < UnfairCraftConfig.BOW_WONKY_CHANCE.get().floatValue()) {
 				MinecraftServer server = ((ServerLevel) level).getServer();
 				for (int delay = 1; delay <= 5; delay++) {
 					final int tickDelay = delay;
@@ -55,9 +41,9 @@ public class BowItemMixin {
 								.forEach(arrow -> {
 									Vec3 currentMotion = arrow.getDeltaMovement();
 									Vec3 wonkyMotion = new Vec3(
-											currentMotion.x + (level.random.nextDouble() - 0.5) * PROJECTILE_DEVIATION,
-											currentMotion.y + (level.random.nextDouble() - 0.5) * PROJECTILE_DEVIATION,
-											currentMotion.z + (level.random.nextDouble() - 0.5) * PROJECTILE_DEVIATION
+											currentMotion.x + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW_PROJECTILE_DEVIATION.get(),
+											currentMotion.y + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW_PROJECTILE_DEVIATION.get(),
+											currentMotion.z + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW_PROJECTILE_DEVIATION.get()
 									);
 									arrow.setDeltaMovement(wonkyMotion);
 									arrow.hasImpulse = true;
@@ -77,13 +63,17 @@ public class BowItemMixin {
 			cancellable = true
 	)
 	private void onBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_BOW_ITEM_MIXIN.get()) {
+			return;
+		}
+
 		if (!level.isClientSide && entity instanceof Player player) {
-			if (level.random.nextFloat() < MISFIRE_CHANCE) {
+			if (level.random.nextFloat() < UnfairCraftConfig.BOW_MISFIRE_CHANCE.get().floatValue()) {
 				ci.cancel();
 
-				if (level.random.nextFloat() < BACKFIRE_CHANCE) {
+				if (level.random.nextFloat() < UnfairCraftConfig.BOW_BACKFIRE_CHANCE.get().floatValue()) {
 					// maths idk
-					float damage = BACKFIRE_DAMAGE_MIN + level.random.nextFloat() * (BACKFIRE_DAMAGE_MAX - BACKFIRE_DAMAGE_MIN);
+					float damage = UnfairCraftConfig.BOW_BACKFIRE_DAMAGE_MIN.get().floatValue() + level.random.nextFloat() * (UnfairCraftConfig.BOW_BACKFIRE_DAMAGE_MAX.get().floatValue() - UnfairCraftConfig.BOW_BACKFIRE_DAMAGE_MIN.get().floatValue());
 
 					player.hurt(level.damageSources().generic(), damage);
 					level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1.0f, 1.0f);
