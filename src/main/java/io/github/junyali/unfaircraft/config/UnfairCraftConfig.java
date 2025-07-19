@@ -35,6 +35,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Chest Block mixin")
 			.define("chest_block_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_ANVIL_MENU_MIXIN = BUILDER
+			.comment("Enable Anvil Menu mixin")
+			.define("anvil_menu_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction (default: 0.25; range: 0.0 to 1.0)")
@@ -119,6 +123,22 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Integer> CHEST_EAT_ITEM_MAX = BUILDER
 			.comment("Maximum number of items a chest will eat at once (default: 32)")
 			.define("chest_eat_item_max", 32);
+
+	public static final ModConfigSpec.ConfigValue<Double> ANVIL_INSTANT_BREAK_CHANCE = BUILDER
+			.comment("Chance for anvils to break completely in one use (default: 0.1; range: 0.0 to 1.0)")
+			.defineInRange("anvil_instance_break_chance", 0.1, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ANVIL_COST_INCREASE_CHANCE = BUILDER
+			.comment("Chance for anvil repair costs to be multiplied (default: 0.5; range: 0.0 to 1.0)")
+			.defineInRange("anvil_cost_increase_chance", 0.5, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ANVIL_COST_MULTIPLIER_MIN = BUILDER
+			.comment("Minimum multiplier for increased anvil repair costs (default: 2.0)")
+			.define("anvil_cost_multiplier_min", 2.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ANVIL_COST_MULTIPLIER_MAX = BUILDER
+			.comment("Maximum multiplier for increased anvil repair costs (default: 6.0)")
+			.define("anvil_cost_multiplier_max", 6.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
