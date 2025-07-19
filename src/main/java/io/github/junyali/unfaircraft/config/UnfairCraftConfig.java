@@ -43,6 +43,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Minecart Mixin")
 			.define("minecat_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_FOOD_ITEM_MIXIN = BUILDER
+			.comment("Enable Food Item mixin")
+			.define("food_item_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction (default: 0.25; range: 0.0 to 1.0)")
@@ -155,6 +159,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> MINECART_REVERSE_CHANCE = BUILDER
 			.comment("Chance for minecarts to randomly reverse direction each tick (default: 0.01; range: 0.0 to 1.0)")
 			.defineInRange("minecart_reverse_chance", 0.01, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> FOOD_FAIL_CHANCE = BUILDER
+			.comment("Chance for food to completely fail to restore hunger (default: 0.05; range: 0.0 to 1.0)")
+			.defineInRange("food_fail_chance", 0.05, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

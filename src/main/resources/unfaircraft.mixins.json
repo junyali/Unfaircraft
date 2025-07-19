@@ -10,7 +10,8 @@
     "BowItemMixin",
     "ChestBlockEntityMixin",
     "AnvilMenuMixin",
-    "MinecartMixin"
+    "MinecartMixin",
+    "FoodItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
