@@ -14,6 +14,7 @@ import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.carver.CaveCarverConfiguration;
 import net.minecraft.world.level.levelgen.carver.CaveWorldCarver;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,6 +23,26 @@ import java.util.function.Function;
 
 @Mixin(CaveWorldCarver.class)
 public class CaveWorldCarverMixin {
+	@Unique
+	private boolean unfaircraft$hasAdjacentSolidBlock(ChunkAccess chunkAccess, BlockPos blockPos) {
+		BlockPos[] adjacentPositions = {
+				blockPos.above(),
+				blockPos.below(),
+				blockPos.north(),
+				blockPos.south(),
+				blockPos.east(),
+				blockPos.west()
+		};
+
+		for (BlockPos adjacentPos : adjacentPositions) {
+			if (chunkAccess.getBlockState(adjacentPos).isSolid()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@Inject(
 			method = "carve*",
 			at = @At("RETURN")
@@ -37,11 +58,11 @@ public class CaveWorldCarverMixin {
 
 		if (random.nextFloat() < UnfairCraftConfig.EXTRA_LAVA_POCKET_CHANCE.get().floatValue()) {
 			int x = chunkPos.getMinBlockX() + random.nextInt(16);
-			int y = chunkPos.getMinBlockZ() + random.nextInt(16);
-			int z = random.nextInt(60) + 10;
+			int z = chunkPos.getMinBlockZ() + random.nextInt(16);
+			int y = random.nextInt(80) - 50;
 
 			BlockPos lavaPos = new BlockPos(x, y, z);
-			if (chunkAccess.getBlockState(lavaPos).isAir()) {
+			if (chunkAccess.getBlockState(lavaPos).isAir() && unfaircraft$hasAdjacentSolidBlock(chunkAccess, lavaPos)) {
 				chunkAccess.setBlockState(lavaPos, Blocks.LAVA.defaultBlockState(), false);
 			}
 		}
