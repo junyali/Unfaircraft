@@ -47,6 +47,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Food Item mixin")
 			.define("mixins.food_item_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_CAVE_WORLD_CARVER_MIXIN = BUILDER
+			.comment("Enable Cave World Carver mixin")
+			.define("mixins.cave_world_carver_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -163,6 +167,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> FOOD_FAIL_CHANCE = BUILDER
 			.comment("Chance for food to completely fail to restore hunger")
 			.defineInRange("food_item_mixin.food_fail_chance", 0.05, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> EXTRA_LAVA_POCKET_CHANCE = BUILDER
+			.comment("Chance for extra lava pockets to generate in caves")
+			.defineInRange("cave_world_carver_mixin.extra_lava_pocket_chance", 0.8, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

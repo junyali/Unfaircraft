@@ -11,7 +11,8 @@
     "ChestBlockEntityMixin",
     "AnvilMenuMixin",
     "MinecartMixin",
-    "FoodItemMixin"
+    "FoodItemMixin",
+    "CaveWorldCarverMixin"
   ],
   "injectors": {
     "defaultRequire": 1
