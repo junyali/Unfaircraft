@@ -27,7 +27,27 @@ public class OreFeatureMixin {
 	@Unique
 	private void unfaircraft$initReplacements() {
 		unfaircraft$oreReplacements.put(Blocks.DIAMOND_ORE, Blocks.COAL_ORE);
-		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.DEEPSLATE_COAL_ORE);
+
+		unfaircraft$oreReplacements.put(Blocks.IRON_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_IRON_ORE, Blocks.DEEPSLATE_COAL_ORE);
+
+		unfaircraft$oreReplacements.put(Blocks.GOLD_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_GOLD_ORE, Blocks.DEEPSLATE_COAL_ORE);
+
+		unfaircraft$oreReplacements.put(Blocks.COPPER_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_COPPER_ORE, Blocks.DEEPSLATE_COAL_ORE);
+
+		unfaircraft$oreReplacements.put(Blocks.REDSTONE_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_REDSTONE_ORE, Blocks.DEEPSLATE_COAL_ORE);
+
+		unfaircraft$oreReplacements.put(Blocks.LAPIS_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_LAPIS_ORE, Blocks.DEEPSLATE_COAL_ORE);
+
+		unfaircraft$oreReplacements.put(Blocks.EMERALD_ORE, Blocks.MOSS_BLOCK);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_EMERALD_ORE, Blocks.MOSS_BLOCK);
+
+		unfaircraft$oreReplacements.put(Blocks.ANCIENT_DEBRIS, Blocks.MAGMA_BLOCK);
 	}
 
 	@Unique
