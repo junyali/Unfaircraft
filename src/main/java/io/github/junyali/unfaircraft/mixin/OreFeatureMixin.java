@@ -4,18 +4,51 @@ import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Mixin(OreFeature.class)
 public class OreFeatureMixin {
+	@Unique
+	private final Map<Block, Block> oreReplacements = new HashMap<>();
+
+	@Unique
+	private void unfaircraft$initReplacements() {
+		oreReplacements.put(Blocks.DIAMOND_ORE, Blocks.COAL_ORE);
+		oreReplacements.put(Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.COAL_ORE);
+	}
+
+	@Unique
+	private float unfaircraft$getReplacementChance(Block block) {
+		if (block == Blocks.ANCIENT_DEBRIS) {
+			return UnfairCraftConfig.ORE_ANCIENT_DEBRIS_REPLACEMENT_CHANCE.get().floatValue();
+		}
+		else if (block == Blocks.DIAMOND_ORE || block == Blocks.DEEPSLATE_DIAMOND_ORE) {
+			return UnfairCraftConfig.ORE_DIAMOND_REPLACEMENT_CHANCE.get().floatValue();
+		}
+		else if (block== Blocks.EMERALD_ORE || block == Blocks.DEEPSLATE_EMERALD_ORE) {
+			return UnfairCraftConfig.ORE_EMERALD_REPLACEMENT_CHANCE.get().floatValue();
+		}
+		else if (block == Blocks.GOLD_ORE || block == Blocks.DEEPSLATE_GOLD_ORE) {
+			return UnfairCraftConfig.ORE_GOLD_REPLACEMENT_CHANCE.get().floatValue();
+		}
+		else {
+			return UnfairCraftConfig.ORE_DEFAULT_REPLACEMENT_CHANCE.get().floatValue();
+		}
+	}
+
 	@Inject(
 			method = "place",
 			at = @At("RETURN")
@@ -27,25 +60,28 @@ public class OreFeatureMixin {
 
 		if (!cir.getReturnValue()) return;
 
+		if (oreReplacements.isEmpty()) {
+			unfaircraft$initReplacements();
+		}
+
 		BlockPos origin = context.origin();
 		WorldGenLevel level = context.level();
 		RandomSource random = context.random();
 
-		for (int x = -8; x <= 8; x++) {
-			for (int y = -8; y <= 8; y++) {
-				for (int z = -8; z <= 8; z++) {
+		int searchRadius = 8;
+		for (int x = -searchRadius; x <= searchRadius; x++) {
+			for (int y = -searchRadius; y <= searchRadius; y++) {
+				for (int z = -searchRadius; z <= searchRadius; z++) {
 					BlockPos blockPos = origin.offset(x, y, z);
 					BlockState blockState = level.getBlockState(blockPos);
+					Block block = blockState.getBlock();
 
-					if (blockState.is(Blocks.DIAMOND_ORE)) {
-						if (random.nextFloat() < UnfairCraftConfig.ORE_DIAMOND_REPLACEMENT_CHANCE.get().floatValue()) {
-							level.setBlock(blockPos, Blocks.DEEPSLATE_COAL_ORE.defaultBlockState(), 2);
-						}
-					}
+					if (oreReplacements.containsKey(block)) {
+						float replacementChance = unfaircraft$getReplacementChance(block);
 
-					if (blockState.is(Blocks.DEEPSLATE_DIAMOND_ORE)) {
-						if (random.nextFloat() < UnfairCraftConfig.ORE_DIAMOND_REPLACEMENT_CHANCE.get().floatValue()) {
-							level.setBlock(blockPos, Blocks.DEEPSLATE_COAL_ORE.defaultBlockState(), 2);
+						if (random.nextFloat() < replacementChance) {
+							Block replacementBlock = oreReplacements.get(block);
+							level.setBlock(blockPos, replacementBlock.defaultBlockState(), 2);
 						}
 					}
 				}

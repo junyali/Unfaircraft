@@ -176,9 +176,25 @@ public class UnfairCraftConfig {
 			.comment("Chance for extra lava pockets to generate in caves")
 			.defineInRange("cave_world_carver_mixin.extra_lava_pocket_chance", 0.8, 0.0, 1.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> ORE_DEFAULT_REPLACEMENT_CHANCE = BUILDER
+			.comment("Chance to replace ores in ore veins by default")
+			.defineInRange("ore_feature_mixin.ore_default_replacement_chance", 0.3, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ORE_GOLD_REPLACEMENT_CHANCE = BUILDER
+			.comment("Chance to replace ores in gold ore veins")
+			.defineInRange("ore_feature_mixin.ore_gold_replacement_chance", 0.4, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ORE_EMERALD_REPLACEMENT_CHANCE = BUILDER
+			.comment("Chance to replace ores in emerald ore veins")
+			.defineInRange("ore_feature_mixin.ore_emerald_replacement_chance", 0.5, 0.0, 1.0);
+
 	public static final ModConfigSpec.ConfigValue<Double> ORE_DIAMOND_REPLACEMENT_CHANCE = BUILDER
-			.comment("Chance for diamond ore veins to be mostly replaced with coal ore")
+			.comment("Chance to replace ores in diamond ore veins")
 			.defineInRange("ore_feature_mixin.ore_diamond_replacement_chance", 0.6, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ORE_ANCIENT_DEBRIS_REPLACEMENT_CHANCE = BUILDER
+			.comment("Chance to replace ores in ancient debris ore veins")
+			.defineInRange("ore_feature_mixin.ore_ancient_debris_replacement_chance", 0.5, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
