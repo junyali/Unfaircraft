@@ -22,12 +22,12 @@ import java.util.Map;
 @Mixin(OreFeature.class)
 public class OreFeatureMixin {
 	@Unique
-	private final Map<Block, Block> oreReplacements = new HashMap<>();
+	private final Map<Block, Block> unfaircraft$oreReplacements = new HashMap<>();
 
 	@Unique
 	private void unfaircraft$initReplacements() {
-		oreReplacements.put(Blocks.DIAMOND_ORE, Blocks.COAL_ORE);
-		oreReplacements.put(Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DIAMOND_ORE, Blocks.COAL_ORE);
+		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.COAL_ORE);
 	}
 
 	@Unique
@@ -60,7 +60,7 @@ public class OreFeatureMixin {
 
 		if (!cir.getReturnValue()) return;
 
-		if (oreReplacements.isEmpty()) {
+		if (unfaircraft$oreReplacements.isEmpty()) {
 			unfaircraft$initReplacements();
 		}
 
@@ -76,11 +76,11 @@ public class OreFeatureMixin {
 					BlockState blockState = level.getBlockState(blockPos);
 					Block block = blockState.getBlock();
 
-					if (oreReplacements.containsKey(block)) {
+					if (unfaircraft$oreReplacements.containsKey(block)) {
 						float replacementChance = unfaircraft$getReplacementChance(block);
 
 						if (random.nextFloat() < replacementChance) {
-							Block replacementBlock = oreReplacements.get(block);
+							Block replacementBlock = unfaircraft$oreReplacements.get(block);
 							level.setBlock(blockPos, replacementBlock.defaultBlockState(), 2);
 						}
 					}
