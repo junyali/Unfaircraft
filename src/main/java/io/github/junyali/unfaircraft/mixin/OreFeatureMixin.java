@@ -22,10 +22,9 @@ import java.util.Map;
 @Mixin(OreFeature.class)
 public class OreFeatureMixin {
 	@Unique
-	private final Map<Block, Block> unfaircraft$oreReplacements = new HashMap<>();
+	private static final Map<Block, Block> unfaircraft$oreReplacements = new HashMap<>();
 
-	@Unique
-	private void unfaircraft$initReplacements() {
+	static {
 		unfaircraft$oreReplacements.put(Blocks.DIAMOND_ORE, Blocks.COAL_ORE);
 		unfaircraft$oreReplacements.put(Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.DEEPSLATE_COAL_ORE);
 
@@ -80,15 +79,11 @@ public class OreFeatureMixin {
 
 		if (!cir.getReturnValue()) return;
 
-		if (unfaircraft$oreReplacements.isEmpty()) {
-			unfaircraft$initReplacements();
-		}
-
 		BlockPos origin = context.origin();
 		WorldGenLevel level = context.level();
 		RandomSource random = context.random();
 
-		int searchRadius = 8;
+		int searchRadius = 4;
 		for (int x = -searchRadius; x <= searchRadius; x++) {
 			for (int y = -searchRadius; y <= searchRadius; y++) {
 				for (int z = -searchRadius; z <= searchRadius; z++) {
