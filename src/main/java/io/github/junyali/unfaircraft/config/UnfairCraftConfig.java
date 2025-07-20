@@ -51,6 +51,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Cave World Carver mixin")
 			.define("mixins.cave_world_carver_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_ORE_FEATURE_MIXIN = BUILDER
+			.comment("Enable Ore Feature mixin")
+			.define("mixins.ore_feature_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -171,6 +175,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> EXTRA_LAVA_POCKET_CHANCE = BUILDER
 			.comment("Chance for extra lava pockets to generate in caves")
 			.defineInRange("cave_world_carver_mixin.extra_lava_pocket_chance", 0.8, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ORE_DIAMOND_REPLACEMENT_CHANCE = BUILDER
+			.comment("Chance for diamond ore veins to be mostly replaced with coal ore")
+			.defineInRange("ore_feature_mixin.ore_diamond_replacement_chance", 0.6, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

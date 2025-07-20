@@ -12,7 +12,8 @@
     "AnvilMenuMixin",
     "MinecartMixin",
     "FoodItemMixin",
-    "CaveWorldCarverMixin"
+    "CaveWorldCarverMixin",
+    "OreFeatureMixin"
   ],
   "injectors": {
     "defaultRequire": 1
