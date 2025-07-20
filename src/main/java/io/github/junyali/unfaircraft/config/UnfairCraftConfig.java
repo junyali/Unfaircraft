@@ -55,6 +55,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Ore Feature mixin")
 			.define("mixins.ore_feature_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_LOOT_TABLE_MIXIN = BUILDER
+			.comment("Enable Loot Table mixin")
+			.define("mixins.loot_table_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -195,6 +199,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> ORE_ANCIENT_DEBRIS_REPLACEMENT_CHANCE = BUILDER
 			.comment("Chance to replace ores in ancient debris ore veins")
 			.defineInRange("ore_feature_mixin.ore_ancient_debris_replacement_chance", 0.5, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> LOOT_TABLE_TROLL_CHANCE = BUILDER
+			.comment("Chance for loot tables to be replaced with troll loot")
+			.defineInRange("loot_table_mixin.loot_table_troll_chance", 0.1, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

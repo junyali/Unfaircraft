@@ -13,7 +13,8 @@
     "MinecartMixin",
     "FoodItemMixin",
     "CaveWorldCarverMixin",
-    "OreFeatureMixin"
+    "OreFeatureMixin",
+    "LootTableMixin"
   ],
   "injectors": {
     "defaultRequire": 1
