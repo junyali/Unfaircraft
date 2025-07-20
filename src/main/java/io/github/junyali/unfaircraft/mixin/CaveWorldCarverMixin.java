@@ -7,6 +7,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.CarvingMask;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Aquifer;
@@ -63,7 +65,8 @@ public class CaveWorldCarverMixin {
 
 			BlockPos lavaPos = new BlockPos(x, y, z);
 			if (chunkAccess.getBlockState(lavaPos).isAir() && unfaircraft$hasAdjacentSolidBlock(chunkAccess, lavaPos)) {
-				chunkAccess.setBlockState(lavaPos, Blocks.LAVA.defaultBlockState(), false);
+				BlockState flowingLava = Blocks.LAVA.defaultBlockState().setValue(LiquidBlock.LEVEL, 0);
+				chunkAccess.setBlockState(lavaPos, flowingLava, false);
 			}
 		}
 	}
