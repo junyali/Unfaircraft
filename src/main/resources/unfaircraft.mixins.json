@@ -14,7 +14,8 @@
     "FoodItemMixin",
     "CaveWorldCarverMixin",
     "OreFeatureMixin",
-    "LootTableMixin"
+    "LootTableMixin",
+    "SaplingBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
