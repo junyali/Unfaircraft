@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -114,9 +115,7 @@ public class NightmareEventMixin {
 			default -> throw new IllegalStateException("Unexpected value: " + pieceType);
 		};
 
-		ItemStack armourPiece = new ItemStack(selectedItem);
-
-		return armourPiece;
+		return new ItemStack(selectedItem);
 	}
 
 	@Unique
@@ -142,8 +141,19 @@ public class NightmareEventMixin {
 			}
 			spawnPos = spawnPos.above();
 
-			Zombie zombie = new Zombie(level);
-			zombie.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+			int mobType = level.random.nextInt(5);
+			switch (mobType) {
+				case 0 -> unfaircraft$spawnArmouredZombie(level, spawnPos);
+				case 1 -> unfaircraft$spawnArmouredSkeleton(level, spawnPos);
+			}
+		}
+	}
+
+	@Unique
+	private void unfaircraft$spawnArmouredZombie(ServerLevel level, BlockPos blockPos) {
+		Zombie zombie = EntityType.ZOMBIE.create(level);
+		if (zombie != null) {
+			zombie.setPos(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
 
 			zombie.setItemSlot(EquipmentSlot.HEAD, unfaircraft$createRandomArmourPiece(level.random, "helmet"));
 			zombie.setItemSlot(EquipmentSlot.CHEST, unfaircraft$createRandomArmourPiece(level.random, "chestplate"));
@@ -156,7 +166,42 @@ public class NightmareEventMixin {
 			zombie.setDropChance(EquipmentSlot.LEGS, 0.0f);
 			zombie.setDropChance(EquipmentSlot.FEET, 0.0f);
 
+			if (level.random.nextFloat() < 0.3f) {
+				zombie.setBaby(true);
+			}
+
 			level.addFreshEntity(zombie);
+		}
+	}
+
+	@Unique
+	private void unfaircraft$spawnArmouredSkeleton(ServerLevel level, BlockPos blockPos) {
+		Skeleton skeleton = EntityType.SKELETON.create(level);
+		if (skeleton != null) {
+			skeleton.setPos(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+
+			skeleton.setItemSlot(EquipmentSlot.HEAD, unfaircraft$createRandomArmourPiece(level.random, "helmet"));
+			skeleton.setItemSlot(EquipmentSlot.CHEST, unfaircraft$createRandomArmourPiece(level.random, "chestplate"));
+			skeleton.setItemSlot(EquipmentSlot.LEGS, unfaircraft$createRandomArmourPiece(level.random, "leggings"));
+			skeleton.setItemSlot(EquipmentSlot.FEET, unfaircraft$createRandomArmourPiece(level.random, "boots"));
+
+			if (level.random.nextBoolean()) {
+				ItemStack bow = new ItemStack(Items.BOW);
+				skeleton.setItemSlot(EquipmentSlot.MAINHAND, bow);
+			} else {
+				skeleton.setItemSlot(EquipmentSlot.MAINHAND, unfaircraft$createRandomWeapon(level.random));
+			}
+
+			skeleton.setDropChance(EquipmentSlot.HEAD, 0.0f);
+			skeleton.setDropChance(EquipmentSlot.CHEST, 0.0f);
+			skeleton.setDropChance(EquipmentSlot.LEGS, 0.0f);
+			skeleton.setDropChance(EquipmentSlot.FEET, 0.0f);
+
+			if (level.random.nextFloat() < 0.3f) {
+				skeleton.setBaby(true);
+			}
+
+			level.addFreshEntity(skeleton);
 		}
 	}
 }
