@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
@@ -145,6 +146,7 @@ public class NightmareEventMixin {
 			switch (mobType) {
 				case 0 -> unfaircraft$spawnArmouredZombie(level, spawnPos);
 				case 1 -> unfaircraft$spawnArmouredSkeleton(level, spawnPos);
+				case 2 -> unfaircraft$spawnArmouredCreeper(level, spawnPos);
 			}
 		}
 	}
@@ -202,6 +204,23 @@ public class NightmareEventMixin {
 			}
 
 			level.addFreshEntity(skeleton);
+		}
+	}
+
+	@Unique
+	private void unfaircraft$spawnArmouredCreeper(ServerLevel level, BlockPos blockPos) {
+		Creeper creeper = EntityType.CREEPER.create(level);
+		if (creeper != null) {
+			creeper.setPos(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+
+			if (level.random.nextFloat() < 0.3f) {
+				LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+				if (lightning != null) {
+					creeper.thunderHit(level, lightning);
+				}
+			}
+
+			level.addFreshEntity(creeper);
 		}
 	}
 }
