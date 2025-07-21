@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -147,6 +148,7 @@ public class NightmareEventMixin {
 				case 0 -> unfaircraft$spawnArmouredZombie(level, spawnPos);
 				case 1 -> unfaircraft$spawnArmouredSkeleton(level, spawnPos);
 				case 2 -> unfaircraft$spawnArmouredCreeper(level, spawnPos);
+				case 3 -> unfaircraft$spawnArmouredSpider(level, spawnPos);
 			}
 		}
 	}
@@ -221,6 +223,32 @@ public class NightmareEventMixin {
 			}
 
 			level.addFreshEntity(creeper);
+		}
+	}
+
+	@Unique
+	private void unfaircraft$spawnArmouredSpider(ServerLevel level, BlockPos blockPos) {
+		boolean isCaveSpider = level.random.nextFloat() < 0.3f;
+
+		Spider spider;
+		if (isCaveSpider) {
+			spider = EntityType.CAVE_SPIDER.create(level);
+		} else {
+			spider = EntityType.SPIDER.create(level);
+		}
+
+		if (spider != null) {
+			spider.setPos(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+			if (level.random.nextFloat() < 0.3f) {
+				Skeleton rider = EntityType.SKELETON.create(level);
+				if (rider != null) {
+					rider.setPos(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+					rider.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+					rider.startRiding(spider);
+				}
+			}
+
+			level.addFreshEntity(spider);
 		}
 	}
 }
