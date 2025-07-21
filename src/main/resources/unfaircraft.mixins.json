@@ -17,7 +17,8 @@
     "LootTableMixin",
     "SaplingBlockMixin",
     "FarmBlockMixin",
-    "NearestAttackableTargetGoalMixin"
+    "NearestAttackableTargetGoalMixin",
+    "NightmareEventMixin"
   ],
   "injectors": {
     "defaultRequire": 1

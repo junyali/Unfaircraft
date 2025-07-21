@@ -10,6 +10,10 @@ public class UnfairCraftConfig {
 			.comment("Master toggle for UnfairCraft")
 			.define("general.enable_unfair_mode", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_NIGHTMARE_MODE = BUILDER
+			.comment("Master toggle for Nightmare Mode")
+			.define("mixins.enable_nightmare_mode", true);
+
 	// individual mixin toggles
 	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_BED_BLOCK_MIXIN = BUILDER
 			.comment("Enable Bed Block mixin")
@@ -235,6 +239,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> MOB_DETECTION_RANGE_MULTIPLIER = BUILDER
 			.comment("Multiplier for increased mob detection range")
 			.define("nearest_attackable_target_goal_mixin.mob_detection_range_multiplier", 4.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> NIGHTMARE_EVENT_CHANCE = BUILDER
+			.comment("Chance for a nightmare event to happen")
+			.defineInRange("nightmare_event_mixin.nightmare_event_chance", 0.0001, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
