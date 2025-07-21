@@ -63,6 +63,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Sapling Block mixin")
 			.define("mixins.sapling_block_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_FARM_BLOCK_MIXIN = BUILDER
+			.comment("Enable Farm Block mixin")
+			.define("mixins.farm_block_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -211,6 +215,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> SAPLING_DEATH_CHANCE = BUILDER
 			.comment("Chance for saplings to 'die' every tick")
 			.defineInRange("sapling_block_mixin.sapling_death_chance", 0.005, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> FARMLAND_REVERT_CHANCE = BUILDER
+			.comment("Chance for farmland blocks to revert every tick")
+			.defineInRange("farm_block_mixin.farmland_revert_chance", 0.005, 0.0, 1.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
