@@ -1,13 +1,1 @@
-{
-  "itemGroup.unfaircraft": "Example Mod Tab",
-  "block.unfaircraft.example_block": "Example Block",
-  "item.unfaircraft.example_item": "Example Item",
-
-  "unfaircraft.configuration.title": "UnfairCraft Configs",
-  "unfaircraft.configuration.section.unfaircraft.common.toml": "UnfairCraft Configs",
-  "unfaircraft.configuration.section.unfaircraft.common.toml.title": "UnfairCraft Configs",
-  "unfaircraft.configuration.items": "Item List",
-  "unfaircraft.configuration.logDirtBlock": "Log Dirt Block",
-  "unfaircraft.configuration.magicNumberIntroduction": "Magic Number Text",
-  "unfaircraft.configuration.magicNumber": "Magic Number"
-}
+{}
