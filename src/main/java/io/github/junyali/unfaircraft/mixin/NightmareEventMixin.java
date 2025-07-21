@@ -142,7 +142,7 @@ public class NightmareEventMixin {
 			}
 			spawnPos = spawnPos.above();
 
-			int mobType = level.random.nextInt(5);
+			int mobType = level.random.nextInt(2);
 			switch (mobType) {
 				case 0 -> unfaircraft$spawnArmouredZombie(level, spawnPos);
 				case 1 -> unfaircraft$spawnArmouredSkeleton(level, spawnPos);
