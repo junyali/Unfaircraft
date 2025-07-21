@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
@@ -88,6 +89,24 @@ public class PlayerMixin {
 				}
 			}
 		}
+	}
+
+	@ModifyVariable(
+			method = "causeFallDamage",
+			at = @At("HEAD"),
+			argsOnly = true,
+			ordinal = 0
+	)
+	private float increaseFallDamage(float fallDistance) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_PLAYER_MIXIN.get()) {
+			return fallDistance;
+		}
+
+		if (fallDistance > UnfairCraftConfig.PLAYER_FALL_DAMAGE_DISTANCE.get().floatValue()) {
+			return fallDistance * UnfairCraftConfig.PLAYER_FALL_DAMAGE_MULTIPLIER.get().floatValue();
+		}
+
+		return fallDistance;
 	}
 
 	@Unique
