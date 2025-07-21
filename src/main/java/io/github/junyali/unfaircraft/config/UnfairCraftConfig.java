@@ -67,6 +67,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Farm Block mixin")
 			.define("mixins.farm_block_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_NEAREST_ATTACKABLE_TARGET_GOAL_MIXIN = BUILDER
+			.comment("Enable Nearest Attackable Target Goal mixin")
+			.define("mixins.nearest_attackable_target_goal_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -227,6 +231,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> FARMLAND_REVERT_CHANCE = BUILDER
 			.comment("Chance for farmland blocks to revert every tick")
 			.defineInRange("farm_block_mixin.farmland_revert_chance", 0.005, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> MOB_DETECTION_RANGE_MULTIPLIER = BUILDER
+			.comment("Multiplier for increased mob detection range")
+			.define("nearest_attackable_target_goal_mixin.mob_detection_range_multiplier", 4.0);
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

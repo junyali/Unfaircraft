@@ -16,7 +16,8 @@
     "OreFeatureMixin",
     "LootTableMixin",
     "SaplingBlockMixin",
-    "FarmBlockMixin"
+    "FarmBlockMixin",
+    "NearestAttackableTargetGoalMixin"
   ],
   "injectors": {
     "defaultRequire": 1
