@@ -5,16 +5,23 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
@@ -26,11 +33,12 @@ public class NightmareEventMixin {
 		if (players.isEmpty()) return;
 
 		Player randomPlayer = players.get(level.random.nextInt(players.size()));
-		int eventType = level.random.nextInt(1);
+		int eventType = level.random.nextInt(2);
 
 		switch (eventType) {
 			case 0 -> unfaircraft$tntRain(level, randomPlayer);
 			case 1 -> unfaircraft$instantSmite(level, randomPlayer);
+			case 2 -> unfaircraft$spawnArmouredMobs(level, randomPlayer);
 		}
 	}
 
@@ -89,5 +97,66 @@ public class NightmareEventMixin {
 				level.addFreshEntity(delayedLightning);
 			}
 		}));
+	}
+
+	@Unique
+	private ItemStack unfaircraft$createRandomArmourPiece(RandomSource random, String pieceType) {
+		Item[] helmets = {Items.LEATHER_HELMET, Items.CHAINMAIL_HELMET, Items.IRON_HELMET, Items.GOLDEN_HELMET, Items.DIAMOND_HELMET};
+		Item[] chestplates = {Items.LEATHER_CHESTPLATE, Items.CHAINMAIL_CHESTPLATE, Items.IRON_CHESTPLATE, Items.GOLDEN_CHESTPLATE, Items.DIAMOND_CHESTPLATE};
+		Item[] leggings = {Items.LEATHER_LEGGINGS, Items.CHAINMAIL_LEGGINGS, Items.IRON_LEGGINGS, Items.GOLDEN_LEGGINGS, Items.DIAMOND_LEGGINGS};
+		Item[] boots = {Items.LEATHER_BOOTS, Items.CHAINMAIL_BOOTS, Items.IRON_BOOTS, Items.GOLDEN_BOOTS, Items.DIAMOND_BOOTS};
+
+		Item selectedItem = switch (pieceType) {
+			case "helmet" -> helmets[random.nextInt(helmets.length)];
+			case "chestplate" -> chestplates[random.nextInt(chestplates.length)];
+			case "leggings" -> leggings[random.nextInt(leggings.length)];
+			case "boots" -> boots[random.nextInt(boots.length)];
+			default -> throw new IllegalStateException("Unexpected value: " + pieceType);
+		};
+
+		ItemStack armourPiece = new ItemStack(selectedItem);
+
+		return armourPiece;
+	}
+
+	@Unique
+	private ItemStack unfaircraft$createRandomWeapon(RandomSource random) {
+		Item[] weapons = {Items.WOODEN_SWORD, Items.STONE_SWORD, Items.IRON_SWORD, Items.GOLDEN_SWORD, Items.DIAMOND_SWORD};
+
+		return new ItemStack(weapons[random.nextInt(weapons.length)]);
+	}
+
+	@Unique
+	private void unfaircraft$spawnArmouredMobs(ServerLevel level, Player player) {
+		BlockPos playerPos = player.blockPosition();
+
+		for (int i = 0; i < 3 + level.random.nextInt(8); i++) {
+			BlockPos spawnPos = playerPos.offset(
+					level.random.nextInt(24) - 12,
+					0,
+					level.random.nextInt(24) - 12
+			);
+
+			while (spawnPos.getY() > level.getMinBuildHeight() && level.getBlockState(spawnPos).isAir()) {
+				spawnPos = spawnPos.below();
+			}
+			spawnPos = spawnPos.above();
+
+			Zombie zombie = new Zombie(level);
+			zombie.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+
+			zombie.setItemSlot(EquipmentSlot.HEAD, unfaircraft$createRandomArmourPiece(level.random, "helmet"));
+			zombie.setItemSlot(EquipmentSlot.CHEST, unfaircraft$createRandomArmourPiece(level.random, "chestplate"));
+			zombie.setItemSlot(EquipmentSlot.LEGS, unfaircraft$createRandomArmourPiece(level.random, "leggings"));
+			zombie.setItemSlot(EquipmentSlot.FEET, unfaircraft$createRandomArmourPiece(level.random, "boots"));
+			zombie.setItemSlot(EquipmentSlot.MAINHAND, unfaircraft$createRandomWeapon(level.random));
+
+			zombie.setDropChance(EquipmentSlot.HEAD, 0.0f);
+			zombie.setDropChance(EquipmentSlot.CHEST, 0.0f);
+			zombie.setDropChance(EquipmentSlot.LEGS, 0.0f);
+			zombie.setDropChance(EquipmentSlot.FEET, 0.0f);
+
+			level.addFreshEntity(zombie);
+		}
 	}
 }
