@@ -2,8 +2,11 @@ package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,10 +26,11 @@ public class NightmareEventMixin {
 		if (players.isEmpty()) return;
 
 		Player randomPlayer = players.get(level.random.nextInt(players.size()));
-		int eventType = level.random.nextInt(0);
+		int eventType = level.random.nextInt(1);
 
 		switch (eventType) {
 			case 0 -> unfaircraft$tntRain(level, randomPlayer);
+			case 1 -> unfaircraft$instantSmite(level, randomPlayer);
 		}
 	}
 
@@ -63,5 +67,27 @@ public class NightmareEventMixin {
 			tnt.setFuse(20 + level.random.nextInt(40));
 			level.addFreshEntity(tnt);
 		}
+	}
+
+	@Unique
+	private void unfaircraft$instantSmite(ServerLevel level, Player player) {
+		LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+		if (lightning != null) {
+			lightning.moveTo(player.getX(), player.getY(), player.getZ());
+			level.addFreshEntity(lightning);
+		}
+
+		level.getServer().tell(new TickTask(20 + level.random.nextInt(60), () -> {
+			LightningBolt delayedLightning = EntityType.LIGHTNING_BOLT.create(level);
+			if (delayedLightning != null) {
+				BlockPos nearPlayer = player.blockPosition().offset(
+						level.random.nextInt(8) - 4,
+						0,
+						level.random.nextInt(8) - 4
+				);
+				delayedLightning.moveTo(nearPlayer.getX(), nearPlayer.getY(), nearPlayer.getZ());
+				level.addFreshEntity(delayedLightning);
+			}
+		}));
 	}
 }
