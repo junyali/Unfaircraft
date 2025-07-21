@@ -20,9 +20,6 @@
     "NearestAttackableTargetGoalMixin",
     "NightmareEventMixin"
   ],
-  "client": [
-    "TitleScreenMixin"
-  ],
   "injectors": {
     "defaultRequire": 1
   },
