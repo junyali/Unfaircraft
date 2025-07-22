@@ -130,9 +130,9 @@ public class NightmareEventMixin {
 
 		for (int i = 0; i < 8 + level.random.nextInt(8); i++) {
 			BlockPos spawnPos = playerPos.offset(
-					level.random.nextInt(24) - 12,
+					level.random.nextInt(12) - 6,
 					0,
-					level.random.nextInt(24) - 12
+					level.random.nextInt(12) - 6
 			);
 
 			while (spawnPos.getY() > level.getMinBuildHeight() && level.getBlockState(spawnPos).isAir()) {
