@@ -21,6 +21,7 @@
     "BlockItemMixin",
     "ServerPlayerGameModeMixin",
     "BucketItemMixin",
+    "LivingEntityMixin",
     "NightmareEventMixin"
   ],
   "injectors": {
