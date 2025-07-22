@@ -35,12 +35,14 @@ public class NightmareEventMixin {
 		if (players.isEmpty()) return;
 
 		Player randomPlayer = players.get(level.random.nextInt(players.size()));
-		int eventType = level.random.nextInt(2);
+		int eventType = level.random.nextInt(4);
 
 		switch (eventType) {
 			case 0 -> unfaircraft$tntRain(level, randomPlayer);
 			case 1 -> unfaircraft$instantSmite(level, randomPlayer);
 			case 2 -> unfaircraft$spawnArmouredMobs(level, randomPlayer);
+			case 3 -> unfaircraft$inventoryDrop(level, randomPlayer);
+			case 4 -> unfaircraft$launchPlayer(level, randomPlayer);
 		}
 	}
 
@@ -249,5 +251,22 @@ public class NightmareEventMixin {
 
 			level.addFreshEntity(spider);
 		}
+	}
+
+	@Unique
+	private void unfaircraft$inventoryDrop(ServerLevel level, Player player) {
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack = player.getInventory().getItem(i);
+			if (!stack.isEmpty()) {
+				player.drop(stack, true);
+				player.getInventory().setItem(i, ItemStack.EMPTY);
+			}
+		}
+	}
+
+	@Unique
+	private void unfaircraft$launchPlayer(ServerLevel level, Player player) {
+		player.setDeltaMovement(player.getDeltaMovement().add(0, 5.0, 0));
+		player.hasImpulse = true;
 	}
 }
