@@ -83,24 +83,20 @@ public class NightmareEventMixin {
 
 	@Unique
 	private void unfaircraft$instantSmite(ServerLevel level, Player player) {
-		LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
-		if (lightning != null) {
-			lightning.moveTo(player.getX(), player.getY(), player.getZ());
-			level.addFreshEntity(lightning);
+		for (int i = 0; i < 3 + level.random.nextInt(5); i++) {
+			level.getServer().tell(new TickTask((20 * i) + level.random.nextInt(60), () -> {
+				LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+				if (lightning != null) {
+					BlockPos nearPlayer = player.blockPosition().offset(
+							level.random.nextInt(8) - 4,
+							0,
+							level.random.nextInt(8) - 4
+					);
+					lightning.moveTo(nearPlayer.getX(), nearPlayer.getY(), nearPlayer.getZ());
+					level.addFreshEntity(lightning);
+				}
+			}));
 		}
-
-		level.getServer().tell(new TickTask(20 + level.random.nextInt(60), () -> {
-			LightningBolt delayedLightning = EntityType.LIGHTNING_BOLT.create(level);
-			if (delayedLightning != null) {
-				BlockPos nearPlayer = player.blockPosition().offset(
-						level.random.nextInt(8) - 4,
-						0,
-						level.random.nextInt(8) - 4
-				);
-				delayedLightning.moveTo(nearPlayer.getX(), nearPlayer.getY(), nearPlayer.getZ());
-				level.addFreshEntity(delayedLightning);
-			}
-		}));
 	}
 
 	@Unique
