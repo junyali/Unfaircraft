@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
 public class PlayerMixin {
@@ -107,6 +108,23 @@ public class PlayerMixin {
 		}
 
 		return fallDistance;
+	}
+
+	@Inject(
+			method = "addItem",
+			at = @At("HEAD"),
+			cancellable = true
+	)
+	private void vanishItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_PLAYER_MIXIN.get()) {
+			return;
+		}
+
+		Player player = (Player) (Object) this;
+
+		if (!player.level().isClientSide() && player.level().random.nextFloat() < UnfairCraftConfig.PLAYER_PICKUP_FAIL_CHANCE.get().floatValue()) {
+			cir.setReturnValue(false);
+		}
 	}
 
 	@Unique

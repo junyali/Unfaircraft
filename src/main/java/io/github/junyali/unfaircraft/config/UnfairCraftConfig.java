@@ -124,6 +124,10 @@ public class UnfairCraftConfig {
 			.comment("Multiplier for increased fall damage")
 			.define("player_mixin.player_fall_damage_multiplier", 3.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> PLAYER_PICKUP_FAIL_CHANCE = BUILDER
+			.comment("Chance for items picked up by the player to vanish")
+			.defineInRange("player_mixin.player_pickup_fail_chance", 0.01, 0.0, 1.0);
+
 	public static final ModConfigSpec.ConfigValue<Double> ITEM_DURABILITY_LOSS_CHANCE = BUILDER
 			.comment("Chance for tiered items to lose extra durability")
 			.defineInRange("item_stack_mixin.item_durability_loss_chance", 0.05, 0.0, 1.0);
