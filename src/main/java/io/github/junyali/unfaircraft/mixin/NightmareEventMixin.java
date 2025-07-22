@@ -68,11 +68,11 @@ public class NightmareEventMixin {
 	private void unfaircraft$tntRain(ServerLevel level, Player player) {
 		BlockPos playerPos = player.blockPosition();
 
-		for (int i = 0; i < 8 + level.random.nextInt(8); i++) {
+		for (int i = 0; i < 8 + level.random.nextInt(32); i++) {
 			BlockPos tntPos = playerPos.offset(
-					level.random.nextInt(32) - 16,
+					level.random.nextInt(16) - 8,
 					16 + level.random.nextInt(16),
-					level.random.nextInt(32) - 16
+					level.random.nextInt(16) - 8
 			);
 
 			PrimedTnt tnt = new PrimedTnt(level, tntPos.getX(), tntPos.getY(), tntPos.getZ(), null);
@@ -132,7 +132,7 @@ public class NightmareEventMixin {
 	private void unfaircraft$spawnArmouredMobs(ServerLevel level, Player player) {
 		BlockPos playerPos = player.blockPosition();
 
-		for (int i = 0; i < 3 + level.random.nextInt(8); i++) {
+		for (int i = 0; i < 8 + level.random.nextInt(8); i++) {
 			BlockPos spawnPos = playerPos.offset(
 					level.random.nextInt(24) - 12,
 					0,
