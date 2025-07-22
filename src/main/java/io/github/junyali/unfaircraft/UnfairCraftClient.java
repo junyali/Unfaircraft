@@ -1,6 +1,7 @@
 package io.github.junyali.unfaircraft;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -26,18 +27,24 @@ public class UnfairCraftClient {
         UnfairCraft.LOGGER.info("HELLO FROM CLIENT SETUP");
         UnfairCraft.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
-        event.enqueueWork(UnfairCraftClient::enableResourcePack);
+        event.enqueueWork(UnfairCraftClient::registerResourcePack);
     }
 
-    private static void enableResourcePack() {
+    private static void registerResourcePack() {
         PackRepository packRepository = Minecraft.getInstance().getResourcePackRepository();
 
-        Collection<String> enabledPacks = new ArrayList<>(packRepository.getSelectedIds());
         String packId = UnfairCraft.MODID;
 
-        if (!enabledPacks.contains(packId)) {
-            enabledPacks.add(packId);
-            packRepository.setSelected(enabledPacks);
+        try {
+            packRepository.reload();
+            Pack pack = packRepository.getPack(packId);
+            if (pack != null) {
+                Collection<String> enabledPacks = new ArrayList<>(packRepository.getSelectedIds());
+                enabledPacks.add(packId);
+                packRepository.setSelected(enabledPacks);
+            }
+        } catch (Exception e) {
+            UnfairCraft.LOGGER.error(String.valueOf(e));
         }
     }
 }
