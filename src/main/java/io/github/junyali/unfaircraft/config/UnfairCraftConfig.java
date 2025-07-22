@@ -12,7 +12,7 @@ public class UnfairCraftConfig {
 
 	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_NIGHTMARE_MODE = BUILDER
 			.comment("Master toggle for Nightmare Mode")
-			.define("mixins.enable_nightmare_mode", true);
+			.define("general.enable_nightmare_mode", true);
 
 	// individual mixin toggles
 	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_BED_BLOCK_MIXIN = BUILDER
