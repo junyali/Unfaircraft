@@ -45,3 +45,41 @@ There's more but my 2am sleep deprived brain cannot be bothered to write more :D
 ![Nightmare Mode Event - TNT Rain](./images/tnt_rain.png)
 ![Unfair Mode - Hungry Chests](./images/the_chest.png)
 ![Nightmare Mode Event - Mob Swarm](./images/mob_swarm.png)
+
+## How to Run / Build
+
+### Requirements
+
+**NeoForge**: This mod was built on NeoForge version 21.1.173 for 1.21.1
+
+### Running
+
+1. Download the latest release [here](https://github.com/junyali/unfaircraft/releases).
+2. Drop it in your `mods` directory
+3. Boot up Minecraft
+4. Immediately regret your decisions
+
+You may configure how the mod modifies vanilla behaviour in `unfaircraft.toml` under the `config` directory.
+- Disable specific tortures (but where's the fun in that?)
+- Adjust event probabilities
+- Enable Nightmare Mode
+
+### Building
+
+This mod was developed on Intellij IDEA Ultimate, though may work with over Java IDEs that support the Gradle Build Tool.
+Importing from `build.gradle`, run:
+
+```console
+$ ./gradlew
+```
+
+Then to launch the client configuration, run:
+
+```console
+$ ./gradlew runClient
+```
+
+Be sure to sync all gradle projects and refresh dependencies if you encounter issues related to Gradle.
+
+*"It's not a bug, it's psychological warfare!"*
+
