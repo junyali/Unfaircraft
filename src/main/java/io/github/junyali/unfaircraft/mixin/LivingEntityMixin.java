@@ -29,21 +29,11 @@ public class LivingEntityMixin {
 
 			int random = entity.level().random.nextInt(5);
 			switch (random) {
-				case 1 -> {
-					jumpModification = 0.3f;
-				}
-				case 2 -> {
-					jumpModification = 0.8f;
-				}
-				case 3 -> {
-					jumpModification = 1.2f;
-				}
-				case 4 -> {
-					jumpModification = 1.5f;
-				}
-				case 5 -> {
-					jumpModification = 2.0f;
-				}
+				case 1 -> jumpModification = 0.3f;
+				case 2 -> jumpModification = 0.8f;
+				case 3 -> jumpModification = 1.2f;
+				case 4 -> jumpModification = 1.5f;
+				case 5 -> jumpModification = 2.0f;
 			}
 
 			entity.setDeltaMovement(motion.x, motion.y * jumpModification, motion.z);
