@@ -20,6 +20,7 @@
     "NearestAttackableTargetGoalMixin",
     "BlockItemMixin",
     "ServerPlayerGameModeMixin",
+    "BucketItemMixin",
     "NightmareEventMixin"
   ],
   "injectors": {

@@ -79,6 +79,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Block Item mixin")
 			.define("mixins.block_item_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_BUCKET_ITEM_MIXIN = BUILDER
+			.comment("Enable Bucket Item mixin")
+			.define("mixins.bucket_item_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -255,6 +259,10 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> BLOCK_BREAK_FAIL_CHANCE = BUILDER
 			.comment("Chance for block breaking to fail")
 			.defineInRange("block_item_mixin.block_break_fail_chance", 0.05, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> WATER_BUCKET_FAIL_CHANCE = BUILDER
+			.comment("Chance for water bucket placement to fail")
+			.defineInRange("bucket_item_mixin.water_bucket_fail_chance", 0.3, 0.0, 1.0);
 
 	public static final ModConfigSpec.ConfigValue<Double> NIGHTMARE_EVENT_CHANCE = BUILDER
 			.comment("Chance for a nightmare event to happen")
