@@ -75,6 +75,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Nearest Attackable Target Goal mixin")
 			.define("mixins.nearest_attackable_target_goal_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_BLOCK_ITEM_MIXIN = BUILDER
+			.comment("Enable Block Item mixin")
+			.define("mixins.block_item_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -239,6 +243,14 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> MOB_DETECTION_RANGE_MULTIPLIER = BUILDER
 			.comment("Multiplier for increased mob detection range")
 			.define("nearest_attackable_target_goal_mixin.mob_detection_range_multiplier", 4.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> BLOCK_PLACE_FAIL_CHANCE = BUILDER
+			.comment("Chance for block placements to fail")
+			.defineInRange("block_item_mixin.block_place_fail_chance", 0.05, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> BLOCK_BREAK_FAIL_CHANCE = BUILDER
+			.comment("Chance for block breaking to fail")
+			.defineInRange("block_item_mixin.block_break_fail_chance", 0.05, 0.0, 1.0);
 
 	public static final ModConfigSpec.ConfigValue<Double> NIGHTMARE_EVENT_CHANCE = BUILDER
 			.comment("Chance for a nightmare event to happen")

@@ -18,6 +18,8 @@
     "SaplingBlockMixin",
     "FarmBlockMixin",
     "NearestAttackableTargetGoalMixin",
+    "BlockItemMixin",
+    "ServerPlayerGameModeMixin",
     "NightmareEventMixin"
   ],
   "injectors": {
