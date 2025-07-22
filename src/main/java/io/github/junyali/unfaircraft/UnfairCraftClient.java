@@ -1,6 +1,7 @@
 package io.github.junyali.unfaircraft;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.packs.repository.PackRepository;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -9,6 +10,9 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Mod(value = UnfairCraft.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = UnfairCraft.MODID, value = Dist.CLIENT)
@@ -21,5 +25,19 @@ public class UnfairCraftClient {
     static void onClientSetup(FMLClientSetupEvent event) {
         UnfairCraft.LOGGER.info("HELLO FROM CLIENT SETUP");
         UnfairCraft.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        event.enqueueWork(UnfairCraftClient::enableResourcePack);
+    }
+
+    private static void enableResourcePack() {
+        PackRepository packRepository = Minecraft.getInstance().getResourcePackRepository();
+
+        Collection<String> enabledPacks = new ArrayList<>(packRepository.getSelectedIds());
+        String packId = UnfairCraft.MODID;
+
+        if (!enabledPacks.contains(packId)) {
+            enabledPacks.add(packId);
+            packRepository.setSelected(enabledPacks);
+        }
     }
 }
