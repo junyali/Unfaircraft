@@ -292,5 +292,9 @@ public class UnfairCraftConfig {
 			.comment("Chance for a nightmare event to happen")
 			.defineInRange("nightmare_event_mixin.nightmare_event_chance", 0.0001, 0.0, 1.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> TOTEM_FAIL_CHANCE = BUILDER
+			.comment("Chance for totems of undying to fail to save the player")
+			.defineInRange("living_entity_mixin.totem_fail_chance", 0.15, 0.0, 1.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
