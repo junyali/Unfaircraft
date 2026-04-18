@@ -23,7 +23,9 @@
     "BucketItemMixin",
     "LivingEntityMixin",
     "NightmareEventMixin",
-    "CreeperMixin"
+    "CreeperMixin",
+    "SkeletonMixin",
+    "RangedAttackGoalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

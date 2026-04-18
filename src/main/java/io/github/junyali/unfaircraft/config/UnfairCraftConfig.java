@@ -332,5 +332,17 @@ public class UnfairCraftConfig {
 			.comment("Multiplier for creeper explosion radius")
 			.defineInRange("creeper_mixin.creeper_explosion_radius_multiplier", 1.5, 1.0, 5.0);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_SKELETON_MIXIN = BUILDER
+			.comment("Enable Skeleton mixin")
+			.define("mixins.skeleton_mixin", true);
+
+	public static final ModConfigSpec.ConfigValue<Double> SKELETON_ACCURACY_MULTIPLIER = BUILDER
+			.comment("Multiplier for skeleton accuracy")
+			.defineInRange("skeleton_mixin.skeleton_accuracy_multiplier", 0.1, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Integer> SKELETON_ATTACK_SPEED_INCREASE = BUILDER
+			.comment("Number of ticks to reduce from skeleton attack cooldown")
+			.defineInRange("skeleton_mixin.skeleton_attack_speed_increase", 2, 0, 10);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
