@@ -87,6 +87,10 @@ public class UnfairCraftConfig {
 			.comment("Enable Living Entity mixin")
 			.define("mixins.living_entity_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_MIXIN = BUILDER
+			.comment("Enable Armor mixin")
+			.define("mixins.armor_mixin", true);
+
 	// oh boy here we go...
 	public static final ModConfigSpec.ConfigValue<Double> BED_EXPLOSION_CHANCE = BUILDER
 			.comment("Chance for beds to explode on interaction")
@@ -267,6 +271,22 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Double> WATER_BUCKET_FAIL_CHANCE = BUILDER
 			.comment("Chance for water bucket placement to fail")
 			.defineInRange("bucket_item_mixin.water_bucket_fail_chance", 0.3, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ARMOR_PROTECTION_FAIL_CHANCE = BUILDER
+			.comment("Chance for armor to provide no protection when hit")
+			.defineInRange("armor_mixin.armor_protection_fail_chance", 0.15, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ARMOR_DURABILITY_LOSS_CHANCE = BUILDER
+			.comment("Chance for armor to extra durability damage when hit")
+			.defineInRange("armor_mixin.armor_durability_loss_chance", 0.20, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Integer> ARMOR_DURABILITY_DAMAGE_MIN = BUILDER
+			.comment("Minimum extra durability damage to armor")
+			.defineInRange("armor_mixin.armor_durability_damage_min", 2, 1, 100);
+
+	public static final ModConfigSpec.ConfigValue<Integer> ARMOR_DURABILITY_DAMAGE_MAX = BUILDER
+			.comment("Maximum extra durability damage to armor")
+			.defineInRange("armor_mixin.armor_durability_damage_max", 5, 1, 100);
 
 	public static final ModConfigSpec.ConfigValue<Double> NIGHTMARE_EVENT_CHANCE = BUILDER
 			.comment("Chance for a nightmare event to happen")
