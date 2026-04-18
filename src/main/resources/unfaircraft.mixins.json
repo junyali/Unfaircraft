@@ -22,7 +22,8 @@
     "ServerPlayerGameModeMixin",
     "BucketItemMixin",
     "LivingEntityMixin",
-    "NightmareEventMixin"
+    "NightmareEventMixin",
+    "CreeperMixin"
   ],
   "injectors": {
     "defaultRequire": 1

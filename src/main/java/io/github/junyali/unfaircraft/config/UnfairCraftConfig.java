@@ -320,5 +320,17 @@ public class UnfairCraftConfig {
 			.comment("Ignore thorns when reflecting damage back to player")
 			.define("living_entity_mixin.damage_reflection_ignore_thorns", true);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_CREEPER_MIXIN = BUILDER
+			.comment("Enable Creeper mixin")
+			.define("mixins.creeper_mixin", true);
+
+	public static final ModConfigSpec.ConfigValue<Double> CREEPER_FUSE_SPEED_MULTIPLIER = BUILDER
+			.comment("Multiplier for creeper fuse speed")
+			.defineInRange("creeper_mixin.creeper_fuse_speed_multiplier", 5.0, 1.0, 10.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> CREEPER_EXPLOSION_RADIUS_MULTIPLIER = BUILDER
+			.comment("Multiplier for creeper explosion radius")
+			.defineInRange("creeper_mixin.creeper_explosion_radius_multiplier", 1.5, 1.0, 5.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
