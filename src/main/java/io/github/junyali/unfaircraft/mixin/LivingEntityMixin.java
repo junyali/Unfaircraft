@@ -1,11 +1,13 @@
 package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -128,6 +130,32 @@ public abstract class LivingEntityMixin {
 
 		if (entity.level().random.nextFloat() < UnfairCraftConfig.TOTEM_FAIL_CHANCE.get().floatValue()) {
 			cir.setReturnValue(false);
+		}
+	}
+
+	@Inject(
+			method = "knockback",
+			at = @At("HEAD")
+	)
+	private void knockbackPlayer(double strength, double x, double z, CallbackInfo ci) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_LIVING_ENTITY_MIXIN.get()) {
+			return;
+		}
+
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (entity.getLastHurtByMob() instanceof Player player) {
+			if (entity.level().random.nextFloat() < UnfairCraftConfig.PLAYER_KNOCKBACK_CHANCE.get().floatValue()) {
+				ItemStack heldItem = player.getMainHandItem();
+				int knockbackLevel = heldItem.getEnchantmentLevel(player.level().registryAccess()
+						.registryOrThrow(Registries.ENCHANTMENT)
+						.getHolderOrThrow(Enchantments.KNOCKBACK));
+
+				double knockbackMultiplier = 1.0 + (knockbackLevel * 0.5);
+				double modifiedStrength = strength * knockbackMultiplier * UnfairCraftConfig.PLAYER_KNOCKBACK_MULTIPLIER.get();
+
+				player.knockback(modifiedStrength, -x, -z);
+			}
 		}
 	}
 }

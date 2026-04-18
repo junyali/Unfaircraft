@@ -296,5 +296,13 @@ public class UnfairCraftConfig {
 			.comment("Chance for totems of undying to fail to save the player")
 			.defineInRange("living_entity_mixin.totem_fail_chance", 0.15, 0.0, 1.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> PLAYER_KNOCKBACK_CHANCE = BUILDER
+			.comment("Chance for player to be knocked back when hitting a mob")
+			.defineInRange("living_entity_mixin.player_knockback_chance", 0.1, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> PLAYER_KNOCKBACK_MULTIPLIER = BUILDER
+			.comment("Multiplier for knockback effect on player")
+			.defineInRange("living_entity_mixin.player_knockback_multiplier", 1.5, 1.0, 100.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
