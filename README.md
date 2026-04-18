@@ -53,7 +53,7 @@ There's more but my 2am sleep deprived brain cannot be bothered to write more :D
 
 ### Requirements
 
-**NeoForge**: This mod was built on NeoForge version 21.1.173 for 1.21.1
+**NeoForge**: This mod was built on NeoForge version 21.1.226 for 1.21.1
 
 ### Running
 
