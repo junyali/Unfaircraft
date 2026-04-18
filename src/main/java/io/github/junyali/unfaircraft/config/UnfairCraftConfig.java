@@ -304,5 +304,21 @@ public class UnfairCraftConfig {
 			.comment("Multiplier for knockback effect on player")
 			.defineInRange("living_entity_mixin.player_knockback_multiplier", 1.5, 1.0, 100.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> DAMAGE_REFLECTION_CHANCE = BUILDER
+			.comment("Chance for damage to be reflected back to player")
+			.defineInRange("living_entity_mixin.damage_reflection_chance", 0.1, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Integer> DAMAGE_REFLECTION_PERCENTAGE_MIN = BUILDER
+			.comment("Minimum percentage for damage to be reflected back to player")
+			.defineInRange("living_entity_mixin.damage_reflection_percentage_min", 3, 1, 100);
+
+	public static final ModConfigSpec.ConfigValue<Integer> DAMAGE_REFLECTION_PERCENTAGE_MAX = BUILDER
+			.comment("Maximum percentage for damage to be reflected back to player")
+			.defineInRange("living_entity_mixin.damage_reflection_percentage_max", 5, 1, 100);
+
+	public static final ModConfigSpec.ConfigValue<Boolean> DAMAGE_REFLECTION_IGNORE_THORNS = BUILDER
+			.comment("Ignore thorns when reflecting damage back to player")
+			.define("living_entity_mixin.damage_reflection_ignore_thorns", true);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

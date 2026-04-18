@@ -158,4 +158,32 @@ public abstract class LivingEntityMixin {
 			}
 		}
 	}
+
+	@Inject(
+			method = "actuallyHurt",
+			at = @At("HEAD")
+	)
+	private void reflectDamageToAttacker(DamageSource damageSource, float damageAmount, CallbackInfo ci) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_LIVING_ENTITY_MIXIN.get()) {
+			return;
+		}
+
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (damageSource.getEntity() instanceof Player player) {
+			if (entity.level().random.nextFloat() < UnfairCraftConfig.DAMAGE_REFLECTION_CHANCE.get().floatValue()) {
+				float reflectionPercentage = UnfairCraftConfig.DAMAGE_REFLECTION_PERCENTAGE_MIN.get().floatValue() +
+						entity.level().random.nextFloat() * (UnfairCraftConfig.DAMAGE_REFLECTION_PERCENTAGE_MAX.get().floatValue() -
+						UnfairCraftConfig.DAMAGE_REFLECTION_PERCENTAGE_MIN.get().floatValue());
+
+				float reflectedDamage = damageAmount * reflectionPercentage;
+
+				if (UnfairCraftConfig.DAMAGE_REFLECTION_IGNORE_THORNS.get()) {
+					player.hurt(damageSource, reflectedDamage);
+				} else {
+					player.hurt(player.damageSources().thorns(entity), reflectedDamage);
+				}
+			}
+		}
+	}
 }
