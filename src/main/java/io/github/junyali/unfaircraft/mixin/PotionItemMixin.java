@@ -1,6 +1,7 @@
 package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -49,14 +50,14 @@ public class PotionItemMixin {
 			boolean backfired = false;
 
 			for (MobEffectInstance effect : potionContents.getAllEffects()) {
-				MobEffect negativeEffect = POSITIVE_TO_NEGATIVE_EFFECTS.get(effect.getEffect());
+				MobEffect negativeEffect = POSITIVE_TO_NEGATIVE_EFFECTS.get(effect.getEffect().value());
 
 				if (negativeEffect != null) {
 					// idk if there's a more effective way of doing this lol
 					player.removeEffect(effect.getEffect());
 
 					player.addEffect(new MobEffectInstance(
-							negativeEffect,
+							Holder.direct(negativeEffect),
 							effect.getDuration(),
 							effect.getAmplifier(),
 							effect.isAmbient(),
