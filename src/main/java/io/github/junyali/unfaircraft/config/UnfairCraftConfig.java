@@ -360,5 +360,13 @@ public class UnfairCraftConfig {
 			.comment("Chance per tick for enderman to become aggressive when player is nearby")
 			.defineInRange("enderman_mixin.enderman_proximity_aggro_chance", 1.0, 0.0, 1.0);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_POTION_ITEM_MIXIN = BUILDER
+			.comment("Enable Potion Item mixin")
+			.define("mixins.potion_item", true);
+
+	public static final ModConfigSpec.ConfigValue<Double> POTION_BACKFIRE_CHANCE = BUILDER
+			.comment("Chance for potion effects to backfire on player")
+			.defineInRange("potion_item_mixin.potion_backfire_chance", 0.1, 0.0, 1.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

@@ -26,7 +26,8 @@
     "CreeperMixin",
     "SkeletonMixin",
     "RangedAttackGoalMixin",
-    "EndermanMixin"
+    "EndermanMixin",
+    "PotionItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
