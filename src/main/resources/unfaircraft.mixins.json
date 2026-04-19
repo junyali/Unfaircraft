@@ -27,7 +27,8 @@
     "SkeletonMixin",
     "RangedAttackGoalMixin",
     "EndermanMixin",
-    "PotionItemMixin"
+    "PotionItemMixin",
+    "MobRegenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

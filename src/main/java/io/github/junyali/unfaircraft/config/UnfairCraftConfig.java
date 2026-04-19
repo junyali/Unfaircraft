@@ -368,5 +368,21 @@ public class UnfairCraftConfig {
 			.comment("Chance for potion effects to backfire on player")
 			.defineInRange("potion_item_mixin.potion_backfire_chance", 0.1, 0.0, 1.0);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_MOB_REGEN_MIXIN = BUILDER
+			.comment("Enable Mob Regen mixin")
+			.define("mixins.mob_regen_mixin", true);
+
+	public static final ModConfigSpec.ConfigValue<Integer> MOB_REGEN_DELAY = BUILDER
+			.comment("Ticks to wait after damage before mob regen starts")
+			.defineInRange("mob_regen_mixin.mob_regen_delay", 300, 0, 72000);
+
+	public static final ModConfigSpec.ConfigValue<Integer> MOB_REGEN_RATE = BUILDER
+			.comment("How often to regenerate in ticks")
+			.defineInRange("mob_regen_mixin.mob_regen_rate", 20, 0, 1200);
+
+	public static final ModConfigSpec.ConfigValue<Double> MOB_REGEN_AMOUNT = BUILDER
+			.comment("Health restored per regen tick")
+			.defineInRange("mob_regen_mixin.mob_regen_amount", 0.5, 0.0, 10.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
