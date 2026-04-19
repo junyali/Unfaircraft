@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +28,27 @@ public class PotionItemMixin {
 
 	@Unique
 	private static final Map<MobEffect, MobEffect> POSITIVE_TO_NEGATIVE_EFFECTS = new HashMap<>();
+
+	static {
+		unfaircraft$registerOppositeEffect(MobEffects.MOVEMENT_SPEED.value(), MobEffects.MOVEMENT_SLOWDOWN.value());
+		unfaircraft$registerOppositeEffect(MobEffects.DAMAGE_BOOST.value(), MobEffects.WEAKNESS.value());
+		unfaircraft$registerOppositeEffect(MobEffects.DAMAGE_RESISTANCE.value(), MobEffects.WITHER.value());
+		unfaircraft$registerOppositeEffect(MobEffects.HEAL.value(), MobEffects.HARM.value());
+		unfaircraft$registerOppositeEffect(MobEffects.REGENERATION.value(), MobEffects.POISON.value());
+		unfaircraft$registerOppositeEffect(MobEffects.HEALTH_BOOST.value(), MobEffects.WITHER.value());
+		unfaircraft$registerOppositeEffect(MobEffects.JUMP.value(), MobEffects.LEVITATION.value());
+		unfaircraft$registerOppositeEffect(MobEffects.NIGHT_VISION.value(), MobEffects.BLINDNESS.value());
+		unfaircraft$registerOppositeEffect(MobEffects.DIG_SPEED.value(), MobEffects.DIG_SLOWDOWN.value());
+		unfaircraft$registerOppositeEffect(MobEffects.SLOW_FALLING.value(), MobEffects.LEVITATION.value());
+		unfaircraft$registerOppositeEffect(MobEffects.ABSORPTION.value(), MobEffects.WITHER.value());
+		unfaircraft$registerOppositeEffect(MobEffects.SATURATION.value(), MobEffects.HUNGER.value());
+		unfaircraft$registerOppositeEffect(MobEffects.LUCK.value(), MobEffects.UNLUCK.value());
+	}
+
+	@Unique
+	private static void unfaircraft$registerOppositeEffect(MobEffect positive, MobEffect negative) {
+		POSITIVE_TO_NEGATIVE_EFFECTS.put(positive, negative);
+	}
 
 	@Inject(
 			method = "finishUsingItem",
