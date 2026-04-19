@@ -25,7 +25,8 @@
     "NightmareEventMixin",
     "CreeperMixin",
     "SkeletonMixin",
-    "RangedAttackGoalMixin"
+    "RangedAttackGoalMixin",
+    "EndermanMixin"
   ],
   "injectors": {
     "defaultRequire": 1

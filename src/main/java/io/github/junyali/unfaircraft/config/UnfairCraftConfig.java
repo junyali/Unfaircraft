@@ -348,5 +348,17 @@ public class UnfairCraftConfig {
 			.comment("Enable drunk jumping")
 			.define("living_entity_mixin.drunk_jumping", false);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_ENDERMAN_MIXIN = BUILDER
+			.comment("Enable Enderman mixin")
+			.define("mixins.enderman_mixin", true);
+
+	public static final ModConfigSpec.ConfigValue<Double> ENDERMAN_PROXIMITY_AGGRO_RANGE = BUILDER
+			.comment("Range in blocks for enderman proximity aggro")
+			.defineInRange("enderman_mixin.enderman_proximity_aggro_range", 16.0, 1.0, 64.0);
+
+	public static final ModConfigSpec.ConfigValue<Double> ENDERMAN_PROXIMITY_AGGRO_CHANCE = BUILDER
+			.comment("Chance per tick for enderman to become aggressive when player is nearby")
+			.defineInRange("enderman_mixin.enderman_proximity_aggro_chance", 1.0, 0.0, 1.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
