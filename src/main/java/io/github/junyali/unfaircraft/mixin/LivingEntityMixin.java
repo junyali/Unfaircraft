@@ -23,7 +23,7 @@ public abstract class LivingEntityMixin {
 			at = @At("TAIL")
 	)
 	private void modifyJumpPower(CallbackInfo ci) {
-		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_LIVING_ENTITY_MIXIN.get()) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_LIVING_ENTITY_MIXIN.get() || !UnfairCraftConfig.ENABLE_DRUNK_JUMPING.get()) {
 			return;
 		}
 

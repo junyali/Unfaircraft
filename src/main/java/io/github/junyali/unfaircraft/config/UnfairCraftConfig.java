@@ -344,5 +344,9 @@ public class UnfairCraftConfig {
 			.comment("Number of ticks to reduce from skeleton attack cooldown")
 			.defineInRange("skeleton_mixin.skeleton_attack_speed_increase", 2, 0, 10);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_DRUNK_JUMPING = BUILDER
+			.comment("Enable drunk jumping")
+			.define("living_entity_mixin.drunk_jumping", false);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
