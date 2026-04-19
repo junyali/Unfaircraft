@@ -384,5 +384,25 @@ public class UnfairCraftConfig {
 			.comment("Health restored per regen tick")
 			.defineInRange("mob_regen_mixin.mob_regen_amount", 0.5, 0.0, 10.0);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_SET_FIRE_MIXIN = BUILDER
+			.comment("Enable Set Fire mixin")
+			.define("mixins.set_fire_mixin", true);
+
+	public static final ModConfigSpec.ConfigValue<Integer> SET_FIRE_RADIUS = BUILDER
+			.comment("Radius to check for fire source blocks around the player")
+			.defineInRange("set_fire_mixin.set_fire_radius", 3, 1, 16);
+
+	public static final ModConfigSpec.ConfigValue<Double> SET_FIRE_CHANCE = BUILDER
+			.comment("Chance per tick for a player to be set on fire near a heat source")
+			.defineInRange("set_fire_mixin.set_fire_chance", 0.005, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Integer> SET_FIRE_INITIAL_DURATION = BUILDER
+			.comment("Initial Duration for the player to be set on fire")
+			.defineInRange("set_fire_mixin.initial_duration", 40, 20, 6000);
+
+	public static final ModConfigSpec.ConfigValue<Integer> SET_FIRE_DURATION_INCREASE = BUILDER
+			.comment("How many ticks to add to fire duration if player is already on fire and near a heat source")
+			.defineInRange("set_fire_mixin.duration_increase", 20, 1, 6000);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

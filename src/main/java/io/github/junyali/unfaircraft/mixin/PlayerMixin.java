@@ -1,13 +1,17 @@
 package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -131,5 +135,32 @@ public class PlayerMixin {
 	private void unfaircraft$dropItemAndPlaySound(Player player, ItemStack stack) {
 		player.drop(stack, true);
 		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f, ((player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.7f + 1.0f) * 2.0f);
+	}
+
+	@Inject(
+			method = "tick",
+			at = @At("TAIL")
+	)
+	private void onPlayerTickTail(CallbackInfo info) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_SET_FIRE_MIXIN.get()) {
+			return;
+		}
+
+		Player player = (Player) (Object) this;
+
+		if (player.level().isClientSide() || !player.isOnFire() || player.isSpectator() || player.isCreative()) {
+			return;
+		}
+
+		int radius = UnfairCraftConfig.SET_FIRE_RADIUS.get();
+		BlockPos playerPos = player.blockPosition();
+
+		for (BlockPos pos: BlockPos.betweenClosed(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))) {
+			BlockState blockState = player.level().getBlockState(pos);
+			if (blockState.is(Blocks.FIRE) || blockState.is(Blocks.LAVA) || blockState.is(Blocks.MAGMA_BLOCK)) {
+				player.setRemainingFireTicks(player.getRemainingFireTicks() + UnfairCraftConfig.SET_FIRE_DURATION_INCREASE.get());
+				return;
+			}
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,6 +11,8 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -239,6 +242,39 @@ public abstract class LivingEntityMixin {
 
 		if (entity instanceof Enemy) {
 			unfaircraft$ticksSinceLastDamage = 0;
+		}
+	}
+
+	@Inject(
+			method = "tick",
+			at = @At("TAIL")
+	)
+	private void setFire(CallbackInfo info) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_SET_FIRE_MIXIN.get()) {
+			return;
+		}
+
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (!(entity instanceof Player player)) {
+			return;
+		}
+
+		if (player.level().isClientSide() || player.isOnFire() || player.isSpectator() || player.isCreative()) {
+			return;
+		}
+
+		int radius = UnfairCraftConfig.SET_FIRE_RADIUS.get();
+		BlockPos playerPos = player.blockPosition();
+
+		for (BlockPos pos: BlockPos.betweenClosed(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))) {
+			BlockState blockState = player.level().getBlockState(pos);
+			if (blockState.is(Blocks.FIRE) || blockState.is(Blocks.LAVA) || blockState.is(Blocks.MAGMA_BLOCK)) {
+				if (player.level().random.nextFloat() < UnfairCraftConfig.SET_FIRE_CHANCE.get()) {
+					player.igniteForSeconds(UnfairCraftConfig.SET_FIRE_INITIAL_DURATION.get());
+					return;
+				}
+			}
 		}
 	}
 }
