@@ -408,5 +408,17 @@ public class UnfairCraftConfig {
 			.comment("Enable Zombie mixin")
 			.define("mixins.zombie_mixin", true);
 
+	public static final ModConfigSpec.ConfigValue<Double> ZOMBIE_SUMMON_CHANCE = BUILDER
+			.comment("Chance for zombie to summon reinforcements when hit")
+			.defineInRange("zombie_mixin.zombie_summon_chance", 0.05, 0.0, 1.0);
+
+	public static final ModConfigSpec.ConfigValue<Integer> ZOMBIE_SUMMON_MIN = BUILDER
+			.comment("Minimum number of zombies to summon")
+			.define("zombie_mixin.zombie_summon_minimum", 1);
+
+	public static final ModConfigSpec.ConfigValue<Integer> ZOMBIE_SUMMON_MAX = BUILDER
+			.comment("Maximum number of zombies to summon")
+			.define("zombie_mixin.zombie_summon_maximum", 3);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
