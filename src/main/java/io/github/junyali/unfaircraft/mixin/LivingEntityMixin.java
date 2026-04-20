@@ -3,6 +3,9 @@ package io.github.junyali.unfaircraft.mixin;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,6 +13,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -130,11 +134,22 @@ public abstract class LivingEntityMixin {
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
-		if (!(entity instanceof Player)) {
+		if (!(entity instanceof Player player)) {
 			return;
 		}
 
-		if (entity.level().random.nextFloat() < UnfairCraftConfig.TOTEM_FAIL_CHANCE.get().floatValue()) {
+		ItemStack totemStack = null;
+		for (InteractionHand hand : InteractionHand.values()) {
+			ItemStack stack = player.getItemInHand(hand);
+			if (stack.is(Items.TOTEM_OF_UNDYING)) {
+				totemStack = stack;
+				break;
+			}
+		}
+
+		if (totemStack != null && entity.level().random.nextFloat() < UnfairCraftConfig.TOTEM_FAIL_CHANCE.get().floatValue()) {
+			totemStack.shrink(1);
+			entity.level().playSound(null, entity.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0F, 0.5F + entity.level().random.nextFloat() * 0.2F);
 			cir.setReturnValue(false);
 		}
 	}
