@@ -404,5 +404,9 @@ public class UnfairCraftConfig {
 			.comment("How many ticks to add to fire duration if player is already on fire and near a heat source")
 			.defineInRange("set_fire_mixin.duration_increase", 20, 1, 6000);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_ZOMBIE_MIXIN = BUILDER
+			.comment("Enable Zombie mixin")
+			.define("mixins.zombie_mixin", true);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
