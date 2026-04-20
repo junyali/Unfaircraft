@@ -29,6 +29,9 @@ public class PotionItemMixin {
 	@Unique
 	private static final Map<MobEffect, MobEffect> POSITIVE_TO_NEGATIVE_EFFECTS = new HashMap<>();
 
+	@Unique
+	private PotionContents unfaircraft$savedPotionContents;
+
 	static {
 		unfaircraft$registerOppositeEffect(MobEffects.MOVEMENT_SPEED.value(), MobEffects.MOVEMENT_SLOWDOWN.value());
 		unfaircraft$registerOppositeEffect(MobEffects.DAMAGE_BOOST.value(), MobEffects.WEAKNESS.value());
@@ -52,6 +55,14 @@ public class PotionItemMixin {
 
 	@Inject(
 			method = "finishUsingItem",
+			at = @At("HEAD")
+	)
+	private void onPotionDrinkStart(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> cir) {
+		unfaircraft$savedPotionContents = stack.get(DataComponents.POTION_CONTENTS);
+	}
+
+	@Inject(
+			method = "finishUsingItem",
 			at = @At("RETURN")
 	)
 	private void onPotionDrink(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> cir) {
@@ -64,7 +75,7 @@ public class PotionItemMixin {
 		}
 
 		if (level.random.nextFloat() < UnfairCraftConfig.POTION_BACKFIRE_CHANCE.get()) {
-			PotionContents potionContents = stack.get(DataComponents.POTION_CONTENTS);
+			PotionContents potionContents = unfaircraft$savedPotionContents;
 			if (potionContents == null) {
 				return;
 			}
