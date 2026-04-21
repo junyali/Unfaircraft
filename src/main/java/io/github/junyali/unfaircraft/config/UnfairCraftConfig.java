@@ -428,5 +428,9 @@ public class UnfairCraftConfig {
 			.comment("Multiplier for food exhaustion rate")
 			.defineInRange("food_data_mixin.food_data_exhaustion_multiplier", 3.0, 1.0, 10.0);
 
+	public static final ModConfigSpec.ConfigValue<Double> FOOD_DEBUFF_CHANCE = BUILDER
+			.comment("Chance for a food item to give you a harmful effect when consumed")
+			.defineInRange("living_entity_mixin.food_debuff_chance", 0.15, 0.0, 1.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }
