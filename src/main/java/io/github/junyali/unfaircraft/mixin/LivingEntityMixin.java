@@ -355,6 +355,10 @@ public abstract class LivingEntityMixin {
 			at = @At("HEAD")
 	)
 	private void onEatHead(Level level, ItemStack stack, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_LIVING_ENTITY_MIXIN.get()) {
+			return;
+		}
+
 		if (level.isClientSide()) {
 			return;
 		}
@@ -371,6 +375,10 @@ public abstract class LivingEntityMixin {
 			ordinal = 0
 	)
 	private FoodProperties diminishSaturation(FoodProperties foodProperties) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_LIVING_ENTITY_MIXIN.get()) {
+			return foodProperties;
+		}
+
 		LivingEntity entity = (LivingEntity) (Object) this;
 
 		if (entity.level().isClientSide()) return foodProperties;
