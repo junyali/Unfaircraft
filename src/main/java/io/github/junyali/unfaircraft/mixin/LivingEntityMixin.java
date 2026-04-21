@@ -2,7 +2,9 @@ package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,8 +31,12 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -340,5 +347,41 @@ public abstract class LivingEntityMixin {
 				entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 1));
 			}
 		}
+	}
+
+	@Unique
+	private final Map<ResourceLocation, Integer> unfaircraft$eatCounts = new HashMap<>();
+
+	@Inject(
+			method = "eat(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/ItemStack;",
+			at = @At("HEAD")
+	)
+	private void onEatHead(Level level, ItemStack stack, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
+		if (level.isClientSide()) {
+			return;
+		}
+
+		ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+		unfaircraft$eatCounts.merge(key, 1, Integer::sum);
+	}
+
+	@ModifyVariable(
+			method = "eat(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/ItemStack;",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/food/FoodData;eat(IF)V",
+					shift = At.Shift.BEFORE
+			),
+			ordinal = 1,
+			argsOnly = false
+	)
+	private float diminishSaturation(float saturationModifier, Level level, ItemStack stack, FoodProperties foodProperties) {
+		if (!level.isClientSide()) {
+			ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+			int count = unfaircraft$eatCounts.getOrDefault(key, 1);
+			float scale = Math.max(0.1f, 1.0f - (count - 1) * 0.2f);
+			return saturationModifier * scale;
+		}
+		return saturationModifier;
 	}
 }
