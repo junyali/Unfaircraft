@@ -420,5 +420,13 @@ public class UnfairCraftConfig {
 			.comment("Maximum number of zombies to summon")
 			.define("zombie_mixin.zombie_summon_maximum", 3);
 
+	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_FOOD_DATA_MIXIN = BUILDER
+			.comment("Enable Food Data mixin")
+			.define("mixins.food_data.mixin", true);
+
+	public static final ModConfigSpec.ConfigValue<Double> FOOD_DATA_EXHAUSTION_MULTIPLIER = BUILDER
+			.comment("Multiplier for food exhaustion rate")
+			.defineInRange("food_data_mixin.food_data_exhaustion_multiplier", 3.0, 1.0, 10.0);
+
 	public static final ModConfigSpec SPEC = BUILDER.build();
 }

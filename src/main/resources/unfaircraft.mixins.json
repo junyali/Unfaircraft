@@ -28,7 +28,8 @@
     "RangedAttackGoalMixin",
     "EndermanMixin",
     "PotionItemMixin",
-    "ZombieMixin"
+    "ZombieMixin",
+    "FoodDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1
