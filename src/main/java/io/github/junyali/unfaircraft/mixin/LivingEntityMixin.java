@@ -334,13 +334,27 @@ public abstract class LivingEntityMixin {
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
-		if (entity.level().random.nextFloat() < UnfairCraftConfig.FOOD_DEBUFF_CHANCE.get().floatValue()) {
-			boolean givePoison = entity.level().random.nextBoolean();
-			if (givePoison) {
-				entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
-			} else {
-				entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 1));
+		if (!(entity instanceof Player player)) {
+			if (entity.level().random.nextFloat() < UnfairCraftConfig.FOOD_DEBUFF_CHANCE.get().floatValue()) {
+				boolean givePoison = entity.level().random.nextBoolean();
+				if (givePoison) {
+					entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
+				} else {
+					entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 1));
+				}
 			}
+
+			if (unfaircraft$hungerBeforeEat < 0) return;
+
+			int nutrition = foodProperties.nutrition();
+			int hungerBefore = unfaircraft$hungerBeforeEat;
+			int maxHunger = 20;
+			int overflow = Math.max(0, (hungerBefore + nutrition) - maxHunger);
+			if (overflow > 0) {
+				int amplifier = Math.min(2, (overflow - 1) / 2);
+				entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200 + overflow * 20, amplifier));
+			}
+			unfaircraft$hungerBeforeEat = -1;
 		}
 	}
 
@@ -349,6 +363,9 @@ public abstract class LivingEntityMixin {
 
 	@Unique
 	private ResourceLocation unfaircraft$lastEatenKey;
+
+	@Unique
+	private int unfaircraft$hungerBeforeEat = -1;
 
 	@Inject(
 			method = "eat(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/ItemStack;",
@@ -363,9 +380,14 @@ public abstract class LivingEntityMixin {
 			return;
 		}
 
-		ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-		unfaircraft$lastEatenKey = key;
-		unfaircraft$eatCounts.merge(key, 1, Integer::sum);
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (entity instanceof Player player) {
+			unfaircraft$hungerBeforeEat = player.getFoodData().getFoodLevel();
+			ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+			unfaircraft$lastEatenKey = key;
+			unfaircraft$eatCounts.merge(key, 1, Integer::sum);
+		}
 	}
 
 	@ModifyVariable(
