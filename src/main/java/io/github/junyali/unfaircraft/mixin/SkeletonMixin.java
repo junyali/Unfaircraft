@@ -18,7 +18,7 @@ public class SkeletonMixin {
 			return inaccuracy;
 		}
 
-		return inaccuracy * UnfairCraftConfig.SKELETON_ACCURACY_MULTIPLIER.get().floatValue();
+		return inaccuracy / UnfairCraftConfig.SKELETON_ACCURACY_MULTIPLIER.get().floatValue();
 	}
 
 	@ModifyVariable(
@@ -31,7 +31,7 @@ public class SkeletonMixin {
 			return inaccuracy;
 		}
 
-		return inaccuracy * UnfairCraftConfig.SKELETON_ACCURACY_MULTIPLIER.get().floatValue();
+		return inaccuracy / UnfairCraftConfig.SKELETON_ACCURACY_MULTIPLIER.get().floatValue();
 	}
 
 	@ModifyVariable(
@@ -44,6 +44,6 @@ public class SkeletonMixin {
 			return inaccuracy;
 		}
 
-		return inaccuracy * UnfairCraftConfig.SKELETON_ACCURACY_MULTIPLIER.get().floatValue();
+		return inaccuracy / UnfairCraftConfig.SKELETON_ACCURACY_MULTIPLIER.get().floatValue();
 	}
 }
