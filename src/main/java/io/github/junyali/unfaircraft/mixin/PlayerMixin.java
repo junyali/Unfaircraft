@@ -2,6 +2,8 @@ package io.github.junyali.unfaircraft.mixin;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -9,7 +11,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -92,6 +97,49 @@ public class PlayerMixin {
 					inventory.setItem(i, ItemStack.EMPTY);
 					return;
 				}
+			}
+		}
+	}
+
+	@Unique
+	private static final String unfaircraft$rot_tag = "unfaircraft_rot";
+
+	@Inject(
+			method = "tick",
+			at = @At("TAIL")
+	)
+	private void rotInventory(CallbackInfo ci) {
+		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_PLAYER_MIXIN.get()) {
+			return;
+		}
+
+		Player player = (Player) (Object) this;
+		if (player.level().isClientSide()) {
+			return;
+		}
+		if (player.level().getGameTime() % 20 != 0) {
+			return;
+		}
+
+		Inventory inventory = player.getInventory();
+		for (int i = 0; i < inventory.getContainerSize(); i++) {
+			ItemStack stack = inventory.getItem(i);
+			if (stack.isEmpty()) continue;
+
+			Item item = stack.getItem();
+
+			if (item == Items.ROTTEN_FLESH) continue;
+			if (stack.getFoodProperties(player) == null) continue;
+
+			CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+			int rot = tag.getInt(unfaircraft$rot_tag) + 20;
+			// 24000 ticks is a full mc day fyi
+			// if only fridges existed in minecraft.. :loll:
+			if (rot >= 24000) {
+				inventory.setItem(i, new ItemStack(Items.ROTTEN_FLESH, stack.getCount()));
+			} else {
+				tag.putInt(unfaircraft$rot_tag, rot);
+				stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
 			}
 		}
 	}
