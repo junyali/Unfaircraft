@@ -46,11 +46,21 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> explosionRadius;
 		public final ModConfigSpec.ConfigValue<Double> fireChance;
 		public final ModConfigSpec.ConfigValue<Integer> fireDuration;
+
+		private Bed(ModConfigSpec.Builder builder) {
+			builder.push("bed");
+			builder.pop();
+		}
 	}
 
 	public static class Shield {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> failChance;
+
+		private Shield(ModConfigSpec.Builder builder) {
+			builder.push("shield");
+			builder.pop();
+		}
 	}
 
 	public static class Player {
@@ -62,6 +72,11 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> fallDamageDistance;
 		public final ModConfigSpec.ConfigValue<Double> fallDamageMultiplier;
 		public final ModConfigSpec.ConfigValue<Double> pickupFailChance;
+
+		private Player(ModConfigSpec.Builder builder) {
+			builder.push("player");
+			builder.pop();
+		}
 	}
 
 	public static class ItemDurability {
@@ -69,6 +84,11 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> lossChance;
 		public final ModConfigSpec.ConfigValue<Integer> damageMin;
 		public final ModConfigSpec.ConfigValue<Integer> damageMax;
+
+		private ItemDurability(ModConfigSpec.Builder builder) {
+			builder.push("item_durability");
+			builder.pop();
+		}
 	}
 
 	public static class Bow {
@@ -79,6 +99,11 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> backfireChance;
 		public final ModConfigSpec.ConfigValue<Double> backfireDamageMin;
 		public final ModConfigSpec.ConfigValue<Double> backfireDamaeMax;
+
+		private Bow(ModConfigSpec.Builder builder) {
+			builder.push("bow");
+			builder.pop();
+		}
 	}
 
 	public static class Chest {
@@ -86,6 +111,11 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> eatChance;
 		public final ModConfigSpec.ConfigValue<Integer> eatItemMin;
 		public final ModConfigSpec.ConfigValue<Integer> eatItemMax;
+
+		private Chest(ModConfigSpec.Builder builder) {
+			builder.push("chest");
+			builder.pop();
+		}
 	}
 
 	public static class Anvil {
@@ -94,6 +124,11 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> costIncreaseChance;
 		public final ModConfigSpec.ConfigValue<Double> costMultiplierMin;
 		public final ModConfigSpec.ConfigValue<Double> costMultiplierMax;
+
+		private Anvil(ModConfigSpec.Builder builder) {
+			builder.push("anvil");
+			builder.pop();
+		}
 	}
 
 	public static class Minecart {
@@ -101,17 +136,32 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> slowdownFactor;
 		public final ModConfigSpec.ConfigValue<Double> stopChance;
 		public final ModConfigSpec.ConfigValue<Double> reverseChance;
+
+		private Minecart(ModConfigSpec.Builder builder) {
+			builder.push("minecart");
+			builder.pop();
+		}
 	}
 
 	public static class Food {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> failChance;
 		public final ModConfigSpec.ConfigValue<Double> debuffChance;
+
+		private Food(ModConfigSpec.Builder builder) {
+			builder.push("food");
+			builder.pop();
+		}
 	}
 
 	public static class CaveCarver {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> extraLavaPocketChance;
+
+		private CaveCarver(ModConfigSpec.Builder builder) {
+			builder.push("cave_carver");
+			builder.pop();
+		}
 	}
 
 	public static class Ore {
@@ -121,37 +171,72 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> emeraldReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> diamondReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> ancientDebrisReplacementChance;
+
+		private Ore(ModConfigSpec.Builder builder) {
+			builder.push("ore");
+			builder.pop();
+		}
 	}
 
 	public static class LootTable {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> trollChance;
+
+		private LootTable(ModConfigSpec.Builder builder) {
+			builder.push("loot_table");
+			builder.pop();
+		}
 	}
 
 	public static class Sapling {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> deathChance;
+
+		private Sapling(ModConfigSpec.Builder builder) {
+			builder.push("sapling");
+			builder.pop();
+		}
 	}
 
 	public static class Farmland {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> revertChance;
+
+		private Farmland(ModConfigSpec.Builder builder) {
+			builder.push("farmland");
+			builder.pop();
+		}
 	}
 
 	public static class MobDetection {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> rangeMultiplier;
+
+		private MobDetection(ModConfigSpec.Builder builder) {
+			builder.push("mob_detection");
+			builder.pop();
+		}
 	}
 
 	public static class BlockInteraction {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> placeFailChance;
 		public final ModConfigSpec.ConfigValue<Double> breakFailChance;
+
+		private BlockInteraction(ModConfigSpec.Builder builder) {
+			builder.push("block_interaction");
+			builder.pop();
+		}
 	}
 
 	public static class Bucket {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> waterFailChance;
+
+		private Bucket(ModConfigSpec.Builder builder) {
+			builder.push("bucket");
+			builder.pop();
+		}
 	}
 
 	public static class Armour {
@@ -160,17 +245,32 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> durabilityLossChance;
 		public final ModConfigSpec.ConfigValue<Integer> durabilityDamageMin;
 		public final ModConfigSpec.ConfigValue<Integer> durabilityDamageMax;
+
+		private Armour(ModConfigSpec.Builder builder) {
+			builder.push("armour");
+			builder.pop();
+		}
 	}
 
 	public static class Totem {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> failChance;
+
+		private Totem(ModConfigSpec.Builder builder) {
+			builder.push("totem");
+			builder.pop();
+		}
 	}
 
 	public static class Knockback {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> chance;
 		public final ModConfigSpec.ConfigValue<Double> multiplier;
+
+		private Knockback(ModConfigSpec.Builder builder) {
+			builder.push("knockback");
+			builder.pop();
+		}
 	}
 
 	public static class DamageReflection {
@@ -179,24 +279,44 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Integer> percentageMin;
 		public final ModConfigSpec.ConfigValue<Integer> percentageMax;
 		public final ModConfigSpec.ConfigValue<Boolean> ignoreThorns;
+
+		private DamageReflection(ModConfigSpec.Builder builder) {
+			builder.push("damage_reflection");
+			builder.pop();
+		}
 	}
 
 	public static class Creeper {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> fuseSpeedMultiplier;
 		public final ModConfigSpec.ConfigValue<Double> explosionRadiusMultiplier;
+
+		private Creeper(ModConfigSpec.Builder builder) {
+			builder.push("creeper");
+			builder.pop();
+		}
 	}
 
 	public static class Skeleton {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> accuracyMultiplier;
 		public final ModConfigSpec.ConfigValue<Integer> attackSpeedIncrease;
+
+		private Skeleton(ModConfigSpec.Builder builder) {
+			builder.push("skeleton");
+			builder.pop();
+		}
 	}
 
 	public static class Enderman {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> proximityAggroRange;
 		public final ModConfigSpec.ConfigValue<Double> proximityAggroChance;
+
+		private Enderman(ModConfigSpec.Builder builder) {
+			builder.push("enderman");
+			builder.pop();
+		}
 	}
 
 	public static class Zombie {
@@ -204,11 +324,21 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> summonChance;
 		public final ModConfigSpec.ConfigValue<Integer> summonMin;
 		public final ModConfigSpec.ConfigValue<Integer> summonMax;
+
+		private Zombie(ModConfigSpec.Builder builder) {
+			builder.push("zombie");
+			builder.pop();
+		}
 	}
 
 	public static class Potion {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> backfireChance;
+
+		private Potion(ModConfigSpec.Builder builder) {
+			builder.push("potion");
+			builder.pop();
+		}
 	}
 
 	public static class MobRegen {
@@ -216,6 +346,11 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Integer> delay;
 		public final ModConfigSpec.ConfigValue<Integer> rate;
 		public final ModConfigSpec.ConfigValue<Double> amount;
+
+		private MobRegen(ModConfigSpec.Builder builder) {
+			builder.push("mob_regen");
+			builder.pop();
+		}
 	}
 
 	public static class SetFire {
@@ -224,19 +359,39 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> chance;
 		public final ModConfigSpec.ConfigValue<Integer> initialDuration;
 		public final ModConfigSpec.ConfigValue<Integer> durationIncrease;
+
+		private SetFire(ModConfigSpec.Builder builder) {
+			builder.push("set_fire");
+			builder.pop();
+		}
 	}
 
 	public static class FoodData {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> exhaustionMultiplier;
+
+		private FoodData(ModConfigSpec.Builder builder) {
+			builder.push("food_data");
+			builder.pop();
+		}
 	}
 
 	public static class DrunkJumping {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+
+		private DrunkJumping(ModConfigSpec.Builder builder) {
+			builder.push("drunk_jumping");
+			builder.pop();
+		}
 	}
 
 	public static class NightmareEvent {
 		public final ModConfigSpec.ConfigValue<Double> chance;
+
+		private NightmareEvent(ModConfigSpec.Builder builder) {
+			builder.push("nightmare_event");
+			builder.pop();
+		}
 	}
 
 	static {
