@@ -15,5 +15,6 @@ public class DataGenerators {
 		PackOutput packOutput = generator.getPackOutput();
 
 		// Client
+		generator.addProvider(event.includeClient(), new UnfairCraftLanguageProvider(packOutput, "en_us"));
 	}
 }
