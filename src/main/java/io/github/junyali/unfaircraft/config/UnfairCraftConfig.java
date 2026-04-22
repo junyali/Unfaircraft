@@ -49,6 +49,9 @@ public class UnfairCraftConfig {
 
 		private Bed(ModConfigSpec.Builder builder) {
 			builder.push("bed");
+			enabled = builder.comment("Enable Bed mixin")
+					.translation("unfaircraft.config.bed.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -59,6 +62,9 @@ public class UnfairCraftConfig {
 
 		private Shield(ModConfigSpec.Builder builder) {
 			builder.push("shield");
+			enabled = builder.comment("Enable Shield mixin")
+					.translation("unfaircraft.config.shield.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -75,6 +81,9 @@ public class UnfairCraftConfig {
 
 		private Player(ModConfigSpec.Builder builder) {
 			builder.push("player");
+			enabled = builder.comment("Enable Player mixin")
+					.translation("unfaircraft.config.player.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -87,6 +96,9 @@ public class UnfairCraftConfig {
 
 		private ItemDurability(ModConfigSpec.Builder builder) {
 			builder.push("item_durability");
+			enabled = builder.comment("Enable Item Durability mixin")
+					.translation("unfaircraft.config.item_durability.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -102,6 +114,9 @@ public class UnfairCraftConfig {
 
 		private Bow(ModConfigSpec.Builder builder) {
 			builder.push("bow");
+			enabled = builder.comment("Enable Bow mixin")
+					.translation("unfaircraft.config.bow.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -114,6 +129,9 @@ public class UnfairCraftConfig {
 
 		private Chest(ModConfigSpec.Builder builder) {
 			builder.push("chest");
+			enabled = builder.comment("Enable Chest mixin")
+					.translation("unfaircraft.config.chest.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -127,6 +145,9 @@ public class UnfairCraftConfig {
 
 		private Anvil(ModConfigSpec.Builder builder) {
 			builder.push("anvil");
+			enabled = builder.comment("Enable Anvil mixin")
+					.translation("unfaircraft.config.anvil.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -139,6 +160,9 @@ public class UnfairCraftConfig {
 
 		private Minecart(ModConfigSpec.Builder builder) {
 			builder.push("minecart");
+			enabled = builder.comment("Enable Minecart mixin")
+					.translation("unfaircraft.config.minecart.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -150,6 +174,9 @@ public class UnfairCraftConfig {
 
 		private Food(ModConfigSpec.Builder builder) {
 			builder.push("food");
+			enabled = builder.comment("Enable Food mixin")
+					.translation("unfaircraft.config.food.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -160,6 +187,9 @@ public class UnfairCraftConfig {
 
 		private CaveCarver(ModConfigSpec.Builder builder) {
 			builder.push("cave_carver");
+			enabled = builder.comment("Enable Cave Carver mixin")
+					.translation("unfaircraft.config.cave_carver.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -174,6 +204,9 @@ public class UnfairCraftConfig {
 
 		private Ore(ModConfigSpec.Builder builder) {
 			builder.push("ore");
+			enabled = builder.comment("Enable Ore mixin")
+					.translation("unfaircraft.config.ore.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -184,6 +217,9 @@ public class UnfairCraftConfig {
 
 		private LootTable(ModConfigSpec.Builder builder) {
 			builder.push("loot_table");
+			enabled = builder.comment("Enable Loot Table mixin")
+					.translation("unfaircraft.config.loot_table.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -194,6 +230,9 @@ public class UnfairCraftConfig {
 
 		private Sapling(ModConfigSpec.Builder builder) {
 			builder.push("sapling");
+			enabled = builder.comment("Enable Sapling mixin")
+					.translation("unfaircraft.config.sapling.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -204,6 +243,9 @@ public class UnfairCraftConfig {
 
 		private Farmland(ModConfigSpec.Builder builder) {
 			builder.push("farmland");
+			enabled = builder.comment("Enable Farmland mixin")
+					.translation("unfaircraft.config.farmland.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -214,6 +256,9 @@ public class UnfairCraftConfig {
 
 		private MobDetection(ModConfigSpec.Builder builder) {
 			builder.push("mob_detection");
+			enabled = builder.comment("Enable Mob Detection mixin")
+					.translation("unfaircraft.config.mob_detection.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -225,6 +270,9 @@ public class UnfairCraftConfig {
 
 		private BlockInteraction(ModConfigSpec.Builder builder) {
 			builder.push("block_interaction");
+			enabled = builder.comment("Enable Block Interaction mixin")
+					.translation("unfaircraft.config.block_interaction.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -235,6 +283,9 @@ public class UnfairCraftConfig {
 
 		private Bucket(ModConfigSpec.Builder builder) {
 			builder.push("bucket");
+			enabled = builder.comment("Enable Bucket mixin")
+					.translation("unfaircraft.config.bucket.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -248,6 +299,9 @@ public class UnfairCraftConfig {
 
 		private Armour(ModConfigSpec.Builder builder) {
 			builder.push("armour");
+			enabled = builder.comment("Enable Armour mixin")
+					.translation("unfaircraft.config.armour.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -258,6 +312,9 @@ public class UnfairCraftConfig {
 
 		private Totem(ModConfigSpec.Builder builder) {
 			builder.push("totem");
+			enabled = builder.comment("Enable Totem mixin")
+					.translation("unfaircraft.config.totem.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -269,6 +326,9 @@ public class UnfairCraftConfig {
 
 		private Knockback(ModConfigSpec.Builder builder) {
 			builder.push("knockback");
+			enabled = builder.comment("Enable Knockback mixin")
+					.translation("unfaircraft.config.knockback.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -282,6 +342,9 @@ public class UnfairCraftConfig {
 
 		private DamageReflection(ModConfigSpec.Builder builder) {
 			builder.push("damage_reflection");
+			enabled = builder.comment("Enable Damage Reflection mixin")
+					.translation("unfaircraft.config.damage_reflection.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -293,6 +356,9 @@ public class UnfairCraftConfig {
 
 		private Creeper(ModConfigSpec.Builder builder) {
 			builder.push("creeper");
+			enabled = builder.comment("Enable Creeper mixin")
+					.translation("unfaircraft.config.creeper.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -304,6 +370,9 @@ public class UnfairCraftConfig {
 
 		private Skeleton(ModConfigSpec.Builder builder) {
 			builder.push("skeleton");
+			enabled = builder.comment("Enable Skeleton mixin")
+					.translation("unfaircraft.config.skeleton.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -315,6 +384,9 @@ public class UnfairCraftConfig {
 
 		private Enderman(ModConfigSpec.Builder builder) {
 			builder.push("enderman");
+			enabled = builder.comment("Enable Enderman mixin")
+					.translation("unfaircraft.config.enderman.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -327,6 +399,9 @@ public class UnfairCraftConfig {
 
 		private Zombie(ModConfigSpec.Builder builder) {
 			builder.push("zombie");
+			enabled = builder.comment("Enable Zombie mixin")
+					.translation("unfaircraft.config.zombie.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -337,6 +412,9 @@ public class UnfairCraftConfig {
 
 		private Potion(ModConfigSpec.Builder builder) {
 			builder.push("potion");
+			enabled = builder.comment("Enable Potion mixin")
+					.translation("unfaircraft.config.potion.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -349,6 +427,9 @@ public class UnfairCraftConfig {
 
 		private MobRegen(ModConfigSpec.Builder builder) {
 			builder.push("mob_regen");
+			enabled = builder.comment("Enable Mob Regen mixin")
+					.translation("unfaircraft.config.mob_regen.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -362,6 +443,9 @@ public class UnfairCraftConfig {
 
 		private SetFire(ModConfigSpec.Builder builder) {
 			builder.push("set_fire");
+			enabled = builder.comment("Enable Set Fire mixin")
+					.translation("unfaircraft.config.set_fire.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -372,6 +456,9 @@ public class UnfairCraftConfig {
 
 		private FoodData(ModConfigSpec.Builder builder) {
 			builder.push("food_data");
+			enabled = builder.comment("Enable Food Data mixin")
+					.translation("unfaircraft.config.food_data.enabled")
+					.define("enabled", true);
 			builder.pop();
 		}
 	}
@@ -381,6 +468,9 @@ public class UnfairCraftConfig {
 
 		private DrunkJumping(ModConfigSpec.Builder builder) {
 			builder.push("drunk_jumping");
+			enabled = builder.comment("Enable Drunk Jumping")
+					.translation("unfaircraft.config.drunk_jumping.enabled")
+					.define("enabled", false);
 			builder.pop();
 		}
 	}
