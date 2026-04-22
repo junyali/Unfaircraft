@@ -451,7 +451,7 @@ public class UnfairCraftConfig {
 					.translation("unfaircraft.config.armour.durability_damage_min")
 					.defineInRange("durability_damage_min", 2, 1, 100);
 			durabilityDamageMax = builder.comment("Maximum extra durability damage to armour")
-					.translation("unfaircraft.config.armour_durability_damage_max")
+					.translation("unfaircraft.config.armour.durability_damage_max")
 					.defineInRange("durability_damage_max", 5, 1, 100);
 			builder.pop();
 		}
@@ -487,7 +487,7 @@ public class UnfairCraftConfig {
 					.translation("unfaircraft.config.knockback.chance")
 					.defineInRange("chance", 0.1, 0.0, 1.0);
 			multiplier = builder.comment("Multiplier for knockback effect on player")
-					.translation("unfaircraft.config.knockbac.multiplier")
+					.translation("unfaircraft.config.knockback.multiplier")
 					.defineInRange("multiplier", 1.5, 1.0, 100.0);
 			builder.pop();
 		}
@@ -508,7 +508,7 @@ public class UnfairCraftConfig {
 			chance = builder.comment("Chance for damage to be reflected back to player")
 					.translation("unfaircraft.config.damage_reflection.chance")
 					.defineInRange("chance", 0.1, 0.0, 1.0);
-			percentageMin = builder.comment("Minimum percentage for damage to be relected back to player")
+			percentageMin = builder.comment("Minimum percentage for damage to be reflected back to player")
 					.translation("unfaircraft.config.damage_reflection.percentage_min")
 					.defineInRange("percentage_min", 3, 1, 100);
 			percentageMax = builder.comment("Maximum percentage for damage to be reflected back to player")
@@ -593,14 +593,14 @@ public class UnfairCraftConfig {
 					.translation("unfaircraft.config.zombie.enabled")
 					.define("enabled", true);
 			summonChance = builder.comment("Chance for zombie to summon reinforcements when hit")
-							.translation("unfaircraft.config.zombie.summon_chance")
-									.defineInRange("summon_chance", 0.05, 0.0, 1.0);
+					.translation("unfaircraft.config.zombie.summon_chance")
+					.defineInRange("summon_chance", 0.05, 0.0, 1.0);
 			summonMin = builder.comment("Minimum number of zombies to summon")
-							.translation("unfaircraft.config.zombie.summon_min")
-									.define("summon_min", 1);
+					.translation("unfaircraft.config.zombie.summon_min")
+					.define("summon_min", 1);
 			summonMax = builder.comment("Maximum number of zombies to summon")
-							.translation("unfaircraft.config.zombie.summon_max")
-									.define("summon_max", 3);
+					.translation("unfaircraft.config.zombie.summon_max")
+					.define("summon_max", 3);
 			builder.pop();
 		}
 	}
@@ -667,7 +667,7 @@ public class UnfairCraftConfig {
 					.translation("unfaircraft.config.set_fire.initial_duration")
 					.defineInRange("initial_duration", 40, 20, 6000);
 			durationIncrease = builder.comment("Ticks to add to fire duration if player is already on fire")
-					.translation("unfaircraft.config.set_fire.initial_duration")
+					.translation("unfaircraft.config.set_fire.duration_increase")
 					.defineInRange("duration_increase", 20, 1, 6000);
 			builder.pop();
 		}
