@@ -17,6 +17,7 @@ public class FoodDataMixin {
 	)
 	private void increaseHungerExhaustion(FoodData instance, float exhaustion) {
 		if (!UnfairCraftConfig.ENABLE_UNFAIR_MODE.get() || !UnfairCraftConfig.ENABLE_FOOD_DATA_MIXIN.get()) {
+			instance.addExhaustion(exhaustion);
 			return;
 		}
 

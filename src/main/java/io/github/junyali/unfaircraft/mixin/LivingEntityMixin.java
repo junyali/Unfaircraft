@@ -334,7 +334,7 @@ public abstract class LivingEntityMixin {
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
-		if (!(entity instanceof Player player)) {
+		if (entity instanceof Player player) {
 			if (entity.level().random.nextFloat() < UnfairCraftConfig.FOOD_DEBUFF_CHANCE.get().floatValue()) {
 				boolean givePoison = entity.level().random.nextBoolean();
 				if (givePoison) {
@@ -384,9 +384,6 @@ public abstract class LivingEntityMixin {
 
 		if (entity instanceof Player player) {
 			unfaircraft$hungerBeforeEat = player.getFoodData().getFoodLevel();
-			ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-			unfaircraft$lastEatenKey = key;
-			unfaircraft$eatCounts.merge(key, 1, Integer::sum);
 		}
 	}
 
@@ -402,10 +399,15 @@ public abstract class LivingEntityMixin {
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
-
 		if (entity.level().isClientSide()) return foodProperties;
+		if (!(entity instanceof Player player)) return foodProperties;
 
-		int count = unfaircraft$eatCounts.getOrDefault(unfaircraft$lastEatenKey, 0);
+		ItemStack stack = player.getUseItem();
+		if (stack.isEmpty()) return foodProperties;
+
+		ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+		unfaircraft$eatCounts.merge(key, 1, Integer::sum);
+		int count = unfaircraft$eatCounts.get(key);
 		float scale = Math.max(0.1f, 1.0f - count * 0.2f);
 
 		return new FoodProperties(
