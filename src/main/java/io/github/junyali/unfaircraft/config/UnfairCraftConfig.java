@@ -52,6 +52,18 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Bed mixin")
 					.translation("unfaircraft.config.bed.enabled")
 					.define("enabled", true);
+			explosionChance = builder.comment("Chance for beds to explode on interaction")
+					.translation("unfaircraft.config.bed.explosion_chance")
+					.defineInRange("explosion_chance", 0.25, 0.0, 1.0);
+			explosionRadius = builder.comment("Radius for bed explosion")
+					.translation("unfaircraft.config.bed.explosion_radius")
+					.define("explosion_radius", 5.0);
+			fireChance = builder.comment("Chance for beds to set player on fire after explosion")
+					.translation("unfaircraft.config.bed.fire_chance")
+					.defineInRange("fire_chance", 0.5, 0.0, 1.0);
+			fireDuration = builder.comment("Duration of bed fire in ticks")
+					.translation("unfaircraft.config.bed.fire_duration")
+					.define("fire_duration", 200);
 			builder.pop();
 		}
 	}
@@ -65,6 +77,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Shield mixin")
 					.translation("unfaircraft.config.shield.enabled")
 					.define("enabled", true);
+			failChance = builder.comment("Chance for shields to fail to block attacks")
+					.translation("unfaircraft.config.shield.fail_chance")
+					.defineInRange("fail_chance", 0.10, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -84,6 +99,27 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Player mixin")
 					.translation("unfaircraft.config.player.enabled")
 					.define("enabled", true);
+			critFailChance = builder.comment("Chance for player crit attacks to fail")
+					.translation("unfaircraft.config.player.crit_fail_chance")
+					.defineInRange("crit_fail_chance", 0.25, 0.0, 1.0);
+			selfAttackChance = builder.comment("Chance for player attacks to inflict upon themself")
+					.translation("unfaircraft.config.player.self_attack_chance")
+					.defineInRange("self_attack_chance", 0.05, 0.0, 1.0);
+			attackExhaustionChance = builder.comment("Chance for player attacks to cause exhaustion upon themself")
+					.translation("unfaircraft.config.player.attack_exhaustion_chance")
+					.defineInRange("attack_exhaustion_chance", 0.2, 0.0, 1.0);
+			randomDropChance = builder.comment("Chance per tick for a player to randomly drop their held item")
+					.translation("unfaircraft.config.player.random_drop_chance")
+					.defineInRange("random_drop_chance", 0.0000005, 0.0, 1.0);
+			fallDamageDistance = builder.comment("Minimum distance for player to fall to take fall damage")
+					.translation("unfaircraft.config.player.fall_damage_distance")
+					.define("fall_damage_distance", 1.5);
+			fallDamageMultiplier = builder.comment("Multiplier for increased fall damage")
+					.translation("unfaircraft.config.player.fall_damage_multiplier")
+					.define("fall_damage_multiplier", 3.0);
+			pickupFailChance = builder.comment("Chance for items picked up by the player to vanish")
+					.translation("unfaircraft.config.player.pickup_fail_chance")
+					.defineInRange("pickup_fail_chance", 0.01, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -99,6 +135,15 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Item Durability mixin")
 					.translation("unfaircraft.config.item_durability.enabled")
 					.define("enabled", true);
+			lossChance = builder.comment("Chance for tiered items to lose extra durability")
+					.translation("unfaircraft.config.item_durability.loss_chance")
+					.defineInRange("loss_chance", 0.05, 0.0, 1.0);
+			damageMin = builder.comment("Minimum additional durability damage on items")
+					.translation("unfaircraft.config.item_durability.damage_min")
+					.define("damage_min", 2);
+			damageMax = builder.comment("Maximum additional durability damage on items")
+					.translation("unfaircraft.config.item_durability.damage_max")
+					.define("damage_max", 20);
 			builder.pop();
 		}
 	}
@@ -110,13 +155,31 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> misfireChance;
 		public final ModConfigSpec.ConfigValue<Double> backfireChance;
 		public final ModConfigSpec.ConfigValue<Double> backfireDamageMin;
-		public final ModConfigSpec.ConfigValue<Double> backfireDamaeMax;
+		public final ModConfigSpec.ConfigValue<Double> backfireDamageMax;
 
 		private Bow(ModConfigSpec.Builder builder) {
 			builder.push("bow");
 			enabled = builder.comment("Enable Bow mixin")
 					.translation("unfaircraft.config.bow.enabled")
 					.define("enabled", true);
+			wonkyChance = builder.comment("Chance for player arrows to deviate in direction")
+					.translation("unfaircraft.config.bow.wonky_chance")
+					.defineInRange("wonky_chance", 0.25, 0.0, 1.0);
+			projectileDeviation = builder.comment("How much player-fired arrows can deviate from their intended path")
+					.translation("unfaircraft.config.bow.projectile_deviation")
+					.define("projectile_deviation", 0.8);
+			misfireChance = builder.comment("Chance for player-fired bows to not shoot")
+					.translation("unfaircraft.config.bow.misfire_chance")
+					.defineInRange("misfire_chance", 0.5, 0.0, 1.0);
+			backfireChance = builder.comment("Chance for player-fired bows to damage themself when misfiring")
+					.translation("unfaircraft.config.bow.backfire_chance")
+					.defineInRange("backfire_chance", 0.4, 0.0, 1.0);
+			backfireDamageMin = builder.comment("Minimum damage from bow backfire")
+					.translation("unfaircraft.config.bow.backfire_damage_min")
+					.define("backfire_damage_min", 2.0);
+			backfireDamageMax = builder.comment("Maximum damage from bow backfire")
+					.translation("unfaircraft.config.bow.backfire_damage_max")
+					.define("backfire_damage_max", 20.0);
 			builder.pop();
 		}
 	}
@@ -132,6 +195,15 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Chest mixin")
 					.translation("unfaircraft.config.chest.enabled")
 					.define("enabled", true);
+			eatChance = builder.comment("Chance for a chest to eat items when opened")
+					.translation("unfaircraft.config.chest.eat_chance")
+					.defineInRange("eat_chance", 0.15, 0.0, 1.0);
+			eatItemMin = builder.comment("Minimum number of items a chest will eat at once")
+					.translation("unfaircraft.config.chest.eat_item_min")
+					.define("eat_item_min", 1);
+			eatItemMax = builder.comment("Maximum number of items a chest will eat at once")
+					.translation("unfaircraft.config.chest.eat_item_max")
+					.define("eat_item_max", 32);
 			builder.pop();
 		}
 	}
@@ -148,6 +220,18 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Anvil mixin")
 					.translation("unfaircraft.config.anvil.enabled")
 					.define("enabled", true);
+			instantBreakChance = builder.comment("Chance for anvils to break completely in one use")
+					.translation("unfaircraft.config.anvil.instant_break_chance")
+					.defineInRange("instant_break_chance", 0.1, 0.0, 1.0);
+			costIncreaseChance = builder.comment("Chance for anvil repair costs to be multiplied")
+					.translation("unfaircraft.config.anvil.cost_increase_chance")
+					.defineInRange("cost_increase_chance", 0.05, 0.0, 1.0);
+			costMultiplierMin = builder.comment("Minimum multiplier for increased anvil repair costs")
+					.translation("unfaircraft.config.anvil.cost_multiplier_min")
+					.define("cost_multiplier_min", 2.0);
+			costMultiplierMax = builder.comment("Maximum multiplier for increased anvil repair costs")
+					.translation("unfaircraft.config.anvil.cost_multiplier_max")
+					.define("cost_multiplier_max", 6.0);
 			builder.pop();
 		}
 	}
@@ -163,6 +247,15 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Minecart mixin")
 					.translation("unfaircraft.config.minecart.enabled")
 					.define("enabled", true);
+			slowdownFactor = builder.comment("Factor to reduce minecart speed, lower = slower")
+					.translation("unfaircraft.config.minecart.slowdown_factor")
+					.defineInRange("slowdown_factor", 0.5, 0.0, 1.0);
+			stopChance = builder.comment("Chance for minecarts to randomly stop each tick")
+					.translation("unfaircraft.config.minecart.stop_chance")
+					.defineInRange("stop_chance", 0.05, 0.0, 1.0);
+			reverseChance = builder.comment("Chance for minecarts to randomly reverse direction each tick")
+					.translation("unfaircraft.config.minecart.reverse_chance")
+					.defineInRange("reverse_chance", 0.01, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -177,6 +270,12 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Food mixin")
 					.translation("unfaircraft.config.food.enabled")
 					.define("enabled", true);
+			failChance = builder.comment("Chance for food to completely fail to restore hunger")
+					.translation("unfaircraft.config.food.fail_chance")
+					.defineInRange("fail_chance", 0.05, 0.0, 1.0);
+			debuffChance = builder.comment("Chance for cooked food to give you a harmful effect when consumed")
+					.translation("unfaircraft.config.food.debuff_chance")
+					.defineInRange("debuff_chance", 0.15, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -190,6 +289,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Cave Carver mixin")
 					.translation("unfaircraft.config.cave_carver.enabled")
 					.define("enabled", true);
+			extraLavaPocketChance = builder.comment("Chance for extra lava pockets to generate in caves")
+					.translation("unfaircraft.config.cave_carver.extra_lava_pocket_chance")
+					.defineInRange("extra_lava_pocket_chance", 0.8, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -207,6 +309,22 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Ore mixin")
 					.translation("unfaircraft.config.ore.enabled")
 					.define("enabled", true);
+			defaultReplacementChance = builder.comment("Chance to replace ores in ore veins by default")
+					.translation("unfaircraft.config.ore.default_replacement_chance")
+					.defineInRange("default_replacement_chance", 0.3, 0.0, 1.0);
+			goldReplacementChance = builder.comment("Chance to replace ores in gold ore veins")
+					.translation("unfaircraft.config.ore.gold_replacement_chance")
+					.defineInRange("gold_replacement_chance", 0.4, 0.0, 1.0);
+			emeraldReplacementChance = builder.comment("Chance to replace ores in emerald ore veins")
+					.translation("unfaircraft.config.ore.emerald_replacement_chance")
+					.defineInRange("emerald_replacement_chance", 0.5, 0.0, 1.0);
+			diamondReplacementChance = builder.comment("Chance to replace ores in diamond ore veins")
+					.translation("unfaircraft.config.ore.diamond_replacement_chance")
+					.defineInRange("diamond_replacement_chance", 0.6,  0.0, 1.0);
+			ancientDebrisReplacementChance = builder.comment("Chance to replace ores in ancient debris ore veins")
+					.translation("unfaircraft.config.ore.ancient_debris_replacement_chance")
+					.defineInRange("ancient_debris_replacement_chance", 0.5, 0.0, 1.0);
+
 			builder.pop();
 		}
 	}
@@ -220,6 +338,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Loot Table mixin")
 					.translation("unfaircraft.config.loot_table.enabled")
 					.define("enabled", true);
+			trollChance = builder.comment("Chance for loot tables to be replaced with troll loot")
+					.translation("unfaircraft.config.loot_table.troll_chance")
+					.defineInRange("troll_chance", 0.9, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -233,6 +354,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Sapling mixin")
 					.translation("unfaircraft.config.sapling.enabled")
 					.define("enabled", true);
+			deathChance = builder.comment("Chance for saplings to 'die' every random tick")
+					.translation("unfaircraft.config.sapling.death_chance")
+					.defineInRange("death_chance", 0.005, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -246,6 +370,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Farmland mixin")
 					.translation("unfaircraft.config.farmland.enabled")
 					.define("enabled", true);
+			revertChance = builder.comment("Chance for farmland blocks to revert every random tick")
+					.translation("unfaircraft.config.farmland.revert_chance")
+					.defineInRange("revert_chance", 0.005, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -259,6 +386,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Mob Detection mixin")
 					.translation("unfaircraft.config.mob_detection.enabled")
 					.define("enabled", true);
+			rangeMultiplier = builder.comment("Multiplier for increased mob detection range")
+					.translation("unfaircraft.config.mob_detection.range_multiplier")
+					.define("range_multiplier", 4.0);
 			builder.pop();
 		}
 	}
@@ -273,6 +403,12 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Block Interaction mixin")
 					.translation("unfaircraft.config.block_interaction.enabled")
 					.define("enabled", true);
+			placeFailChance = builder.comment("Chance for block placements to fail")
+					.translation("unfaircraft.config.block_interaction.place_fail_chance")
+					.defineInRange("place_fail_chance", 0.05, 0.0, 1.0);
+			breakFailChance = builder.comment("Chance for block breaking to fail")
+					.translation("unfaircraft.config.block_interaction.break_fail_chance")
+					.defineInRange("break_fail_chance", 0.05, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -286,6 +422,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Bucket mixin")
 					.translation("unfaircraft.config.bucket.enabled")
 					.define("enabled", true);
+			waterFailChance = builder.comment("Chance for water bucket placement to fail")
+					.translation("unfaircraft.config.bucket.water_fail_chance")
+					.defineInRange("water_fail_chance", 0.3, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -302,6 +441,18 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Armour mixin")
 					.translation("unfaircraft.config.armour.enabled")
 					.define("enabled", true);
+			protectionFailChance = builder.comment("Chance for armour to provide no protection when hit")
+					.translation("unfaircraft.config.armour.protection_fail_chance")
+					.defineInRange("protection_fail_chance", 0.15, 0.0, 1.0);
+			durabilityLossChance = builder.comment("Chance for armour to take extra durability damage when hit")
+					.translation("unfaircraft.config.armour.durability_loss_chance")
+					.defineInRange("durability_loss_chance", 0.20, 0.0, 1.0);
+			durabilityDamageMin = builder.comment("Minimum extra durability damage to armour")
+					.translation("unfaircraft.config.armour.durability_damage_min")
+					.defineInRange("durability_damage_min", 2, 1, 100);
+			durabilityDamageMax = builder.comment("Maximum extra durability damage to armour")
+					.translation("unfaircraft.config.armour_durability_damage_max")
+					.defineInRange("durability_damage_max", 5, 1, 100);
 			builder.pop();
 		}
 	}
@@ -315,6 +466,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Totem mixin")
 					.translation("unfaircraft.config.totem.enabled")
 					.define("enabled", true);
+			failChance = builder.comment("Chance for totems of undying to fail to save the player")
+					.translation("unfaircraft.config.totem.fail_chance")
+					.defineInRange("fail_chance", 0.15, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -329,6 +483,12 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Knockback mixin")
 					.translation("unfaircraft.config.knockback.enabled")
 					.define("enabled", true);
+			chance = builder.comment("Chance for player to be knocked back when hitting a mob")
+					.translation("unfaircraft.config.knockback.chance")
+					.defineInRange("chance", 0.1, 0.0, 1.0);
+			multiplier = builder.comment("Multiplier for knockback effect on player")
+					.translation("unfaircraft.config.knockbac.multiplier")
+					.defineInRange("multiplier", 1.5, 1.0, 100.0);
 			builder.pop();
 		}
 	}
@@ -345,6 +505,18 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Damage Reflection mixin")
 					.translation("unfaircraft.config.damage_reflection.enabled")
 					.define("enabled", true);
+			chance = builder.comment("Chance for damage to be reflected back to player")
+					.translation("unfaircraft.config.damage_reflection.chance")
+					.defineInRange("chance", 0.1, 0.0, 1.0);
+			percentageMin = builder.comment("Minimum percentage for damage to be relected back to player")
+					.translation("unfaircraft.config.damage_reflection.percentage_min")
+					.defineInRange("percentage_min", 3, 1, 100);
+			percentageMax = builder.comment("Maximum percentage for damage to be reflected back to player")
+					.translation("unfaircraft.config.damage_reflection.percentage_max")
+					.defineInRange("percentage_max", 5, 1, 100);
+			ignoreThorns = builder.comment("Ignore thorns when reflecting damage back to player")
+					.translation("unfaircraft.config.damage_reflection.ignore_thorns")
+					.define("ignore_thorns", true);
 			builder.pop();
 		}
 	}
@@ -359,6 +531,12 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Creeper mixin")
 					.translation("unfaircraft.config.creeper.enabled")
 					.define("enabled", true);
+			fuseSpeedMultiplier = builder.comment("Multiplier for creeper fuse speed")
+					.translation("unfaircraft.config.creeper.fuse_speed_multiplier")
+					.defineInRange("fuse_speed_multiplier", 5.0, 1.0, 10.0);
+			explosionRadiusMultiplier = builder.comment("Multiplier for creeper explosion radius")
+					.translation("unfaircraft.config.creeper.explosion_radius_multiplier")
+					.defineInRange("explosion_radius_multiplier", 1.5, 1.0, 100.0);
 			builder.pop();
 		}
 	}
@@ -373,6 +551,12 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Skeleton mixin")
 					.translation("unfaircraft.config.skeleton.enabled")
 					.define("enabled", true);
+			accuracyMultiplier = builder.comment("Multiplier for skeleton accuracy")
+					.translation("unfaircraft.config.skeleton.accuracy_multiplier")
+					.defineInRange("accuracy_multiplier", 0.1, 0.0, 1.0);
+			attackSpeedIncrease = builder.comment("Number of ticks to reduce from skeleton attack cooldown")
+					.translation("unfaircraft.config.skeleton.attack_speed_increase")
+					.defineInRange("attack_speed_increase", 2, 0, 10);
 			builder.pop();
 		}
 	}
@@ -387,6 +571,12 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Enderman mixin")
 					.translation("unfaircraft.config.enderman.enabled")
 					.define("enabled", true);
+			proximityAggroRange = builder.comment("Range in blocks for enderman to aggro")
+					.translation("unfaircraft.config.enderman.proximity_aggro_range")
+					.defineInRange("proximity_aggro_range", 16.0, 1.0, 64.0);
+			proximityAggroChance = builder.comment("Chance per tick for enderman to become aggressive when player is nearby")
+					.translation("unfaircraft.config.enderman.proximity_aggro_chance")
+					.defineInRange("proximity_aggro_chance", 1.0, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -402,6 +592,15 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Zombie mixin")
 					.translation("unfaircraft.config.zombie.enabled")
 					.define("enabled", true);
+			summonChance = builder.comment("Chance for zombie to summon reinforcements when hit")
+							.translation("unfaircraft.config.zombie.summon_chance")
+									.defineInRange("summon_chance", 0.05, 0.0, 1.0);
+			summonMin = builder.comment("Minimum number of zombies to summon")
+							.translation("unfaircraft.config.zombie.summon_min")
+									.define("summon_min", 1);
+			summonMax = builder.comment("Maximum number of zombies to summon")
+							.translation("unfaircraft.config.zombie.summon_max")
+									.define("summon_max", 3);
 			builder.pop();
 		}
 	}
@@ -415,6 +614,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Potion mixin")
 					.translation("unfaircraft.config.potion.enabled")
 					.define("enabled", true);
+			backfireChance = builder.comment("Chance for potion effects to backfire on player")
+					.translation("unfaircraft.config.potion.backfire_chance")
+					.defineInRange("backfire_chance", 0.1, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -430,6 +632,15 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Mob Regen mixin")
 					.translation("unfaircraft.config.mob_regen.enabled")
 					.define("enabled", true);
+			delay = builder.comment("Ticks to wait after damage before mob regen starts")
+					.translation("unfaircraft.config.mob_regen.delay")
+					.defineInRange("delay", 300, 0, 72000);
+			rate = builder.comment("How often to regenerate in ticks")
+					.translation("unfaircraft.config.mob_regen.rate")
+					.defineInRange("rate", 20, 0, 1200);
+			amount = builder.comment("Health restored per regen tick")
+					.translation("unfaircraft.config.mob_regen.amount")
+					.defineInRange("amount", 0.5, 0.0, 10.0);
 			builder.pop();
 		}
 	}
@@ -446,6 +657,18 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Set Fire mixin")
 					.translation("unfaircraft.config.set_fire.enabled")
 					.define("enabled", true);
+			radius = builder.comment("Radius to check for fire source blocks around the player")
+					.translation("unfaircraft.config.set_fire.radius")
+					.defineInRange("radius", 3, 1, 16);
+			chance = builder.comment("Chance per tick for a player to be set on fire near a heat source")
+					.translation("unfaircraft.config.set_fire.chance")
+					.defineInRange("chance", 0.005, 0.0, 1.0);
+			initialDuration = builder.comment("Initial duration for the player to be set on fire")
+					.translation("unfaircraft.config.set_fire.initial_duration")
+					.defineInRange("initial_duration", 40, 20, 6000);
+			durationIncrease = builder.comment("Ticks to add to fire duration if player is already on fire")
+					.translation("unfaircraft.config.set_fire.initial_duration")
+					.defineInRange("duration_increase", 20, 1, 6000);
 			builder.pop();
 		}
 	}
@@ -459,6 +682,9 @@ public class UnfairCraftConfig {
 			enabled = builder.comment("Enable Food Data mixin")
 					.translation("unfaircraft.config.food_data.enabled")
 					.define("enabled", true);
+			exhaustionMultiplier = builder.comment("Multiplier for food exhaustion rate")
+							.translation("unfaircraft.config.food_data.exhaustion_multiplier")
+									.defineInRange("exhaustion_multiplier", 3.0, 1.0, 10.0);
 			builder.pop();
 		}
 	}
@@ -480,6 +706,9 @@ public class UnfairCraftConfig {
 
 		private NightmareEvent(ModConfigSpec.Builder builder) {
 			builder.push("nightmare_event");
+			chance = builder.comment("Chance for a nightmare event to happen")
+					.translation("unfaircraft.config.nightmare_event.chance")
+					.defineInRange("chance", 0.0001, 0.0, 1.0);
 			builder.pop();
 		}
 	}
