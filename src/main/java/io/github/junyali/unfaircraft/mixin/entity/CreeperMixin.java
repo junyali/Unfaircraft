@@ -4,7 +4,6 @@ import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.monster.Creeper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -12,9 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Creeper.class)
 public class CreeperMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.CREEPER.enabled);
-
 	@Shadow
 	private int swell;
 
@@ -26,7 +22,7 @@ public class CreeperMixin {
 			at = @At("HEAD")
 	)
 	private void reduceFusetime(CallbackInfo ci) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CREEPER.enabled)) {
 			return;
 		}
 
@@ -50,7 +46,7 @@ public class CreeperMixin {
 			ordinal = 0
 	)
 	private float increaseExplosionRadius(float originalRadius) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CREEPER.enabled)) {
 			return originalRadius;
 		}
 

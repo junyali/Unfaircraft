@@ -26,9 +26,6 @@ import java.util.Map;
 @Mixin(PotionItem.class)
 public class PotionItemMixin {
 	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.POTION.enabled);
-
-	@Unique
 	private static final Map<MobEffect, MobEffect> POSITIVE_TO_NEGATIVE_EFFECTS = new HashMap<>();
 
 	@Unique
@@ -68,7 +65,7 @@ public class PotionItemMixin {
 			at = @At("RETURN")
 	)
 	private void onPotionDrink(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> cir) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.POTION.enabled)) {
 			return;
 		}
 

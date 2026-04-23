@@ -3,15 +3,11 @@ package io.github.junyali.unfaircraft.mixin.food;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(FoodData.class)
 public class FoodDataMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD_DATA.enabled);
-
 	@Redirect(
 			method = "tick",
 			at = @At(
@@ -20,7 +16,7 @@ public class FoodDataMixin {
 			)
 	)
 	private void increaseHungerExhaustion(FoodData instance, float exhaustion) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD_DATA.enabled)) {
 			instance.addExhaustion(exhaustion);
 			return;
 		}

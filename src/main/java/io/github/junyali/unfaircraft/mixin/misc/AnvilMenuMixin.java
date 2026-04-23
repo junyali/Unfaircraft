@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -20,16 +19,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ANVIL.enabled);
-
 	@ModifyVariable(
 			method = "createResult",
 			at = @At("STORE"),
 			ordinal = 0
 	)
 	private int modifyRepairCost(int originalCost) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ANVIL.enabled)) {
 			return originalCost;
 		}
 
@@ -46,7 +42,7 @@ public abstract class AnvilMenuMixin {
 			at = @At("HEAD")
 	)
 	private void onAnvilUse(Player player, ItemStack stack, CallbackInfo ci) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ANVIL.enabled)) {
 			return;
 		}
 

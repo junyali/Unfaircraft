@@ -18,9 +18,6 @@ import java.util.List;
 @Mixin(LootTable.class)
 public class LootTableMixin {
 	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.LOOT_TABLE.enabled);
-
-	@Unique
 	private boolean unfaircraft$isStructureLootTable(ResourceLocation lootTableId) {
 		String path = lootTableId.getPath();
 		return path.contains("chests") ||
@@ -64,7 +61,7 @@ public class LootTableMixin {
 			cancellable = true
 	)
 	private void trollLootTable(LootContext context, CallbackInfoReturnable<List<ItemStack>> cir) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.LOOT_TABLE.enabled)) {
 			return;
 		}
 

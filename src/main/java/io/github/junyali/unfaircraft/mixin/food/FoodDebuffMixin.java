@@ -19,9 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class FoodDebuffMixin {
 	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled);
-
-	@Unique
 	private int unfaircraft$hungerBeforeEat = -1;
 
 	@Inject(
@@ -29,7 +26,7 @@ public abstract class FoodDebuffMixin {
 			at = @At("HEAD")
 	)
 	private void onEatHead(Level level, ItemStack stack, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
 			return;
 		}
 
@@ -49,7 +46,7 @@ public abstract class FoodDebuffMixin {
 			at = @At("RETURN")
 	)
 	private void onEat(Level level, ItemStack stack, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
 			return;
 		}
 

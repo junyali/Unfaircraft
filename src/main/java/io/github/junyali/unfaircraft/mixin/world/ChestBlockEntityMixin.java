@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,15 +18,12 @@ import java.util.List;
 
 @Mixin(ChestBlockEntity.class)
 public class ChestBlockEntityMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.CHEST.enabled);
-
 	@Inject(
 			method = "startOpen",
 			at = @At("TAIL")
 	)
 	private void onChestOpen(Player player, CallbackInfo ci) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CHEST.enabled)) {
 			return;
 		}
 

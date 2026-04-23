@@ -13,9 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class MobRegenMixin {
 	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_REGEN.enabled);
-
-	@Unique
 	private int unfaircraft$ticksSinceLastDamage = 0;
 
 	@Inject(
@@ -23,7 +20,7 @@ public abstract class MobRegenMixin {
 			at = @At("HEAD")
 	)
 	private void onMobTick(CallbackInfo ci) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_REGEN.enabled)) {
 			return;
 		}
 
@@ -56,7 +53,7 @@ public abstract class MobRegenMixin {
 			at = @At("HEAD")
 	)
 	private void onMobHurt(DamageSource source, float amount, CallbackInfo ci) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_REGEN.enabled)) {
 			return;
 		}
 

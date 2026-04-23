@@ -16,15 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FarmBlock.class)
 public class FarmBlockMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FARMLAND.enabled);
-
 	@Inject(
 			method = "randomTick",
 			at = @At("HEAD")
 	)
 	private void revertFarmland(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource random, CallbackInfo ci) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SAPLING.enabled)) {
 			return;
 		}
 

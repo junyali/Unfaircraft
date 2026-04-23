@@ -18,9 +18,6 @@ import java.util.Map;
 @Mixin(LivingEntity.class)
 public abstract class SaturationMixin {
 	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled);
-
-	@Unique
 	private final Map<ResourceLocation, Integer> unfaircraft$eatCounts = new HashMap<>();
 
 	@ModifyVariable(
@@ -30,7 +27,7 @@ public abstract class SaturationMixin {
 			ordinal = 0
 	)
 	private FoodProperties diminishSaturation(FoodProperties foodProperties) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
 			return foodProperties;
 		}
 

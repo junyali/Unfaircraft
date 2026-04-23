@@ -6,16 +6,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayerGameMode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayerGameMode.class)
 public class ServerPlayerGameModeMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK_INTERACTION.enabled);
-
 	@Shadow
 	protected ServerLevel level;
 
@@ -25,7 +21,7 @@ public class ServerPlayerGameModeMixin {
 			cancellable = true
 	)
 	private void fakeLagDestroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK_INTERACTION.enabled)) {
 			return;
 		}
 

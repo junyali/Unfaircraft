@@ -4,15 +4,11 @@ import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ITEM_DURABILITY.enabled);
-
 	@ModifyVariable(
 			method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V",
 			at = @At("HEAD"),
@@ -20,7 +16,7 @@ public class ItemStackMixin {
 			ordinal = 0
 	)
 	private int modifyDurabilityDamage(int amount) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ITEM_DURABILITY.enabled)) {
 			return amount;
 		}
 

@@ -22,9 +22,6 @@ import java.util.Map;
 @Mixin(OreFeature.class)
 public class OreFeatureMixin {
 	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ORE.enabled);
-
-	@Unique
 	private static final Map<Block, Block> unfaircraft$oreReplacements = new HashMap<>();
 
 	static {
@@ -76,7 +73,7 @@ public class OreFeatureMixin {
 			at = @At("RETURN")
 	)
 	private void afterOrePlace(FeaturePlaceContext<OreConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ORE.enabled)) {
 			return;
 		}
 

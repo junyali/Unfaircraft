@@ -7,22 +7,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class SetFireMixin {
-	@Unique
-	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.TOTEM.enabled);
-
 	@Inject(
 			method = "tick",
 			at = @At("TAIL")
 	)
 	private void setFire(CallbackInfo info) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.TOTEM.enabled)) {
 			return;
 		}
 
@@ -55,7 +51,7 @@ public abstract class SetFireMixin {
 			at = @At("TAIL")
 	)
 	private void onPlayerTickTail(CallbackInfo info) {
-		if (!unfaircraft$enabled) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.TOTEM.enabled)) {
 			return;
 		}
 
