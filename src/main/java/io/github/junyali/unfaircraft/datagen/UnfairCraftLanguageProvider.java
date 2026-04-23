@@ -52,7 +52,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enabled", "Enable Item Durability Mixin");
 		addConfig("loss_chance", "Durability Loss Chance");
 		addConfig("damage_min", "Min Extra Durability Damage");
-		addConfig("damage_mix", "Max Extra Durability Damage");
+		addConfig("damage_max", "Max Extra Durability Damage");
 
 		section("bow");
 		addConfig("enabled", "Enable Bow Mixin");
@@ -148,7 +148,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("ignore_thorns", "Ignore Thorns");
 
 		section("creeper");
-		addConfig("enabled", "Enable Creper Mixin");
+		addConfig("enabled", "Enable Creeper Mixin");
 		addConfig("fuse_speed_multiplier", "Fuse Speed Multiplier");
 		addConfig("explosion_radius_multiplier", "Explosion Radius Multiplier");
 
@@ -175,7 +175,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		section("mob_regen");
 		addConfig("enabled", "Enable Mob Regen");
 		addConfig("delay", "Regen Delay (ticks)");
-		addConfig("rate", "Rate Rate (ticks)");
+		addConfig("rate", "Regen Rate (ticks)");
 		addConfig("amount", "Regen Amount");
 
 		section("set_fire");
