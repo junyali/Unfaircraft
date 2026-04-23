@@ -40,6 +40,10 @@ public class UnfairCraftConfig {
 	public static final DrunkJumping DRUNK_JUMPING;
 	public static final NightmareEvent NIGHTMARE_EVENT;
 
+	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
+		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
+	}
+
 	public static class Bed {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> explosionChance;
