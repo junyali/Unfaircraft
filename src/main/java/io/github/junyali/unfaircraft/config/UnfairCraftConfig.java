@@ -2,6 +2,8 @@ package io.github.junyali.unfaircraft.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+import java.util.Map;
+
 public class UnfairCraftConfig {
 	private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
