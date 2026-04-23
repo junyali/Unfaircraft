@@ -11,13 +11,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BucketItem.class)
 public class BucketItemMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.BUCKET.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.BUCKET.enabled);
 
 	@Inject(
 			method = "use",
@@ -25,7 +27,7 @@ public class BucketItemMixin {
 			cancellable = true
 	)
 	private void failWaterBucket(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

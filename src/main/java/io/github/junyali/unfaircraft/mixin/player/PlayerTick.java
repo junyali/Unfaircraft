@@ -16,7 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class PlayerTick {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled);
 
 	@Unique
 	private void unfaircraft$dropItemAndPlaySound(Player player, ItemStack stack) {
@@ -29,7 +30,7 @@ public abstract class PlayerTick {
 			at = @At("TAIL")
 	)
 	private void onPlayerTick(CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

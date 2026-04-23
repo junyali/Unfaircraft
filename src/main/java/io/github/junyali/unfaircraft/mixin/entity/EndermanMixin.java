@@ -6,6 +6,7 @@ import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -14,7 +15,8 @@ import java.util.List;
 
 @Mixin(EnderMan.class)
 public abstract class EndermanMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDERMAN.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDERMAN.enabled);
 
 	@Shadow
 	public abstract void setTarget(LivingEntity target);
@@ -24,7 +26,7 @@ public abstract class EndermanMixin {
 			at = @At("HEAD")
 	)
 	private void proximityAggro(CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

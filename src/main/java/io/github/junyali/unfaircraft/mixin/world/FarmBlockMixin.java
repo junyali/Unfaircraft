@@ -9,20 +9,22 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FarmBlock.class)
 public class FarmBlockMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FARMLAND.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FARMLAND.enabled);
 
 	@Inject(
 			method = "randomTick",
 			at = @At("HEAD")
 	)
 	private void revertFarmland(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource random, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

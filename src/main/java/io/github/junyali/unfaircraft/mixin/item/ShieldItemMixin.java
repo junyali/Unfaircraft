@@ -8,13 +8,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ShieldItem.class)
 public class ShieldItemMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SHIELD.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SHIELD.enabled);
 
 	@Inject(
 			method = "use",
@@ -22,7 +24,7 @@ public class ShieldItemMixin {
 			cancellable = true
 	)
 	private void onShieldUse(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

@@ -8,13 +8,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SaplingBlock.class)
 public class SaplingBlockMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SAPLING.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SAPLING.enabled);
 
 	@Inject(
 			method = "randomTick",
@@ -22,7 +24,7 @@ public class SaplingBlockMixin {
 			cancellable = true
 	)
 	private void killSapling(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource random, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

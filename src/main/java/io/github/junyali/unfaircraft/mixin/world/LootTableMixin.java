@@ -17,7 +17,8 @@ import java.util.List;
 
 @Mixin(LootTable.class)
 public class LootTableMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.LOOT_TABLE.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.LOOT_TABLE.enabled);
 
 	@Unique
 	private boolean unfaircraft$isStructureLootTable(ResourceLocation lootTableId) {
@@ -63,7 +64,7 @@ public class LootTableMixin {
 			cancellable = true
 	)
 	private void trollLootTable(LootContext context, CallbackInfoReturnable<List<ItemStack>> cir) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

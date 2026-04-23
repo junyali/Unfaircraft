@@ -25,7 +25,8 @@ import java.util.function.Function;
 
 @Mixin(CaveWorldCarver.class)
 public class CaveWorldCarverMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.CAVE_CARVER.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.CAVE_CARVER.enabled);
 
 	@Unique
 	private boolean unfaircraft$hasAdjacentSolidBlock(ChunkAccess chunkAccess, BlockPos blockPos) {
@@ -56,7 +57,7 @@ public class CaveWorldCarverMixin {
 			Function<BlockPos, Holder<Biome>> biomeAccessor, RandomSource random,
 			Aquifer aquifer, ChunkPos chunkPos, CarvingMask carvingMask, CallbackInfoReturnable<Boolean> cir
 	) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

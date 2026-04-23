@@ -18,7 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class FoodRotMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled);
 
 	@Unique
 	private static final String unfaircraft$rot_tag = "unfaircraft_rot";
@@ -28,7 +29,7 @@ public abstract class FoodRotMixin {
 			at = @At("TAIL")
 	)
 	private void rotInventory(CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

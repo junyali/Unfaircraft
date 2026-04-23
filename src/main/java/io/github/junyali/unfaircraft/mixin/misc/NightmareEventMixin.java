@@ -29,7 +29,8 @@ import java.util.function.BooleanSupplier;
 
 @Mixin(ServerLevel.class)
 public class NightmareEventMixin {
-	private boolean enabled = UnfairCraftConfig.ENABLE_NIGHTMARE_MODE.get();
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.ENABLE_NIGHTMARE_MODE.get();
 
 	@Unique
 	private void unfaircraft$triggerRandomEvent(ServerLevel level) {
@@ -53,7 +54,7 @@ public class NightmareEventMixin {
 			at = @At("TAIL")
 	)
 	private void triggerNightmareEvent(BooleanSupplier hasTimeLeft, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

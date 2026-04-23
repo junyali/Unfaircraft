@@ -13,20 +13,22 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BowItem.class)
 public class BowItemMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.BOW.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.BOW.enabled);
 
 	@Inject(
 			method = "releaseUsing",
 			at = @At("TAIL")
 	)
 	private void afterBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 
@@ -65,7 +67,7 @@ public class BowItemMixin {
 			cancellable = true
 	)
 	private void onBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

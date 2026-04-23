@@ -7,13 +7,15 @@ import net.minecraft.world.entity.monster.AbstractSkeleton;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RangedAttackGoal.class)
 public class RangedAttackGoalMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled);
 
 	@Shadow
 	private int attackTime;
@@ -30,7 +32,7 @@ public class RangedAttackGoalMixin {
 		RangedAttackGoal goal = (RangedAttackGoal) (Object) this;
 
 		if (this.mob instanceof AbstractSkeleton) {
-			if (!enabled) {
+			if (!unfaircraft$enabled) {
 				return;
 			}
 

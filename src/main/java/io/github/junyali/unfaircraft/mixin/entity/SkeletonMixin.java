@@ -3,12 +3,14 @@ package io.github.junyali.unfaircraft.mixin.entity;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(AbstractSkeleton.class)
 public class SkeletonMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled);
 
 	@ModifyVariable(
 			method = "performRangedAttack",
@@ -16,7 +18,7 @@ public class SkeletonMixin {
 			ordinal = 0
 	)
 	private double improveAccuracyX(double inaccuracy) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return inaccuracy;
 		}
 
@@ -29,7 +31,7 @@ public class SkeletonMixin {
 			ordinal = 1
 	)
 	private double improveAccuracyZ(double inaccuracy) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return inaccuracy;
 		}
 
@@ -42,7 +44,7 @@ public class SkeletonMixin {
 			ordinal = 2
 	)
 	private double improveAccuracyY(double inaccuracy) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return inaccuracy;
 		}
 

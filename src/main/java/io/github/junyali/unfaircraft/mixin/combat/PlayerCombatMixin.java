@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,7 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
 public abstract class PlayerCombatMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled);
 
 	@Inject(
 			method = "attack",
@@ -23,7 +25,7 @@ public abstract class PlayerCombatMixin {
 			cancellable = true
 	)
 	private void beforeAttack(Entity target, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 
@@ -59,7 +61,7 @@ public abstract class PlayerCombatMixin {
 			cancellable = true
 	)
 	private void vanishItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

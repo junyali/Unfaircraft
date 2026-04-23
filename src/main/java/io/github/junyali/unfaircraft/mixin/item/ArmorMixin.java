@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -14,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class ArmorMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ARMOUR.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ARMOUR.enabled);
 
 	@ModifyVariable(
 			method = "getDamageAfterArmorAbsorb",
@@ -23,7 +25,7 @@ public abstract class ArmorMixin {
 			ordinal = 0
 	)
 	private float modifyArmorProtection(float damage, DamageSource source) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return damage;
 		}
 
@@ -56,7 +58,7 @@ public abstract class ArmorMixin {
 			at = @At("HEAD")
 	)
 	private void onArmorDamage(DamageSource source, float damage, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 

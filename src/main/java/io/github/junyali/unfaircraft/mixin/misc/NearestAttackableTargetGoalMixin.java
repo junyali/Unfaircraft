@@ -3,12 +3,14 @@ package io.github.junyali.unfaircraft.mixin.misc;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(NearestAttackableTargetGoal.class)
 public class NearestAttackableTargetGoalMixin {
-	private static boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_DETECTION.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_DETECTION.enabled);
 
 	@ModifyArg(
 			method = "<init>*",
@@ -19,7 +21,7 @@ public class NearestAttackableTargetGoalMixin {
 			index = 2
 	)
 	private static int increaseDetectionRange(int originalRange) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return originalRange;
 		}
 

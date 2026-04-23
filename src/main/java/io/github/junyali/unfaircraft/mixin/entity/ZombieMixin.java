@@ -18,14 +18,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Zombie.class)
 public class ZombieMixin {
-	private boolean enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ZOMBIE.enabled);
+	@Unique
+	private static final boolean unfaircraft$enabled = UnfairCraftConfig.isEnabled(UnfairCraftConfig.ZOMBIE.enabled);
 
 	@Inject(
 			method = "setBaby",
 			at = @At("TAIL")
 	)
 	private void onSetBaby(boolean baby, CallbackInfo ci) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 
@@ -56,7 +57,7 @@ public class ZombieMixin {
 			at = @At("HEAD")
 	)
 	private void onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-		if (!enabled) {
+		if (!unfaircraft$enabled) {
 			return;
 		}
 
