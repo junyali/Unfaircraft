@@ -2,8 +2,6 @@ package io.github.junyali.unfaircraft.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-import java.util.Map;
-
 public class UnfairCraftConfig {
 	private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -702,7 +700,7 @@ public class UnfairCraftConfig {
 
 		private DrunkJumping(ModConfigSpec.Builder builder) {
 			builder.push("drunk_jumping");
-			enabled = builder.comment("Enable Drunk Jumping")
+			enabled = builder.comment("Enable Drunk Jumping mixin")
 					.translation("unfaircraft.config.drunk_jumping.enabled")
 					.define("enabled", false);
 			builder.pop();
@@ -727,7 +725,7 @@ public class UnfairCraftConfig {
 
 		private MerchantOffer(ModConfigSpec.Builder builder) {
 			builder.push("merchant_offer");
-			enabled = builder.comment("Enable Villager Price Gouging")
+			enabled = builder.comment("Enable Merchant Offer mixin ")
 					.translation("unfaircraft.config.merchant_offer.enabled")
 					.define("enabled", true);
 			multiplier = builder.comment("Multiplier for merchant prices")
