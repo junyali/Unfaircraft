@@ -1,6 +1,7 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -12,8 +13,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 @Mixin(LootTable.class)
 public class LootTableMixin {
@@ -31,8 +30,8 @@ public class LootTableMixin {
 	}
 
 	@Unique
-	private List<ItemStack> unfaircraft$createTrollLoot(RandomSource random) {
-		List<ItemStack> trollItems = new java.util.ArrayList<>();
+	private ObjectArrayList<ItemStack> unfaircraft$createTrollLoot(RandomSource random) {
+		ObjectArrayList<ItemStack> trollItems = new ObjectArrayList<>();
 
 		int trollType = random.nextInt(3);
 
@@ -56,11 +55,11 @@ public class LootTableMixin {
 	}
 
 	@Inject(
-			method = "getRandomItems*",
+			method = "getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;",
 			at = @At("RETURN"),
 			cancellable = true
 	)
-	private void trollLootTable(LootContext context, CallbackInfoReturnable<List<ItemStack>> cir) {
+	private void trollLootTable(LootContext context, CallbackInfoReturnable<ObjectArrayList<ItemStack>> cir) {
 		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.LOOT_TABLE.enabled)) {
 			return;
 		}
@@ -68,10 +67,10 @@ public class LootTableMixin {
 		ResourceLocation lootTableId = context.getQueriedLootTableId();
 
 		if (lootTableId != null && unfaircraft$isStructureLootTable(lootTableId)) {
-			List<ItemStack> originalLoot = cir.getReturnValue();
+			ObjectArrayList<ItemStack> originalLoot = cir.getReturnValue();
 
 			if (!originalLoot.isEmpty() && context.getRandom().nextFloat() < UnfairCraftConfig.LOOT_TABLE.trollChance.get().floatValue()) {
-				List<ItemStack> trollLoot = unfaircraft$createTrollLoot(context.getRandom());
+				ObjectArrayList<ItemStack> trollLoot = new ObjectArrayList<>(unfaircraft$createTrollLoot(context.getRandom()));
 				cir.setReturnValue(trollLoot);
 			}
 		}
