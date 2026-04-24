@@ -8,34 +8,26 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
 @Mixin(MerchantOffer.class)
 public class MerchantOfferMixin {
 	@Inject(
-			method = "<init>(Lnet/minecraft/world/item/trading/ItemCost;Ljava/util/Optional;Lnet/minecraft/world/item/ItemStack;IIIF)V",
+			method = "getCostA",
 			at = @At("RETURN")
 	)
-	private void unfaircraft$gougePrice(ItemCost baseCostA, Optional costB, ItemStack result, int _uses, int maxUses, int xp, float priceMultiplier, CallbackInfo ci) {
+	private void unfaircraft$gougeCostA(CallbackInfoReturnable<ItemStack> cir) {
 		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MERCHANT_OFFER.enabled)) {
 			return;
 		}
 
-		MerchantOffer self = (MerchantOffer) (Object) this;
-
-		int multiplier = UnfairCraftConfig.MERCHANT_OFFER.multiplier.get();
-
-		ItemStack costA = self.getCostA();
-		if (!costA.isEmpty()) {
-			int newCount = Math.min(costA.getMaxStackSize(), costA.getCount() * multiplier);
-			costA.setCount(newCount);
-		}
-
-		ItemStack costBStack = self.getCostB();
-		if (!costBStack.isEmpty()) {
-			int newCount = Math.min(costBStack.getMaxStackSize(), costBStack.getCount() * multiplier);
-			costBStack.setCount(newCount);
+		ItemStack cost = cir.getReturnValue();
+		if (!cost.isEmpty()) {
+			int multiplier = UnfairCraftConfig.MERCHANT_OFFER.multiplier.get();
+			int newCount = Math.min(cost.getMaxStackSize(), cost.getCount() * multiplier);
+			cost.setCount(newCount);
 		}
 	}
 }
