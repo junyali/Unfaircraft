@@ -26,6 +26,7 @@ public abstract class IronGolemMixin {
 				.add(Attributes.MOVEMENT_SPEED, 0.35D)
 				.add(Attributes.ATTACK_DAMAGE, 20.0D)
 				.add(Attributes.ATTACK_KNOCKBACK, 2.0D)
+				.add(Attributes.ENTITY_INTERACTION_RANGE, 6.0F)
 				.add(Attributes.FOLLOW_RANGE, 32.0D);
 	}
 
