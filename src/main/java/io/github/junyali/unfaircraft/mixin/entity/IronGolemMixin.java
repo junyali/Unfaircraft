@@ -34,6 +34,7 @@ public abstract class IronGolemMixin {
 				.add(Attributes.ATTACK_DAMAGE, 20.0D)
 				.add(Attributes.ATTACK_KNOCKBACK, 2.0D)
 				.add(Attributes.ENTITY_INTERACTION_RANGE, 6.0F)
+				.add(Attributes.WATER_MOVEMENT_EFFICIENCY, 1.0D)
 				.add(Attributes.FOLLOW_RANGE, 32.0D);
 	}
 
@@ -52,6 +53,5 @@ public abstract class IronGolemMixin {
 
 		IronGolem self = (IronGolem) (Object) this;
 		self.goalSelector.addGoal(0, new FloatGoal(self));
-		self.goalSelector.addGoal(1, new MoveTowardsTargetGoal(self, 1.4D, 32.0F));
 	}
 }

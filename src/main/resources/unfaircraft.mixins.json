@@ -9,6 +9,7 @@
     "entity.CreeperMixin",
     "entity.EndermanMixin",
     "entity.IronGolemMixin",
+    "entity.MobMixin",
     "entity.MobRegenMixin",
     "entity.SkeletonMixin",
     "entity.ZombieMixin",
