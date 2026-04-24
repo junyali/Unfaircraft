@@ -202,5 +202,8 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 
 		section("iron_golem", "Iron Golem");
 		addConfig("enabled", "Enable Iron Golem");
+
+		section("mob", "Mob");
+		addConfig("hostile_regardless_enabled", "Make all passive mobs hostile");
 	}
 }

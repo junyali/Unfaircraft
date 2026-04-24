@@ -41,6 +41,7 @@ public class UnfairCraftConfig {
 	public static final NightmareEvent NIGHTMARE_EVENT;
 	public static final MerchantOffer MERCHANT_OFFER;
 	public static final IronGolem IRON_GOLEM;
+	public static final Mob MOB;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -747,6 +748,18 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Mob {
+		public final ModConfigSpec.ConfigValue<Boolean> hostileRegardlessEnabled;
+
+		private Mob(ModConfigSpec.Builder builder) {
+			builder.push("mob");
+			hostileRegardlessEnabled = builder.comment("Make all passive mobs hostile")
+					.translation("unfaircraft.config.mob.hostile_regardless_enabled")
+					.define("hostile_regardless_enabled", true);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -790,6 +803,7 @@ public class UnfairCraftConfig {
 		NIGHTMARE_EVENT = new NightmareEvent(BUILDER);
 		MERCHANT_OFFER = new MerchantOffer(BUILDER);
 		IRON_GOLEM = new IronGolem(BUILDER);
+		MOB = new Mob(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
