@@ -108,6 +108,9 @@
   "unfaircraft.config.skeleton.enabled": "Enable Skeleton Mixin",
   "unfaircraft.config.totem.enabled": "Enable Totem Mixin",
   "unfaircraft.config.totem.fail_chance": "Totem Fail Chance",
+  "unfaircraft.config.weather.enabled": "Enable Weather",
+  "unfaircraft.config.weather.escalate_thunder_chance": "Escalate Thunder Chance",
+  "unfaircraft.config.weather.remain_thunder_chance": "Remain Thunder Chance",
   "unfaircraft.config.zombie.enabled": "Enable Zombie Mixin",
   "unfaircraft.config.zombie.summon_chance": "Summon Chance",
   "unfaircraft.config.zombie.summon_max": "Max Zombies Summoned",
@@ -146,5 +149,6 @@
   "unfaircraft.configuration.shield": "Shield",
   "unfaircraft.configuration.skeleton": "Skeleton",
   "unfaircraft.configuration.totem": "Totem",
+  "unfaircraft.configuration.weather": "Weather",
   "unfaircraft.configuration.zombie": "Zombie"
 }

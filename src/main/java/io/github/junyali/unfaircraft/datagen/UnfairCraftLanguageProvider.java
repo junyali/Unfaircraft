@@ -205,5 +205,10 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 
 		section("mob", "Mob");
 		addConfig("hostile_regardless_enabled", "Make all passive mobs hostile");
+
+		section("weather", "Weather");
+		addConfig("enabled", "Enable Weather");
+		addConfig("escalate_thunder_chance", "Escalate Thunder Chance");
+		addConfig("remain_thunder_chance", "Remain Thunder Chance");
 	}
 }

@@ -42,6 +42,7 @@ public class UnfairCraftConfig {
 	public static final MerchantOffer MERCHANT_OFFER;
 	public static final IronGolem IRON_GOLEM;
 	public static final Mob MOB;
+	public static final Weather WEATHER;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -760,6 +761,26 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Weather {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> escalateThunderChance;
+		public final ModConfigSpec.ConfigValue<Double> remainThunderChance;
+
+		private Weather(ModConfigSpec.Builder builder) {
+			builder.push("weather");
+			enabled = builder.comment("Enable Weather mixin")
+					.translation("unfaircraft.config.weather.enabled")
+					.define("enabled", true);
+			escalateThunderChance = builder.comment("Chance for rain to escalate to thunder each tick")
+					.translation("unfaircraft.config.weather.escalate_thunder_chance")
+					.defineInRange("escalate_thunder_chance", 0.005, 0.0, 1.0);
+			remainThunderChance = builder.comment("Chance for thunder to remain as thunder once winding down")
+					.translation("unfaircraft.config.weather.remain_thunder_chance")
+					.defineInRange("remain_thunder_chance", 0.3, 0.0, 1.0);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -804,6 +825,7 @@ public class UnfairCraftConfig {
 		MERCHANT_OFFER = new MerchantOffer(BUILDER);
 		IRON_GOLEM = new IronGolem(BUILDER);
 		MOB = new Mob(BUILDER);
+		WEATHER = new Weather(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
