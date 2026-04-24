@@ -8,7 +8,6 @@
     "combat.PlayerCombatMixin",
     "entity.CreeperMixin",
     "entity.EndermanMixin",
-    "entity.IronGolemMixin",
     "entity.MobRegenMixin",
     "entity.SkeletonMixin",
     "entity.ZombieMixin",

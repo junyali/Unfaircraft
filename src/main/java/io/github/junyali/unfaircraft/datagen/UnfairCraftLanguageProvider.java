@@ -199,8 +199,5 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		section("merchant_offer", "Merchant Offer");
 		addConfig("enabled", "Enable Villager Price Gouging");
 		addConfig("multiplier", "Multiplier for merchant prices");
-
-		section("iron_golem", "Iron Golem");
-		addConfig("enabled", "Enable Iron Golem");
 	}
 }
