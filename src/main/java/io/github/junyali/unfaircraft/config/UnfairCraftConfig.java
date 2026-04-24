@@ -41,6 +41,7 @@ public class UnfairCraftConfig {
 	public static final FoodData FOOD_DATA;
 	public static final DrunkJumping DRUNK_JUMPING;
 	public static final NightmareEvent NIGHTMARE_EVENT;
+	public static final MerchantOffer MERCHANT_OFFER;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -719,6 +720,22 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class MerchantOffer {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Integer> multiplier;
+
+		private MerchantOffer(ModConfigSpec.Builder builder) {
+			builder.push("merchant_offer");
+			enabled = builder.comment("Enable Villager Price Gouging")
+					.translation("unfaircraft.config.merchant_offer.enabled")
+					.define("enabled", true);
+			multiplier = builder.comment("Multiplier for merchant prices")
+					.translation("unfaircraft.config.merchant_offer.multiplier")
+					.define("multiplier", 3);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -760,6 +777,7 @@ public class UnfairCraftConfig {
 		FOOD_DATA = new FoodData(BUILDER);
 		DRUNK_JUMPING = new DrunkJumping(BUILDER);
 		NIGHTMARE_EVENT = new NightmareEvent(BUILDER);
+		MERCHANT_OFFER = new MerchantOffer(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();

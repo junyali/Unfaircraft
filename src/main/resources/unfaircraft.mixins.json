@@ -23,6 +23,7 @@
     "item.ShieldItemMixin",
     "misc.AnvilMenuMixin",
     "misc.BlockItemMixin",
+    "misc.MerchantOfferMixin",
     "misc.NearestAttackableTargetGoalMixin",
     "misc.NightmareEventMixin",
     "misc.RangedAttackGoalMixin",

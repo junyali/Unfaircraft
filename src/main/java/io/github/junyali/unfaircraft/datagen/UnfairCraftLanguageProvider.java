@@ -195,5 +195,8 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 
 		section("nightmare_event", "Nightmare Event");
 		addConfig("chance", "Nightmare Event Chance");
+
+		section("merchant_offer", "Merchant Offer");
+		addConfig("multiplier", "Multiplier for merchant prices");
 	}
 }
