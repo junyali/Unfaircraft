@@ -205,6 +205,8 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 
 		section("mob", "Mob");
 		addConfig("hostile_regardless_enabled", "Make all passive mobs hostile");
+		addConfig("allow_hostile_daylight_spawn", "Allow Hostile Daylight Spawn");
+		addConfig("hostile_daylight_spawn_chance", "Hostile Daylight Spawn Chance");
 
 		section("weather", "Weather");
 		addConfig("enabled", "Enable Weather");

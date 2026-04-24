@@ -9,11 +9,13 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,6 +49,31 @@ public abstract class MobMixin {
 				mob.setItemSlot(EquipmentSlot.FEET, boots);
 				mob.setDropChance(EquipmentSlot.FEET, 0.0F);
 			}
+		}
+	}
+
+	@Inject(
+			method = "checkSpawnRules",
+			at = @At("RETURN"),
+			cancellable = true
+	)
+	private void unfaircraft$daytimeSpawn(LevelAccessor level, MobSpawnType reason, CallbackInfoReturnable<Boolean> cir) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.allowHostileDaylightSpawn)) {
+			return;
+		}
+
+		if (cir.getReturnValue()) {
+			return;
+		}
+
+		Mob self = (Mob) (Object) this;
+
+		if (!(self instanceof Monster)) {
+			return;
+		}
+
+		if (self.getRandom().nextFloat() < UnfairCraftConfig.MOB.hostileDaylightSpawnChance.get().floatValue()) {
+			cir.setReturnValue(true);
 		}
 	}
 }

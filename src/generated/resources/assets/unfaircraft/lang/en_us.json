@@ -70,6 +70,8 @@
   "unfaircraft.config.minecart.reverse_chance": "Random Reverse Chance",
   "unfaircraft.config.minecart.slowdown_factor": "Slowdown Factor",
   "unfaircraft.config.minecart.stop_chance": "Random Stop Chance",
+  "unfaircraft.config.mob.allow_hostile_daylight_spawn": "Allow Hostile Daylight Spawn",
+  "unfaircraft.config.mob.hostile_daylight_spawn_chance": "Hostile Daylight Spawn Chance",
   "unfaircraft.config.mob.hostile_regardless_enabled": "Make all passive mobs hostile",
   "unfaircraft.config.mob_detection.enabled": "Enable Mob Detection Mixin",
   "unfaircraft.config.mob_detection.range_multiplier": "Detection Range Multiplier",
