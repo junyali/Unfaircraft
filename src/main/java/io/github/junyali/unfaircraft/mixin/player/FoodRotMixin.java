@@ -30,7 +30,12 @@ public abstract class FoodRotMixin {
 			return;
 		}
 
-		Player player = (Player) (Object) this;
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (!(entity instanceof Player player)) {
+			return;
+		}
+
 		if (player.level().isClientSide()) {
 			return;
 		}
