@@ -42,6 +42,7 @@ public class UnfairCraftConfig {
 	public static final DrunkJumping DRUNK_JUMPING;
 	public static final NightmareEvent NIGHTMARE_EVENT;
 	public static final MerchantOffer MERCHANT_OFFER;
+	public static final IronGolem IRON_GOLEM;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -736,6 +737,18 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class IronGolem {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+
+		private IronGolem(ModConfigSpec.Builder builder) {
+			builder.push("iron_golem");
+			enabled = builder.comment("Enable Iron Golem")
+					.translation("unfaircraft.config.iron_golem.enabled")
+					.define("enabled", true);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -778,6 +791,7 @@ public class UnfairCraftConfig {
 		DRUNK_JUMPING = new DrunkJumping(BUILDER);
 		NIGHTMARE_EVENT = new NightmareEvent(BUILDER);
 		MERCHANT_OFFER = new MerchantOffer(BUILDER);
+		IRON_GOLEM = new IronGolem(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
