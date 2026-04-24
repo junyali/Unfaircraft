@@ -20,6 +20,13 @@ public abstract class IronGolemMixin {
 			cancellable = true
 	)
 	private static void unfaircraft$buffGolemAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
+		try {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+				return;
+			}
+		} catch (Exception e) {
+			return;
+		}
 
 		AttributeSupplier.Builder builder = cir.getReturnValue();
 		builder.add(Attributes.MAX_HEALTH, 200.0D)
@@ -35,6 +42,13 @@ public abstract class IronGolemMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$addSwimGoal(CallbackInfo ci) {
+		try {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+				return;
+			}
+		} catch (Exception e) {
+			return;
+		}
 
 		IronGolem self = (IronGolem) (Object) this;
 		self.goalSelector.addGoal(0, new FloatGoal(self));
