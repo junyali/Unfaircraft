@@ -346,7 +346,7 @@ public class UnfairCraftConfig {
 					.define("enabled", true);
 			trollChance = builder.comment("Chance for loot tables to be replaced with troll loot")
 					.translation("unfaircraft.config.loot_table.troll_chance")
-					.defineInRange("troll_chance", 0.9, 0.0, 1.0);
+					.defineInRange("troll_chance", 0.05, 0.0, 1.0);
 			builder.pop();
 		}
 	}
