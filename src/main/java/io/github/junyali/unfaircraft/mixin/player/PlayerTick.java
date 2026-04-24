@@ -31,7 +31,11 @@ public abstract class PlayerTick {
 			return;
 		}
 
-		Player player = (Player) (Object) this;
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (!(entity instanceof Player player)) {
+			return;
+		}
 
 		if (!player.level().isClientSide() && player.level().random.nextFloat() < UnfairCraftConfig.PLAYER.randomDropChance.get().floatValue()) {
 			ItemStack mainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND);

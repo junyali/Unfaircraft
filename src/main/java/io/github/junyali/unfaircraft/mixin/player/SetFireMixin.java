@@ -55,7 +55,11 @@ public abstract class SetFireMixin {
 			return;
 		}
 
-		Player player = (Player) (Object) this;
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if (!(entity instanceof Player player)) {
+			return;
+		}
 
 		if (player.level().isClientSide() || !player.isOnFire() || player.isSpectator() || player.isCreative()) {
 			return;
