@@ -840,6 +840,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> caveInChance;
 		public final ModConfigSpec.ConfigValue<Double> silkTouchFailChance;
 		public final ModConfigSpec.ConfigValue<Double> fortuneReversalChance;
+		public final ModConfigSpec.ConfigValue<Double> veinCollapseChance;
 
 		private Block(ModConfigSpec.Builder builder) {
 			enabled = builder.comment("Enable Block mixin")
@@ -857,6 +858,9 @@ public class UnfairCraftConfig {
 			fortuneReversalChance = builder.comment("Chance for fortune to reverse effect")
 					.translation("unfaircraft.config.block.fortune_reversal_chance")
 					.defineInRange("fortune_reversal_chance", 0.2, 0.0, 1.0);
+			veinCollapseChance = builder.comment("Chance for ore veins to collapse")
+					.translation("unfaircraft.config.block.vein_collapse_chance")
+					.defineInRange("vein_collapse_chance", 0.05, 0.0, 1.0);
 		}
 	}
 
