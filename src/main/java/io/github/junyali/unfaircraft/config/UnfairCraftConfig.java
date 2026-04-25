@@ -843,6 +843,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> veinCollapseChance;
 
 		private Block(ModConfigSpec.Builder builder) {
+			builder.push("block");
 			enabled = builder.comment("Enable Block mixin")
 					.translation("unfaircraft.config.block.enabled")
 					.define("enabled", true);
@@ -861,6 +862,7 @@ public class UnfairCraftConfig {
 			veinCollapseChance = builder.comment("Chance for ore veins to collapse")
 					.translation("unfaircraft.config.block.vein_collapse_chance")
 					.defineInRange("vein_collapse_chance", 0.05, 0.0, 1.0);
+			builder.pop();
 		}
 	}
 
