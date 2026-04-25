@@ -202,6 +202,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enabled", "Enable Villager Price Gouging");
 		addConfig("multiplier", "Multiplier for merchant prices");
 		addConfig("wandering_trader_scam_enabled", "Enable Wandering Trader Scam Offers");
+		addConfig("wandering_trader_scam_chance", "Wandering Trader Scam Chance");
 
 		section("iron_golem", "Iron Golem");
 		addConfig("enabled", "Enable Iron Golem");

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,32 +50,37 @@ public abstract class WanderingTraderMixin {
 		}
 
 		RandomSource random = self.getRandom();
-		MerchantOffers scamOffers = new MerchantOffers();
+		MerchantOffers modifiedOffers = new MerchantOffers();
 
 		Item[] scamItems = unfaircraft$scam_items.keySet().toArray(new Item[0]);
+		float scamChance = UnfairCraftConfig.MERCHANT_OFFER.wanderingTraderScamChance.get().floatValue();
 
 		for (MerchantOffer original : offers) {
-			ItemStack costA = original.getBaseCostA().copy();
-			ItemStack costB = original.getCostB().map(ItemStack::copy).orElse(ItemStack.EMPTY);
+			if (random.nextFloat() < scamChance) {
+				ItemStack costA = original.getBaseCostA().copy();
+				ItemStack costB = original.getCostB();
 
-			Item scamItem = scamItems[random.nextInt(scamItems.length)];
-			String fakeName = unfaircraft$scam_items.get(scamItem);
+				Item scamItem = scamItems[random.nextInt(scamItems.length)];
+				String fakeName = unfaircraft$scam_items.get(scamItem);
 
-			ItemStack scamResult = new ItemStack(scamItem, original.getResult().getCount());
-			scamResult.set(DataComponents.CUSTOM_NAME, Component.literal(fakeName));
-			scamOffers.add(new MerchantOffer(
-					costA,
-					costB.isEmpty() ? Optional.empty() : Optional.of(costB),
-					scamResult,
-					original.getUses(),
-					original.getMaxUses(),
-					original.getXp(),
-					original.getPriceMultiplier(),
-					original.getDemand()
-			));
+				ItemStack scamResult = new ItemStack(scamItem, original.getResult().getCount());
+				scamResult.set(DataComponents.CUSTOM_NAME, Component.literal(fakeName));
+				modifiedOffers.add(new MerchantOffer(
+						new ItemCost(costA.getItem()),
+						costB.isEmpty() ? Optional.empty() : Optional.of(new ItemCost(costB.getItem())),
+						scamResult,
+						original.getUses(),
+						original.getMaxUses(),
+						original.getXp(),
+						original.getPriceMultiplier(),
+						original.getDemand()
+				));
+			} else {
+				modifiedOffers.add(original);
+			}
 		}
 
 		offers.clear();
-		offers.addAll(scamOffers);
+		offers.addAll(modifiedOffers);
 	}
 }
