@@ -733,6 +733,7 @@ public class UnfairCraftConfig {
 	public static class MerchantOffer {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Integer> multiplier;
+		public final ModConfigSpec.ConfigValue<Boolean> wanderingTraderScamEnabled;
 
 		private MerchantOffer(ModConfigSpec.Builder builder) {
 			builder.push("merchant_offer");
@@ -742,6 +743,9 @@ public class UnfairCraftConfig {
 			multiplier = builder.comment("Multiplier for merchant prices")
 					.translation("unfaircraft.config.merchant_offer.multiplier")
 					.define("multiplier", 3);
+			wanderingTraderScamEnabled = builder.comment("Enable Wandering Trader Scam Offers")
+					.translation("unfaircraft.config.merchant_offer.wandering_trader_scam_enabled")
+					.define("wandering_trader_scam_enabled", true);
 			builder.pop();
 		}
 	}
