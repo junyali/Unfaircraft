@@ -145,7 +145,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("multiplier", "Knockback Multiplier");
 
 		section("damage_reflection", "Damage Reflection");
-		addConfig("enabled", "Enable Damage Reflection");
+		addConfig("enabled", "Enable Damage Reflection Mixin");
 		addConfig("chance", "Reflection Chance");
 		addConfig("percentage_min", "Min Reflection Percentage");
 		addConfig("percentage_max", "Max Reflection Percentage");
@@ -177,7 +177,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("backfire_chance", "Potion Backfire Chance");
 
 		section("mob_regen", "Mob Regen");
-		addConfig("enabled", "Enable Mob Regen");
+		addConfig("enabled", "Enable Mob Regen Mixin");
 		addConfig("delay", "Regen Delay (ticks)");
 		addConfig("rate", "Regen Rate (ticks)");
 		addConfig("amount", "Regen Amount");
@@ -194,19 +194,19 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("exhaustion_multiplier", "Exhaustion Multiplier");
 
 		section("drunk_jumping", "Drunk Jumping");
-		addConfig("enabled", "Enable Drunk Jumping");
+		addConfig("enabled", "Enable Drunk Jumping Mixin");
 
 		section("nightmare_event", "Nightmare Event");
 		addConfig("chance", "Nightmare Event Chance");
 
 		section("merchant_offer", "Merchant Offer");
-		addConfig("enabled", "Enable Villager Price Gouging");
+		addConfig("enabled", "Enable Merchant Offer Mixin");
 		addConfig("multiplier", "Multiplier for merchant prices");
 		addConfig("wandering_trader_scam_enabled", "Enable Wandering Trader Scam Offers");
 		addConfig("wandering_trader_scam_chance", "Wandering Trader Scam Chance");
 
 		section("iron_golem", "Iron Golem");
-		addConfig("enabled", "Enable Iron Golem");
+		addConfig("enabled", "Enable Iron Golem Mixin");
 
 		section("mob", "Mob");
 		addConfig("hostile_regardless_enabled", "Make all passive mobs hostile");
@@ -214,18 +214,18 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("hostile_daylight_spawn_chance", "Hostile Daylight Spawn Chance");
 
 		section("weather", "Weather");
-		addConfig("enabled", "Enable Weather");
+		addConfig("enabled", "Enable Weather Mixin");
 		addConfig("escalate_thunder_chance", "Escalate Thunder Chance");
 		addConfig("remain_thunder_chance", "Remain Thunder Chance");
 
 		section("phantom", "Phantom");
-		addConfig("enabled", "Enable Phantom");
+		addConfig("enabled", "Enable Phantom Mixin");
 		addConfig("summon_chance", "Additional swarm summon chance");
 		addConfig("summon_min", "Min phantoms summoned");
 		addConfig("summon_max", "Max phantoms summoned");
 
 		section("block", "Block");
-		addConfig("enabled", "Enable Block mixin");
+		addConfig("enabled", "Enable Block Mixin");
 		addConfig("mimic_spawn_chance", "Mimic Spawn Chance");
 		addConfig("cave_in_chance", "Cave In Chance");
 		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
