@@ -57,8 +57,8 @@ public abstract class WanderingTraderMixin {
 
 		for (MerchantOffer original : offers) {
 			if (random.nextFloat() < scamChance) {
-				ItemStack costA = original.getBaseCostA().copy();
-				ItemStack costB = original.getCostB();
+				ItemCost costA = original.getItemCostA();
+				Optional<ItemCost> costB = original.getItemCostB();
 
 				Item scamItem = scamItems[random.nextInt(scamItems.length)];
 				String fakeName = unfaircraft$scam_items.get(scamItem);
@@ -66,8 +66,8 @@ public abstract class WanderingTraderMixin {
 				ItemStack scamResult = new ItemStack(scamItem, original.getResult().getCount());
 				scamResult.set(DataComponents.CUSTOM_NAME, Component.literal(fakeName));
 				modifiedOffers.add(new MerchantOffer(
-						new ItemCost(costA.getItem()),
-						costB.isEmpty() ? Optional.empty() : Optional.of(new ItemCost(costB.getItem())),
+						costA,
+						costB,
 						scamResult,
 						original.getUses(),
 						original.getMaxUses(),
