@@ -49,6 +49,10 @@ public abstract class MimicOreMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$oreMimic(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool, CallbackInfo ci) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ORE.enabled)) {
+			return;
+		}
+
 		if (level.isClientSide()) {
 			return;
 		}
