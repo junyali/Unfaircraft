@@ -88,6 +88,7 @@
   "unfaircraft.config.ore.gold_replacement_chance": "Gold Ore Replacement Chance",
   "unfaircraft.config.player.attack_exhaustion_chance": "Attack Exhaustion Chance",
   "unfaircraft.config.player.crit_fail_chance": "Crit Fail Chance",
+  "unfaircraft.config.player.enable_biome_hazards": "Enable Biome Hazards",
   "unfaircraft.config.player.enabled": "Enable Player Mixin",
   "unfaircraft.config.player.fall_damage_distance": "Fall Damage Distance",
   "unfaircraft.config.player.fall_damage_multiplier": "Fall Damage Multiplier",

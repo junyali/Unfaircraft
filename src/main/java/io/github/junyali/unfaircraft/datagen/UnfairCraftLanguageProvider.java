@@ -48,6 +48,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("fall_damage_distance", "Fall Damage Distance");
 		addConfig("fall_damage_multiplier", "Fall Damage Multiplier");
 		addConfig("pickup_fail_chance", "Item Pickup Fail Chance");
+		addConfig("enable_biome_hazards", "Enable Biome Hazards");
 
 		section("item_durability", "Item Durability");
 		addConfig("enabled", "Enable Item Durability Mixin");

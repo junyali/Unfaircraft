@@ -101,6 +101,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> fallDamageDistance;
 		public final ModConfigSpec.ConfigValue<Double> fallDamageMultiplier;
 		public final ModConfigSpec.ConfigValue<Double> pickupFailChance;
+		public final ModConfigSpec.ConfigValue<Boolean> enableBiomeHazards;
 
 		private Player(ModConfigSpec.Builder builder) {
 			builder.push("player");
@@ -128,6 +129,9 @@ public class UnfairCraftConfig {
 			pickupFailChance = builder.comment("Chance for items picked up by the player to vanish")
 					.translation("unfaircraft.config.player.pickup_fail_chance")
 					.defineInRange("pickup_fail_chance", 0.01, 0.0, 1.0);
+			enableBiomeHazards = builder.comment("Enable Biome Hazards")
+					.translation("unfaircraft.config.player.enable_biome_hazards")
+					.define("enable_biome_hazards", true);
 			builder.pop();
 		}
 	}
