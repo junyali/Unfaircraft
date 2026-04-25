@@ -35,7 +35,7 @@
     "player.DrunkJumpingMixin",
     "player.FallDamageMixin",
     "player.FoodRotMixin",
-    "player.PlayerTick",
+    "player.PlayerTickMixin",
     "player.SetFireMixin",
     "player.TotemMixin",
     "player.UnstableGroundMixin",

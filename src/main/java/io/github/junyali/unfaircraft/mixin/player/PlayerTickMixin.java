@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class PlayerTick {
+public abstract class PlayerTickMixin {
 	@Unique
 	private void unfaircraft$dropItemAndPlaySound(Player player, ItemStack stack) {
 		player.drop(stack, true);
