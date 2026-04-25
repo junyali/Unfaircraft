@@ -6,8 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,8 +14,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Set;
 
 @Mixin(ServerPlayerGameMode.class)
 public abstract class CaveInMixin {
@@ -30,23 +26,6 @@ public abstract class CaveInMixin {
 
 	@Unique
 	private static final int unfaircraft$scan_height = 16;
-
-	@Unique
-	private static Set<Block> unfaircraft$falling;
-
-	@Unique
-	private static Set<Block> unfaircraft$getFalling() {
-		if (unfaircraft$falling == null) {
-			unfaircraft$falling = Set.of(
-					Blocks.GRAVEL,
-					Blocks.SAND,
-					Blocks.RED_SAND,
-					Blocks.SUSPICIOUS_GRAVEL,
-					Blocks.SUSPICIOUS_SAND
-			);
-		}
-		return unfaircraft$falling;
-	}
 
 	@Inject(
 			method = "destroyBlock",
@@ -63,13 +42,18 @@ public abstract class CaveInMixin {
 
 		if (pos.getY() < 32) {
 			if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.caveInChance.get().floatValue()) {
-				for (int i = 1; i <= unfaircraft$scan_height; i++) {
-					BlockPos above = pos.above(i);
-					BlockState aboveState = level.getBlockState(above);
-					if (unfaircraft$getFalling().contains(aboveState.getBlock())) {
-						level.removeBlock(above, false);
-						FallingBlockEntity falling = FallingBlockEntity.fall(level, above, aboveState);
-						level.addFreshEntity(falling);
+				int radius = 3;
+				for (int x = -radius; x <= radius; x++) {
+					for (int z = -radius; z <= radius; z++) {
+						for (int y = 1; y <= unfaircraft$scan_height; y++) {
+							BlockPos target = pos.offset(x, y, z);
+							BlockState state = level.getBlockState(target);
+							if (state.isAir() || !state.getFluidState().isEmpty()) continue;
+							if (state.getDestroySpeed(level, target) < 0) continue;
+							level.removeBlock(target, false);
+							FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level, target, state);
+							level.addFreshEntity(fallingBlockEntity);
+						}
 					}
 				}
 			}
