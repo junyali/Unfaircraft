@@ -13,6 +13,7 @@
     "entity.MobRegenMixin",
     "entity.NeutralMobMixin",
     "entity.SkeletonMixin",
+    "entity.WanderingTraderMixin",
     "entity.ZombieMixin",
     "food.FoodDataMixin",
     "food.FoodDebuffMixin",
