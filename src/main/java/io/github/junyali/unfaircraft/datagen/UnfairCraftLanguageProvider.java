@@ -50,6 +50,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("pickup_fail_chance", "Item Pickup Fail Chance");
 		addConfig("enable_biome_hazards", "Enable Biome Hazards");
 		addConfig("ground_break_chance", "Ground Break Chance");
+		addConfig("low_mining_morale_chance", "Low Mining Morale Chance");
 
 		section("item_durability", "Item Durability");
 		addConfig("enabled", "Enable Item Durability Mixin");

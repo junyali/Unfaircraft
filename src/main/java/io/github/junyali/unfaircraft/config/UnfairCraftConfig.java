@@ -104,6 +104,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> pickupFailChance;
 		public final ModConfigSpec.ConfigValue<Boolean> enableBiomeHazards;
 		public final ModConfigSpec.ConfigValue<Double> groundBreakChance;
+		public final ModConfigSpec.ConfigValue<Double> lowMiningMoraleChance;
 
 		private Player(ModConfigSpec.Builder builder) {
 			builder.push("player");
@@ -137,6 +138,9 @@ public class UnfairCraftConfig {
 			groundBreakChance = builder.comment("Chance for the ground to break when moving")
 					.translation("unfaircraft.config.player.ground_break_chance")
 					.defineInRange("ground_break_chance", 0.005, 0.0, 1.0);
+			lowMiningMoraleChance = builder.comment("Chance for player to be affected with low morale underground per set interval")
+					.translation("unfaircraft.config.player.low_mining_morale_chance")
+					.defineInRange("low_mining_morale_chance", 0.1, 0.0, 1.0);
 			builder.pop();
 		}
 	}

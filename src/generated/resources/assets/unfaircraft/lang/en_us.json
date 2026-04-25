@@ -101,6 +101,7 @@
   "unfaircraft.config.player.fall_damage_distance": "Fall Damage Distance",
   "unfaircraft.config.player.fall_damage_multiplier": "Fall Damage Multiplier",
   "unfaircraft.config.player.ground_break_chance": "Ground Break Chance",
+  "unfaircraft.config.player.low_mining_morale_chance": "Low Mining Morale Chance",
   "unfaircraft.config.player.pickup_fail_chance": "Item Pickup Fail Chance",
   "unfaircraft.config.player.random_drop_chance": "Random Item Drop Chance",
   "unfaircraft.config.player.self_attack_chance": "Self Attack Chance",
