@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,6 +33,7 @@ public abstract class VeinCollapseMixin {
 	@Final
 	@Shadow
 	protected ServerPlayer player;
+
 	@Unique
 	private BlockState unfaircraft$veinSavedState;
 
@@ -80,7 +80,7 @@ public abstract class VeinCollapseMixin {
 			return;
 		}
 
-		if (!unfaircraft$ores.contains(unfaircraft$veinSavedState.getBlock())) {
+		if (!unfaircraft$getOres().contains(unfaircraft$veinSavedState.getBlock())) {
 			return;
 		}
 
@@ -99,7 +99,7 @@ public abstract class VeinCollapseMixin {
 					if (visited.contains(neighbour)) continue;
 					visited.add(neighbour);
 					BlockState neighbourState = level.getBlockState(neighbour);
-					if (!unfaircraft$ores.contains(neighbourState.getBlock())) continue;
+					if (!unfaircraft$getOres().contains(neighbourState.getBlock())) continue;
 					level.removeBlock(neighbour, false);
 					level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, neighbour, Block.getId(neighbourState));
 					level.playSound(null, player.blockPosition(), SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.0F, 0.0F);
