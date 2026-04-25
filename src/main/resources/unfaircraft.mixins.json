@@ -7,6 +7,7 @@
     "block.FortuneMixin",
     "block.MimicOreMixin",
     "block.SilkTouchMixin",
+    "block.VeinCollapseMixin",
     "combat.DamageReflectionMixin",
     "combat.KnockbackMixin",
     "combat.PlayerCombatMixin",
