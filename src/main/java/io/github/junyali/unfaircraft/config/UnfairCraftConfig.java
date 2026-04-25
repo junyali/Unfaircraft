@@ -103,6 +103,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> fallDamageMultiplier;
 		public final ModConfigSpec.ConfigValue<Double> pickupFailChance;
 		public final ModConfigSpec.ConfigValue<Boolean> enableBiomeHazards;
+		public final ModConfigSpec.ConfigValue<Double> groundBreakChance;
 
 		private Player(ModConfigSpec.Builder builder) {
 			builder.push("player");
@@ -133,6 +134,9 @@ public class UnfairCraftConfig {
 			enableBiomeHazards = builder.comment("Enable Biome Hazards")
 					.translation("unfaircraft.config.player.enable_biome_hazards")
 					.define("enable_biome_hazards", true);
+			groundBreakChance = builder.comment("Chance for the ground to break when moving")
+					.translation("unfaircraft.config.player.ground_break_chance")
+					.defineInRange("ground_break_chance", 0.005, 0.0, 1.0);
 			builder.pop();
 		}
 	}

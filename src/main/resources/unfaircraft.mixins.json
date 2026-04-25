@@ -38,6 +38,7 @@
     "player.PlayerTick",
     "player.SetFireMixin",
     "player.TotemMixin",
+    "player.UnstableGroundMixin",
     "vehicle.MinecartMixin",
     "world.BedBlockMixin",
     "world.CaveWorldCarverMixin",
