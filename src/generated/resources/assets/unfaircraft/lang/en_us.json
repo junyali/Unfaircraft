@@ -88,6 +88,7 @@
   "unfaircraft.config.ore.emerald_replacement_chance": "Emerald Ore Replacement Chance",
   "unfaircraft.config.ore.enabled": "Enable Ore Mixin",
   "unfaircraft.config.ore.gold_replacement_chance": "Gold Ore Replacement Chance",
+  "unfaircraft.config.ore.mimic_spawn_chance": "Mimic Spawn Chance",
   "unfaircraft.config.phantom.enabled": "Enable Phantom",
   "unfaircraft.config.phantom.summon_chance": "Additional swarm summon chance",
   "unfaircraft.config.phantom.summon_max": "Max phantoms summoned",

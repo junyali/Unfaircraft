@@ -45,6 +45,7 @@
     "world.ChestBlockEntityMixin",
     "world.FarmBlockMixin",
     "world.LootTableMixin",
+    "world.MimicOreMixin",
     "world.OreFeatureMixin",
     "world.SaplingBlockMixin"
   ],

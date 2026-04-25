@@ -320,6 +320,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> emeraldReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> diamondReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> ancientDebrisReplacementChance;
+		public final ModConfigSpec.ConfigValue<Double> mimicSpawnChance;
 
 		private Ore(ModConfigSpec.Builder builder) {
 			builder.push("ore");
@@ -341,7 +342,9 @@ public class UnfairCraftConfig {
 			ancientDebrisReplacementChance = builder.comment("Chance to replace ores in ancient debris ore veins")
 					.translation("unfaircraft.config.ore.ancient_debris_replacement_chance")
 					.defineInRange("ancient_debris_replacement_chance", 0.5, 0.0, 1.0);
-
+			mimicSpawnChance = builder.comment("Chance to spawn mimic entities when mining ores")
+					.translation("unfaircraft.config.ore.mimic_spawn_chance")
+					.defineInRange("mimic_spawn_chance", 0.15, 0.0, 1.0);
 			builder.pop();
 		}
 	}
