@@ -43,6 +43,7 @@ public class UnfairCraftConfig {
 	public static final IronGolem IRON_GOLEM;
 	public static final Mob MOB;
 	public static final Weather WEATHER;
+	public static final Phantom PHANTOM;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -793,6 +794,30 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Phantom {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> summonChance;
+		public final ModConfigSpec.ConfigValue<Integer> summonMin;
+		public final ModConfigSpec.ConfigValue<Integer> summonMax;
+
+		private Phantom(ModConfigSpec.Builder builder) {
+			builder.push("enabled");
+			enabled = builder.comment("Enable Phantom mixin")
+					.translation("unfaircraft.config.phantom.enabled")
+					.define("enabled", true);
+			summonChance = builder.comment("Chance for phantoms to summon additional swarms when spawned")
+					.translation("unfaircraft.config.phantom.summon_chance")
+					.defineInRange("summon_chance", 0.8, 0.0, 1.0);
+			summonMin = builder.comment("Minimum number of phantoms to summon")
+					.translation("unfaircraft.config.phantom.summon_min")
+					.define("summon_min", 3);
+			summonMax = builder.comment("Maximum number of phantoms to summon")
+					.translation("unfaircraft.config.phantom.summon_max")
+					.define("summon_max", 6);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -838,6 +863,7 @@ public class UnfairCraftConfig {
 		IRON_GOLEM = new IronGolem(BUILDER);
 		MOB = new Mob(BUILDER);
 		WEATHER = new Weather(BUILDER);
+		PHANTOM = new Phantom(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();

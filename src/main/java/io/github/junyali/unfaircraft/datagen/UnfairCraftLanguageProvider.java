@@ -213,5 +213,11 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enabled", "Enable Weather");
 		addConfig("escalate_thunder_chance", "Escalate Thunder Chance");
 		addConfig("remain_thunder_chance", "Remain Thunder Chance");
+
+		section("phantom", "Phantom");
+		addConfig("enabled", "Enable Phantom");
+		addConfig("summon_chance", "Additional swarm summon chance");
+		addConfig("summon_min", "Min phantoms summoned");
+		addConfig("summon_max", "Max phantoms summoned");
 	}
 }

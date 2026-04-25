@@ -3,13 +3,12 @@ package io.github.junyali.unfaircraft.mixin.entity;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -29,7 +28,7 @@ public abstract class MobMixin {
 			at = @At("RETURN")
 	)
 	private void unfaircraft$onMobSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
-		if (level.isClientSide()) {
+		if (level.isClientSide() || (!(level instanceof ServerLevel serverLevel))) {
 			return;
 		}
 
@@ -48,6 +47,28 @@ public abstract class MobMixin {
 				boots.set(DataComponents.DYED_COLOR, new DyedItemColor(0x00000000, false));
 				mob.setItemSlot(EquipmentSlot.FEET, boots);
 				mob.setDropChance(EquipmentSlot.FEET, 0.0F);
+			}
+		} else if (mob instanceof Phantom) {
+			if (spawnType != MobSpawnType.NATURAL) {
+				return;
+			}
+
+			float summonChance = UnfairCraftConfig.PHANTOM.summonChance.get().floatValue();
+
+			if (serverLevel.random.nextDouble() < summonChance) {
+				int minPhantoms = UnfairCraftConfig.PHANTOM.summonMin.get();
+				int maxPhantoms = UnfairCraftConfig.PHANTOM.summonMax.get();
+				int extras = minPhantoms + serverLevel.random.nextInt(maxPhantoms - minPhantoms + 1);
+
+				for (int i = 0; i < extras; i++) {
+					Phantom extra = EntityType.PHANTOM.create(serverLevel);
+					if (extra == null) continue;
+					double offsetX = mob.getX() + (mob.getRandom().nextDouble() - 0.5) * 10;
+					double offsetZ = mob.getZ() + (mob.getRandom().nextDouble() - 0.5) * 10;
+					extra.moveTo(offsetX, mob.getY(), offsetZ, mob.getYRot(), 0.0f);
+					extra.finalizeSpawn(level, difficulty, MobSpawnType.TRIGGERED, null);
+					serverLevel.addFreshEntity(extra);
+				}
 			}
 		}
 	}
