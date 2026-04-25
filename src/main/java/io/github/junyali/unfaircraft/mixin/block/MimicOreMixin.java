@@ -35,7 +35,7 @@ public abstract class MimicOreMixin {
 	@Final
 	private static Logger LOGGER;
 	@Unique
-	private BlockState unfaircraft$savedState;
+	private BlockState unfaircraft$mimicSavedState;
 
 	@Unique
 	private static Set<Block> unfaircraft$mimicOres;
@@ -64,7 +64,7 @@ public abstract class MimicOreMixin {
 			at = @At("HEAD")
 	)
 	private void unfaircraft$captureState(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-		unfaircraft$savedState = level.getBlockState(pos);
+		unfaircraft$mimicSavedState = level.getBlockState(pos);
 	}
 
 	@Inject(
@@ -80,11 +80,11 @@ public abstract class MimicOreMixin {
 			return;
 		}
 
-		if (unfaircraft$savedState == null) {
+		if (unfaircraft$mimicSavedState == null) {
 			return;
 		}
 
-		if (!unfaircraft$getMimicOres().contains(unfaircraft$savedState.getBlock())) {
+		if (!unfaircraft$getMimicOres().contains(unfaircraft$mimicSavedState.getBlock())) {
 			return;
 		}
 
