@@ -1,4 +1,4 @@
-package io.github.junyali.unfaircraft.mixin.player;
+package io.github.junyali.unfaircraft.mixin.block;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +30,7 @@ public abstract class SilkTouchMixin {
 			cancellable = true
 	)
 	private static void unfaircraft$silkTouchFail(BlockState state, ServerLevel level, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack tool, CallbackInfoReturnable<List<ItemStack>> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
 			return;
 		}
 
@@ -43,7 +42,7 @@ public abstract class SilkTouchMixin {
 			return;
 		}
 
-		if (level.getRandom().nextFloat() < UnfairCraftConfig.PLAYER.silkTouchFailChance.get().floatValue()) {
+		if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.silkTouchFailChance.get().floatValue()) {
 			ItemStack stripped = tool.copy();
 			stripped.remove(DataComponents.ENCHANTMENTS);
 			List<ItemStack> normalDrops = Block.getDrops(state, level, pos, blockEntity, entity, stripped);

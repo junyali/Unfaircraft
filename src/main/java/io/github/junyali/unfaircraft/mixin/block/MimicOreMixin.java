@@ -1,4 +1,4 @@
-package io.github.junyali.unfaircraft.mixin.world;
+package io.github.junyali.unfaircraft.mixin.block;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
@@ -49,7 +49,7 @@ public abstract class MimicOreMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$oreMimic(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ORE.enabled)) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
 			return;
 		}
 
@@ -65,7 +65,7 @@ public abstract class MimicOreMixin {
 			return;
 		}
 
-		if (level.random.nextFloat() < UnfairCraftConfig.ORE.mimicSpawnChance.get().floatValue()) {
+		if (level.random.nextFloat() < UnfairCraftConfig.BLOCK.mimicSpawnChance.get().floatValue()) {
 			Entity mob = EntityType.SILVERFISH.create(serverLevel);
 			if (mob == null) {
 				return;

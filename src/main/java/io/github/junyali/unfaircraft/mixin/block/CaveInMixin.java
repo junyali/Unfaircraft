@@ -1,4 +1,4 @@
-package io.github.junyali.unfaircraft.mixin.world;
+package io.github.junyali.unfaircraft.mixin.block;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
@@ -46,7 +46,7 @@ public abstract class CaveInMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$caveIn(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ORE.enabled)) {
+		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
 			return;
 		}
 
@@ -59,7 +59,7 @@ public abstract class CaveInMixin {
 		}
 
 		if (pos.getY() < 32) {
-			if (level.getRandom().nextFloat() < UnfairCraftConfig.ORE.caveInChance.get().floatValue()) {
+			if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.caveInChance.get().floatValue()) {
 				for (int i = 1; i <= unfaircraft$scan_height; i++) {
 					BlockPos above = pos.above(i);
 					BlockState aboveState = level.getBlockState(above);

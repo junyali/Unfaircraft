@@ -44,6 +44,7 @@ public class UnfairCraftConfig {
 	public static final Mob MOB;
 	public static final Weather WEATHER;
 	public static final Phantom PHANTOM;
+	public static final Block BLOCK;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -105,7 +106,6 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Boolean> enableBiomeHazards;
 		public final ModConfigSpec.ConfigValue<Double> groundBreakChance;
 		public final ModConfigSpec.ConfigValue<Double> lowMiningMoraleChance;
-		public final ModConfigSpec.ConfigValue<Double> silkTouchFailChance;
 
 		private Player(ModConfigSpec.Builder builder) {
 			builder.push("player");
@@ -142,9 +142,6 @@ public class UnfairCraftConfig {
 			lowMiningMoraleChance = builder.comment("Chance for player to be affected with low morale underground per set interval")
 					.translation("unfaircraft.config.player.low_mining_morale_chance")
 					.defineInRange("low_mining_morale_chance", 0.1, 0.0, 1.0);
-			silkTouchFailChance = builder.comment("Chance for Silk Touch to fail")
-					.translation("unfaircraft.config.player.silk_touch_fail_chance")
-					.defineInRange("silk_touch_fail_chance", 0.2, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -328,8 +325,6 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> emeraldReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> diamondReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> ancientDebrisReplacementChance;
-		public final ModConfigSpec.ConfigValue<Double> mimicSpawnChance;
-		public final ModConfigSpec.ConfigValue<Double> caveInChance;
 
 		private Ore(ModConfigSpec.Builder builder) {
 			builder.push("ore");
@@ -351,12 +346,6 @@ public class UnfairCraftConfig {
 			ancientDebrisReplacementChance = builder.comment("Chance to replace ores in ancient debris ore veins")
 					.translation("unfaircraft.config.ore.ancient_debris_replacement_chance")
 					.defineInRange("ancient_debris_replacement_chance", 0.5, 0.0, 1.0);
-			mimicSpawnChance = builder.comment("Chance to spawn mimic entities when mining ores")
-					.translation("unfaircraft.config.ore.mimic_spawn_chance")
-					.defineInRange("mimic_spawn_chance", 0.15, 0.0, 1.0);
-			caveInChance = builder.comment("Chance for blocks to cave in when mining underground")
-					.translation("unfaircraft.config.ore.cave_in_chance")
-					.defineInRange("cave_in_chance", 0.05, 0.0, 1.0);
 			builder.pop();
 		}
 	}
@@ -845,6 +834,28 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Block {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> mimicSpawnChance;
+		public final ModConfigSpec.ConfigValue<Double> caveInChance;
+		public final ModConfigSpec.ConfigValue<Double> silkTouchFailChance;
+
+		private Block(ModConfigSpec.Builder builder) {
+			enabled = builder.comment("Enable Block mixin")
+					.translation("unfaircraft.config.block.enabled")
+					.define("enabled", true);
+			mimicSpawnChance = builder.comment("Chance to spawn mimic entities when mining ores")
+					.translation("unfaircraft.config.block.mimic_spawn_chance")
+					.defineInRange("mimic_spawn_chance", 0.15, 0.0, 1.0);
+			caveInChance = builder.comment("Chance for blocks to cave in when mining underground")
+					.translation("unfaircraft.config.block.cave_in_chance")
+					.defineInRange("cave_in_chance", 0.05, 0.0, 1.0);
+			silkTouchFailChance = builder.comment("Chance for Silk Touch to fail")
+					.translation("unfaircraft.config.block.silk_touch_fail_chance")
+					.defineInRange("silk_touch_fail_chance", 0.2, 0.0, 1.0);
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -891,6 +902,7 @@ public class UnfairCraftConfig {
 		MOB = new Mob(BUILDER);
 		WEATHER = new Weather(BUILDER);
 		PHANTOM = new Phantom(BUILDER);
+		BLOCK = new Block(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();

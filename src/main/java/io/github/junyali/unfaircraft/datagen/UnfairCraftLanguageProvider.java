@@ -51,7 +51,6 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enable_biome_hazards", "Enable Biome Hazards");
 		addConfig("ground_break_chance", "Ground Break Chance");
 		addConfig("low_mining_morale_chance", "Low Mining Morale Chance");
-		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
 
 		section("item_durability", "Item Durability");
 		addConfig("enabled", "Enable Item Durability Mixin");
@@ -103,8 +102,6 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("emerald_replacement_chance", "Emerald Ore Replacement Chance");
 		addConfig("diamond_replacement_chance", "Diamond Ore Replacement Chance");
 		addConfig("ancient_debris_replacement_chance", "Ancient Debris Replacement Chance");
-		addConfig("mimic_spawn_chance", "Mimic Spawn Chance");
-		addConfig("cave_in_chance", "Cave In Chance");
 
 		section("loot_table", "Loot Table");
 		addConfig("enabled", "Enable Loot Table Mixin");
@@ -226,5 +223,11 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("summon_chance", "Additional swarm summon chance");
 		addConfig("summon_min", "Min phantoms summoned");
 		addConfig("summon_max", "Max phantoms summoned");
+
+		section("block", "Block");
+		addConfig("enabled", "Enable Block mixin");
+		addConfig("mimic_spawn_chance", "Mimic Spawn Chance");
+		addConfig("cave_in_chance", "Cave In Chance");
+		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
 	}
 }
