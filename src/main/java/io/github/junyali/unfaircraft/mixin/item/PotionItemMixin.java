@@ -26,34 +26,34 @@ import java.util.Map;
 @Mixin(PotionItem.class)
 public class PotionItemMixin {
 	@Unique
-	private static Map<MobEffect, MobEffect> POSITIVE_TO_NEGATIVE_EFFECTS;
+	private static Map<MobEffect, Holder<MobEffect>> POSITIVE_TO_NEGATIVE_EFFECTS;
 
 	@Unique
 	private PotionContents unfaircraft$savedPotionContents;
 
 	@Unique
-	private static Map<MobEffect, MobEffect> unfaircraft$getEffectMap() {
+	private static Map<MobEffect, Holder<MobEffect>> unfaircraft$getEffectMap() {
 		if (POSITIVE_TO_NEGATIVE_EFFECTS == null) {
 			POSITIVE_TO_NEGATIVE_EFFECTS = new HashMap<>();
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.MOVEMENT_SPEED.value(), MobEffects.MOVEMENT_SLOWDOWN.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.DAMAGE_BOOST.value(), MobEffects.WEAKNESS.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.DAMAGE_RESISTANCE.value(), MobEffects.WITHER.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.HEAL.value(), MobEffects.HARM.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.REGENERATION.value(), MobEffects.POISON.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.HEALTH_BOOST.value(), MobEffects.WITHER.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.JUMP.value(), MobEffects.LEVITATION.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.NIGHT_VISION.value(), MobEffects.BLINDNESS.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.DIG_SPEED.value(), MobEffects.DIG_SLOWDOWN.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.SLOW_FALLING.value(), MobEffects.LEVITATION.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.ABSORPTION.value(), MobEffects.WITHER.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.SATURATION.value(), MobEffects.HUNGER.value());
-			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.LUCK.value(), MobEffects.UNLUCK.value());
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.MOVEMENT_SPEED.value(), MobEffects.MOVEMENT_SLOWDOWN);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.DAMAGE_BOOST.value(), MobEffects.WEAKNESS);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.DAMAGE_RESISTANCE.value(), MobEffects.WITHER);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.HEAL.value(), MobEffects.HARM);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.REGENERATION.value(), MobEffects.POISON);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.HEALTH_BOOST.value(), MobEffects.WITHER);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.JUMP.value(), MobEffects.LEVITATION);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.NIGHT_VISION.value(), MobEffects.BLINDNESS);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.DIG_SPEED.value(), MobEffects.DIG_SLOWDOWN);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.SLOW_FALLING.value(), MobEffects.LEVITATION);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.ABSORPTION.value(), MobEffects.WITHER);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.SATURATION.value(), MobEffects.HUNGER);
+			POSITIVE_TO_NEGATIVE_EFFECTS.put(MobEffects.LUCK.value(), MobEffects.UNLUCK);
 		}
 		return POSITIVE_TO_NEGATIVE_EFFECTS;
 	}
 
 	@Unique
-	private static void unfaircraft$registerOppositeEffect(MobEffect positive, MobEffect negative) {
+	private static void unfaircraft$registerOppositeEffect(MobEffect positive, Holder<MobEffect> negative) {
 		POSITIVE_TO_NEGATIVE_EFFECTS.put(positive, negative);
 	}
 
@@ -87,14 +87,14 @@ public class PotionItemMixin {
 			boolean backfired = false;
 
 			for (MobEffectInstance effect : potionContents.getAllEffects()) {
-				MobEffect negativeEffect = unfaircraft$getEffectMap().get(effect.getEffect().value());
+				Holder<MobEffect> negativeEffect = unfaircraft$getEffectMap().get(effect.getEffect().value());
 
 				if (negativeEffect != null) {
 					// idk if there's a more effective way of doing this lol
 					player.removeEffect(effect.getEffect());
 
 					player.addEffect(new MobEffectInstance(
-							Holder.direct(negativeEffect),
+							negativeEffect,
 							effect.getDuration(),
 							effect.getAmplifier(),
 							effect.isAmbient(),
