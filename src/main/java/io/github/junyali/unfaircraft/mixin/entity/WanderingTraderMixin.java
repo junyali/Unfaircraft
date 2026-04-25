@@ -65,6 +65,7 @@ public abstract class WanderingTraderMixin {
 
 				ItemStack scamResult = new ItemStack(scamItem, original.getResult().getCount());
 				scamResult.set(DataComponents.CUSTOM_NAME, Component.literal(fakeName));
+				scamResult.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 				modifiedOffers.add(new MerchantOffer(
 						costA,
 						costB,
