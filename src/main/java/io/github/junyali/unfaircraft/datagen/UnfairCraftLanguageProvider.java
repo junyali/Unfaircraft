@@ -51,6 +51,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enable_biome_hazards", "Enable Biome Hazards");
 		addConfig("ground_break_chance", "Ground Break Chance");
 		addConfig("low_mining_morale_chance", "Low Mining Morale Chance");
+		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
 
 		section("item_durability", "Item Durability");
 		addConfig("enabled", "Enable Item Durability Mixin");

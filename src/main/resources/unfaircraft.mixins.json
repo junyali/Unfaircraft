@@ -39,6 +39,7 @@
     "player.MiningMoraleMixin",
     "player.PlayerTickMixin",
     "player.SetFireMixin",
+    "player.SilkTouchMixin",
     "player.TotemMixin",
     "player.UnstableGroundMixin",
     "vehicle.MinecartMixin",

@@ -105,6 +105,7 @@
   "unfaircraft.config.player.pickup_fail_chance": "Item Pickup Fail Chance",
   "unfaircraft.config.player.random_drop_chance": "Random Item Drop Chance",
   "unfaircraft.config.player.self_attack_chance": "Self Attack Chance",
+  "unfaircraft.config.player.silk_touch_fail_chance": "Silk Touch Fail Chance",
   "unfaircraft.config.potion.backfire_chance": "Potion Backfire Chance",
   "unfaircraft.config.potion.enabled": "Enable Potion Mixin",
   "unfaircraft.config.sapling.death_chance": "Sapling Death Chance",
