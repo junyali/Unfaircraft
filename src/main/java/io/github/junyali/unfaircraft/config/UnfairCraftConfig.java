@@ -321,6 +321,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> diamondReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> ancientDebrisReplacementChance;
 		public final ModConfigSpec.ConfigValue<Double> mimicSpawnChance;
+		public final ModConfigSpec.ConfigValue<Double> caveInChance;
 
 		private Ore(ModConfigSpec.Builder builder) {
 			builder.push("ore");
@@ -345,6 +346,9 @@ public class UnfairCraftConfig {
 			mimicSpawnChance = builder.comment("Chance to spawn mimic entities when mining ores")
 					.translation("unfaircraft.config.ore.mimic_spawn_chance")
 					.defineInRange("mimic_spawn_chance", 0.15, 0.0, 1.0);
+			caveInChance = builder.comment("Chance for blocks to cave in when mining underground")
+					.translation("unfaircraft.config.ore.cave_in_chance")
+					.defineInRange("cave_in_chance", 0.05, 0.0, 1.0);
 			builder.pop();
 		}
 	}

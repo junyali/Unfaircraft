@@ -42,6 +42,7 @@
     "player.UnstableGroundMixin",
     "vehicle.MinecartMixin",
     "world.BedBlockMixin",
+    "world.CaveInMixin",
     "world.CaveWorldCarverMixin",
     "world.ChestBlockEntityMixin",
     "world.FarmBlockMixin",

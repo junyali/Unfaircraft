@@ -83,6 +83,7 @@
   "unfaircraft.config.mob_regen.rate": "Regen Rate (ticks)",
   "unfaircraft.config.nightmare_event.chance": "Nightmare Event Chance",
   "unfaircraft.config.ore.ancient_debris_replacement_chance": "Ancient Debris Replacement Chance",
+  "unfaircraft.config.ore.cave_in_chance": "Cave In Chance",
   "unfaircraft.config.ore.default_replacement_chance": "Default Ore Replacement Chance",
   "unfaircraft.config.ore.diamond_replacement_chance": "Diamond Ore Replacement Chance",
   "unfaircraft.config.ore.emerald_replacement_chance": "Emerald Ore Replacement Chance",

@@ -102,6 +102,7 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("diamond_replacement_chance", "Diamond Ore Replacement Chance");
 		addConfig("ancient_debris_replacement_chance", "Ancient Debris Replacement Chance");
 		addConfig("mimic_spawn_chance", "Mimic Spawn Chance");
+		addConfig("cave_in_chance", "Cave In Chance");
 
 		section("loot_table", "Loot Table");
 		addConfig("enabled", "Enable Loot Table Mixin");
