@@ -817,7 +817,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Integer> summonMax;
 
 		private Phantom(ModConfigSpec.Builder builder) {
-			builder.push("enabled");
+			builder.push("phantom");
 			enabled = builder.comment("Enable Phantom mixin")
 					.translation("unfaircraft.config.phantom.enabled")
 					.define("enabled", true);
