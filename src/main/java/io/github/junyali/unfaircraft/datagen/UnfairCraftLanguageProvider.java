@@ -230,5 +230,6 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("cave_in_chance", "Cave In Chance");
 		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
 		addConfig("fortune_reversal_chance", "Fortune Reversal Chance");
+		addConfig("vein_collapse_chance", "Vein Collapse Chance");
 	}
 }

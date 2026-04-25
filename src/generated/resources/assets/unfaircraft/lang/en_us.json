@@ -20,6 +20,7 @@
   "unfaircraft.config.block.fortune_reversal_chance": "Fortune Reversal Chance",
   "unfaircraft.config.block.mimic_spawn_chance": "Mimic Spawn Chance",
   "unfaircraft.config.block.silk_touch_fail_chance": "Silk Touch Fail Chance",
+  "unfaircraft.config.block.vein_collapse_chance": "Vein Collapse Chance",
   "unfaircraft.config.block_interaction.break_fail_chance": "Block Break Fail Chance",
   "unfaircraft.config.block_interaction.enabled": "Enable Block Interaction Mixin",
   "unfaircraft.config.block_interaction.place_fail_chance": "Block Place Fail Chance",

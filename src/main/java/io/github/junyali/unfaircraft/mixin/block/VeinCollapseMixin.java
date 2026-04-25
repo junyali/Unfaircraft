@@ -5,14 +5,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,6 +28,28 @@ import java.util.Set;
 
 @Mixin(Block.class)
 public abstract class VeinCollapseMixin {
+	@Unique
+	private static Set<Block> unfaircraft$ores;
+
+	@Unique
+	private static Set<Block> unfaircraft$getOres() {
+		if (unfaircraft$ores == null) {
+			unfaircraft$ores = Set.of(
+					Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE,
+					Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
+					Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE,
+					Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE,
+					Blocks.REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE,
+					Blocks.LAPIS_ORE, Blocks.DEEPSLATE_LAPIS_ORE,
+					Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE,
+					Blocks.EMERALD_ORE, Blocks.DEEPSLATE_EMERALD_ORE,
+					Blocks.NETHER_GOLD_ORE, Blocks.NETHER_QUARTZ_ORE,
+					Blocks.ANCIENT_DEBRIS
+			);
+		}
+		return unfaircraft$ores;
+	}
+
 	@Inject(
 			method = "playerDestroy",
 			at = @At("TAIL")
@@ -41,7 +67,9 @@ public abstract class VeinCollapseMixin {
 			return;
 		}
 
-		// check if block mined is ore here -->
+		if (!unfaircraft$ores.contains(state.getBlock())) {
+			return;
+		}
 
 		if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.veinCollapseChance.get().floatValue()) {
 			Queue<BlockPos> queue = new LinkedList<>();
@@ -58,11 +86,10 @@ public abstract class VeinCollapseMixin {
 					if (visited.contains(neighbour)) continue;
 					visited.add(neighbour);
 					BlockState neighbourState = level.getBlockState(neighbour);
-
-
+					if (!unfaircraft$ores.contains(neighbourState.getBlock())) continue;
 					level.removeBlock(neighbour, false);
 					level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, neighbour, Block.getId(neighbourState));
-					level.playSound();
+					level.playSound(null, player.blockPosition(), SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.0F, 0.0F);
 					queue.add(neighbour);
 					destroyed++;
 				}
