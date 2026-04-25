@@ -229,5 +229,6 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("mimic_spawn_chance", "Mimic Spawn Chance");
 		addConfig("cave_in_chance", "Cave In Chance");
 		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
+		addConfig("fortune_reversal_chance", "Fortune Reversal Chance");
 	}
 }

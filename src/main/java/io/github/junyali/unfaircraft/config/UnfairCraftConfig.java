@@ -839,6 +839,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Double> mimicSpawnChance;
 		public final ModConfigSpec.ConfigValue<Double> caveInChance;
 		public final ModConfigSpec.ConfigValue<Double> silkTouchFailChance;
+		public final ModConfigSpec.ConfigValue<Double> fortuneReversalChance;
 
 		private Block(ModConfigSpec.Builder builder) {
 			enabled = builder.comment("Enable Block mixin")
@@ -853,6 +854,9 @@ public class UnfairCraftConfig {
 			silkTouchFailChance = builder.comment("Chance for Silk Touch to fail")
 					.translation("unfaircraft.config.block.silk_touch_fail_chance")
 					.defineInRange("silk_touch_fail_chance", 0.2, 0.0, 1.0);
+			fortuneReversalChance = builder.comment("Chance for fortune to reverse effect")
+					.translation("unfaircraft.config.block.fortune_reversal_chance")
+					.defineInRange("fortune_reversal_chance", 0.2, 0.0, 1.0);
 		}
 	}
 

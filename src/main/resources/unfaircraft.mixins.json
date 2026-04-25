@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "block.CaveInMixin",
+    "block.FortuneMixin",
     "block.MimicOreMixin",
     "block.SilkTouchMixin",
     "combat.DamageReflectionMixin",

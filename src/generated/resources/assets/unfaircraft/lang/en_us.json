@@ -17,6 +17,7 @@
   "unfaircraft.config.bed.fire_duration": "Bed Fire Duration",
   "unfaircraft.config.block.cave_in_chance": "Cave In Chance",
   "unfaircraft.config.block.enabled": "Enable Block Mixin",
+  "unfaircraft.config.block.fortune_reversal_chance": "Fortune Reversal Chance",
   "unfaircraft.config.block.mimic_spawn_chance": "Mimic Spawn Chance",
   "unfaircraft.config.block.silk_touch_fail_chance": "Silk Touch Fail Chance",
   "unfaircraft.config.block_interaction.break_fail_chance": "Block Break Fail Chance",
