@@ -2,6 +2,8 @@ package io.github.junyali.unfaircraft.mixin.entity;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -15,6 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Villager.class)
 public abstract class VillagerMixin extends AbstractVillager {
@@ -29,6 +32,14 @@ public abstract class VillagerMixin extends AbstractVillager {
 	}
 
 	@Inject(
+			method = "createAttributes",
+			at = @At("RETURN")
+	)
+	private static void unfaircraft$addAttackAttribute(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
+		cir.getReturnValue().add(Attributes.ATTACK_DAMAGE, 2.0f);
+	}
+
+	@Inject(
 			method = "tick",
 			at = @At("HEAD")
 	)
@@ -40,14 +51,19 @@ public abstract class VillagerMixin extends AbstractVillager {
 		if (!unfaircraft$goalsRegistered) {
 			this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
-			entity -> entity instanceof Player player && this.getPlayerReputation(player) <= 15));
+			entity -> {
+				if (!(entity instanceof Player player)) {
+					return false;
+				}
+				return this.getPlayerReputation(player) <= -15;
+			}));
 			this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false));
 			unfaircraft$goalsRegistered = true;
 		}
 
 		if (this.getTarget() == null) {
 			Player nearestPlayer = this.level().getNearestPlayer(this, 16.0D);
-			if (nearestPlayer != null & this.getPlayerReputation(nearestPlayer) <= 15) {
+			if (nearestPlayer != null && this.getPlayerReputation(nearestPlayer) <= -15) {
 				this.setTarget(nearestPlayer);
 			}
 		}
