@@ -18,6 +18,8 @@
     "entity.MobRegenMixin",
     "entity.NeutralMobMixin",
     "entity.SkeletonMixin",
+    "entity.VillagerEntityMixin",
+    "entity.VillagerMixin",
     "entity.WanderingTraderMixin",
     "entity.ZombieMixin",
     "food.FoodDataMixin",

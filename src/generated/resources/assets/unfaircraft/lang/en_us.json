@@ -72,6 +72,7 @@
   "unfaircraft.config.loot_table.troll_chance": "Troll Loot Chance",
   "unfaircraft.config.merchant_offer.enabled": "Enable Merchant Offer Mixin",
   "unfaircraft.config.merchant_offer.multiplier": "Multiplier for merchant prices",
+  "unfaircraft.config.merchant_offer.villager_retaliation": "Enable Villager Retaliation",
   "unfaircraft.config.merchant_offer.wandering_trader_scam_chance": "Wandering Trader Scam Chance",
   "unfaircraft.config.merchant_offer.wandering_trader_scam_enabled": "Enable Wandering Trader Scam Offers",
   "unfaircraft.config.minecart.enabled": "Enable Minecart Mixin",

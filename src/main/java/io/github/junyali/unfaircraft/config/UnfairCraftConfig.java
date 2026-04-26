@@ -739,6 +739,7 @@ public class UnfairCraftConfig {
 		public final ModConfigSpec.ConfigValue<Integer> multiplier;
 		public final ModConfigSpec.ConfigValue<Boolean> wanderingTraderScamEnabled;
 		public final ModConfigSpec.ConfigValue<Double> wanderingTraderScamChance;
+		public final ModConfigSpec.ConfigValue<Boolean> villageRetaliation;
 
 		private MerchantOffer(ModConfigSpec.Builder builder) {
 			builder.push("merchant_offer");
@@ -754,6 +755,9 @@ public class UnfairCraftConfig {
 			wanderingTraderScamChance = builder.comment("Chance for Wandering Traders to offer scam trades")
 					.translation("unfaircraft.config.merchant_offer.wandering_trader_scam_chance")
 					.defineInRange("wandering_trader_scam_chance", 0.25, 0.0, 1.0);
+			villageRetaliation = builder.comment("Enable Villager Retaliation")
+					.translation("unfaircraft.config.merchant_offer.villager_retaliation")
+					.define("villager_retaliation", true);
 			builder.pop();
 		}
 	}
