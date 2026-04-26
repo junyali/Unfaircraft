@@ -45,6 +45,7 @@ public class UnfairCraftConfig {
 	public static final Weather WEATHER;
 	public static final Phantom PHANTOM;
 	public static final Block BLOCK;
+	public static final Ghast GHAST;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -870,6 +871,30 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Ghast {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> summonChance;
+		public final ModConfigSpec.ConfigValue<Integer> summonMin;
+		public final ModConfigSpec.ConfigValue<Integer> summonMax;
+
+		private Ghast(ModConfigSpec.Builder builder) {
+			builder.push("ghast");
+			enabled = builder.comment("Enable Ghast mixin")
+					.translation("unfaircraft.config.ghast.enabled")
+					.define("enabled", true);
+			summonChance = builder.comment("Chance for ghasts to summon additional swarms when spawned")
+					.translation("unfaircraft.config.ghast.summon_chance")
+					.defineInRange("summon_chance", 0.5, 0.0, 1.0);
+			summonMin = builder.comment("Minimum number of ghasts to summon")
+					.translation("unfaircraft.config.ghast.summon_min")
+					.define("summon_min", 2);
+			summonMax = builder.comment("Maximum number of ghasts to summon")
+					.translation("unfaircraft.config.ghast.summon_max")
+					.define("summon_max", 4);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -917,6 +942,7 @@ public class UnfairCraftConfig {
 		WEATHER = new Weather(BUILDER);
 		PHANTOM = new Phantom(BUILDER);
 		BLOCK = new Block(BUILDER);
+		GHAST = new Ghast(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();

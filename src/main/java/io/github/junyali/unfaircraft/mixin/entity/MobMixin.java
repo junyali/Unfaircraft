@@ -9,6 +9,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.item.ItemStack;
@@ -69,6 +70,32 @@ public abstract class MobMixin {
 
 				for (int i = 0; i < extras; i++) {
 					Phantom extra = EntityType.PHANTOM.create(serverLevel);
+					if (extra == null) continue;
+					double offsetX = mob.getX() + (mob.getRandom().nextDouble() - 0.5) * 10;
+					double offsetZ = mob.getZ() + (mob.getRandom().nextDouble() - 0.5) * 10;
+					extra.moveTo(offsetX, mob.getY(), offsetZ, mob.getYRot(), 0.0f);
+					extra.finalizeSpawn(level, difficulty, MobSpawnType.TRIGGERED, null);
+					serverLevel.addFreshEntity(extra);
+				}
+			}
+		} else if (mob instanceof Ghast) {
+			if (spawnType != MobSpawnType.NATURAL) {
+				return;
+			}
+
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.GHAST.enabled)) {
+				return;
+			}
+
+			float summonChance = UnfairCraftConfig.GHAST.summonChance.get().floatValue();
+
+			if (serverLevel.random.nextDouble() < summonChance) {
+				int minGhasts = UnfairCraftConfig.GHAST.summonMin.get();
+				int maxGhasts = UnfairCraftConfig.GHAST.summonMax.get();
+				int extras = minGhasts + serverLevel.random.nextInt(maxGhasts - minGhasts + 1);
+
+				for (int i = 0; i < extras; i++) {
+					Ghast extra = EntityType.GHAST.create(serverLevel);
 					if (extra == null) continue;
 					double offsetX = mob.getX() + (mob.getRandom().nextDouble() - 0.5) * 10;
 					double offsetZ = mob.getZ() + (mob.getRandom().nextDouble() - 0.5) * 10;

@@ -232,5 +232,11 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
 		addConfig("fortune_reversal_chance", "Fortune Reversal Chance");
 		addConfig("vein_collapse_chance", "Vein Collapse Chance");
+
+		section("ghast", "Ghast");
+		addConfig("enabled", "Enable Ghast Mixin");
+		addConfig("summon_chance", "Additional ghast summon chance");
+		addConfig("summon_min", "Min ghasts summoned");
+		addConfig("summon_max", "Max ghasts summoned");
 	}
 }
