@@ -53,7 +53,7 @@
   "unfaircraft.config.damage_reflection.percentage_min": "Min Reflection Percentage",
   "unfaircraft.config.drunk_jumping.enabled": "Enable Drunk Jumping Mixin",
   "unfaircraft.config.end_crystal.enabled": "Enable End Crystal Mixin",
-  "unfaircraft.config.end_crystal.explosion_power": "Explosion Power",
+  "unfaircraft.config.end_crystal.explosion_radius": "Explosion Radius",
   "unfaircraft.config.end_crystal.healing_multiplier": "Healing Multiplier",
   "unfaircraft.config.ender_dragon.aggression_chance": "Aggression Chance",
   "unfaircraft.config.ender_dragon.enabled": "Enable Ender Dragon Mixin",

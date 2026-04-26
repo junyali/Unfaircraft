@@ -949,7 +949,7 @@ public class UnfairCraftConfig {
 	public static class EndCrystal {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> healingMultiplier;
-		public final ModConfigSpec.ConfigValue<Double> explosionPower;
+		public final ModConfigSpec.ConfigValue<Double> explosionRadius;
 
 		private EndCrystal(ModConfigSpec.Builder builder) {
 			builder.push("end_crystal");
@@ -959,9 +959,9 @@ public class UnfairCraftConfig {
 			healingMultiplier = builder.comment("Healing Multiplier")
 					.translation("unfaircraft.config.end_crystal.healing_multiplier")
 					.define("healing_multiplier", 3.0);
-			explosionPower = builder.comment("Explosion Power")
-					.translation("unfaircraft.config.end_crystal.explosion_power")
-					.define("explosion_power", 12.0);
+			explosionRadius = builder.comment("Explosion Radius")
+					.translation("unfaircraft.config.end_crystal.explosion_radius")
+					.define("explosion_radius", 12.0);
 			builder.pop();
 		}
 	}

@@ -32,7 +32,7 @@ public abstract class EndCrystalMixin {
 			);
 		}
 
-		float modifiedPower = UnfairCraftConfig.END_CRYSTAL.explosionPower.get().floatValue();
+		float modifiedPower = UnfairCraftConfig.END_CRYSTAL.explosionRadius.get().floatValue();
 		return instance.explode(
 				source,
 				x,

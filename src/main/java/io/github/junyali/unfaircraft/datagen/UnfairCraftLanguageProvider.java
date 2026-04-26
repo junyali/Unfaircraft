@@ -254,6 +254,6 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		section("end_crystal", "End Crystal");
 		addConfig("enabled", "Enable End Crystal Mixin");
 		addConfig("healing_multiplier", "Healing Multiplier");
-		addConfig("explosion_power", "Explosion Power");
+		addConfig("explosion_radius", "Explosion Radius");
 	}
 }
