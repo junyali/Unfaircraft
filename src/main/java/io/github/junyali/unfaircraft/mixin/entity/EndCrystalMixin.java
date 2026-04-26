@@ -2,40 +2,44 @@ package io.github.junyali.unfaircraft.mixin.entity;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EndCrystal.class)
 public abstract class EndCrystalMixin {
-	@Inject(
+	@Redirect(
 			method = "hurt",
-			at = @At("RETURN")
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+			)
 	)
-	private void unfaircraft$modifyCrystalExplosion(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-		if (!cir.getReturnValue()) {
-			return;
-		}
-
+	private Explosion unfaircraft$modifyCrystalExplosion(Level instance, Entity source, DamageSource damageSource, ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Level.ExplosionInteraction explosionInteraction) {
 		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.END_CRYSTAL.enabled)) {
-			return;
+			return instance.explode(
+					source,
+					x,
+					y,
+					z,
+					radius,
+					explosionInteraction
+			);
 		}
 
-		EndCrystal self = (EndCrystal) (Object) this;
-		if (self.level().isClientSide()) {
-			return;
-		}
-
-		self.level().explode(
-				self,
-				self.getX(),
-				self.getY(),
-				self.getZ(),
-				UnfairCraftConfig.END_CRYSTAL.explosionPower.get().floatValue(),
-				Level.ExplosionInteraction.BLOCK
+		float modifiedPower = UnfairCraftConfig.END_CRYSTAL.explosionPower.get().floatValue();
+		return instance.explode(
+				source,
+				x,
+				y,
+				z,
+				modifiedPower,
+				explosionInteraction
 		);
 	}
 }
