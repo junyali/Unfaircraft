@@ -9,6 +9,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Phantom;
@@ -100,6 +101,32 @@ public abstract class MobMixin {
 
 				for (int i = 0; i < extras; i++) {
 					Ghast extra = EntityType.GHAST.create(serverLevel);
+					if (extra == null) continue;
+					double offsetX = mob.getX() + (mob.getRandom().nextDouble() - 0.5) * 10;
+					double offsetZ = mob.getZ() + (mob.getRandom().nextDouble() - 0.5) * 10;
+					extra.moveTo(offsetX, mob.getY(), offsetZ, mob.getYRot(), 0.0f);
+					extra.finalizeSpawn(level, difficulty, MobSpawnType.TRIGGERED, null);
+					serverLevel.addFreshEntity(extra);
+				}
+			}
+		} else if (mob instanceof Blaze) {
+			if (spawnType != MobSpawnType.NATURAL) {
+				return;
+			}
+
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLAZE.enabled)) {
+				return;
+			}
+
+			float summonChance = UnfairCraftConfig.BLAZE.summonChance.get().floatValue();
+
+			if (serverLevel.random.nextDouble() < summonChance) {
+				int minBlazes = UnfairCraftConfig.BLAZE.summonMin.get();
+				int maxBlazes = UnfairCraftConfig.BLAZE.summonMax.get();
+				int extras = minBlazes + serverLevel.random.nextInt(maxBlazes - minBlazes + 1);
+
+				for (int i = 0; i < extras; i++) {
+					Blaze extra = EntityType.BLAZE.create(serverLevel);
 					if (extra == null) continue;
 					double offsetX = mob.getX() + (mob.getRandom().nextDouble() - 0.5) * 10;
 					double offsetZ = mob.getZ() + (mob.getRandom().nextDouble() - 0.5) * 10;

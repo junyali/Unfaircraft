@@ -238,5 +238,11 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("summon_chance", "Additional ghast summon chance");
 		addConfig("summon_min", "Min ghasts summoned");
 		addConfig("summon_max", "Max ghasts summoned");
+
+		section("blaze", "Blaze");
+		addConfig("enabled", "Enable Blaze Mixin");
+		addConfig("summon_chance", "Additional blaze summon chance");
+		addConfig("summon_min", "Min blazes summoned");
+		addConfig("summon_max", "Max blazes summoned");
 	}
 }

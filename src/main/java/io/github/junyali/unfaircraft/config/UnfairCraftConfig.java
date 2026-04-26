@@ -46,6 +46,7 @@ public class UnfairCraftConfig {
 	public static final Phantom PHANTOM;
 	public static final Block BLOCK;
 	public static final Ghast GHAST;
+	public static final Blaze BLAZE;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -895,6 +896,30 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Blaze {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> summonChance;
+		public final ModConfigSpec.ConfigValue<Integer> summonMin;
+		public final ModConfigSpec.ConfigValue<Integer> summonMax;
+
+		private Blaze(ModConfigSpec.Builder builder) {
+			builder.push("blaze");
+			enabled = builder.comment("Enable Blaze mixin")
+					.translation("unfaircraft.config.blaze.enabled")
+					.define("enabled", true);
+			summonChance = builder.comment("Chance for blazes to summon additional swarms when spawned")
+					.translation("unfaircraft.config.blaze.summon_chance")
+					.defineInRange("summon_chance", 0.5, 0.0, 1.0);
+			summonMin = builder.comment("Minimum number of blazes to summon")
+					.translation("unfaircraft.config.blaze.summon_min")
+					.define("summon_min", 2);
+			summonMax = builder.comment("Maximum number of blazes to summon")
+					.translation("unfaircraft.config.blaze.summon_max")
+					.define("summon_max", 4);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -943,6 +968,7 @@ public class UnfairCraftConfig {
 		PHANTOM = new Phantom(BUILDER);
 		BLOCK = new Block(BUILDER);
 		GHAST = new Ghast(BUILDER);
+		BLAZE = new Blaze(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
