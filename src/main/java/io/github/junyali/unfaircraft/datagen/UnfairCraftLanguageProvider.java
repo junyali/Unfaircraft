@@ -244,5 +244,11 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("summon_chance", "Additional blaze summon chance");
 		addConfig("summon_min", "Min blazes summoned");
 		addConfig("summon_max", "Max blazes summoned");
+
+		section("ender_dragon", "Ender Dragon");
+		addConfig("enabled", "Enable Ender Dragon Mixin");
+		addConfig("health_multiplier", "Health Multiplier");
+		addConfig("speed_multiplier", "Speed Multiplier");
+		addConfig("aggression_chance", "Aggression Chance");
 	}
 }

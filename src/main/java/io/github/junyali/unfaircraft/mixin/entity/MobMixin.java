@@ -1,14 +1,20 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.enderdragon.phases.DragonPhaseInstance;
+import net.minecraft.world.entity.boss.enderdragon.phases.EnderDragonPhase;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
@@ -135,6 +141,29 @@ public abstract class MobMixin {
 					serverLevel.addFreshEntity(extra);
 				}
 			}
+		} else if (mob instanceof EnderDragon) {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDER_DRAGON.enabled)) {
+				return;
+			}
+
+			AttributeInstance health = mob.getAttribute(Attributes.MAX_HEALTH);
+			if (health != null) {
+				health.addPermanentModifier(new AttributeModifier(
+						ResourceLocation.fromNamespaceAndPath(UnfairCraft.MODID, "dragon_health"),
+						(UnfairCraftConfig.ENDER_DRAGON.healthMultiplier.get().floatValue() * 100),
+						AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+				));
+				mob.setHealth(mob.getMaxHealth());
+			}
+
+			AttributeInstance speed = mob.getAttribute(Attributes.MOVEMENT_SPEED);
+			if (speed != null) {
+				speed.addPermanentModifier(new AttributeModifier(
+						ResourceLocation.fromNamespaceAndPath(UnfairCraft.MODID, "dragon_speed"),
+						(UnfairCraftConfig.ENDER_DRAGON.speedMultiplier.get().floatValue()) - 1.0,
+						AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+				));
+			}
 		}
 	}
 
@@ -210,6 +239,34 @@ public abstract class MobMixin {
 					if (followRange != null) {
 						followRange.setBaseValue(32.0);
 					}
+				}
+			}
+		}
+	}
+
+	@Inject(
+			method = "tick",
+			at = @At("TAIL")
+	)
+	private void unfaircraft$onTickTail(CallbackInfo ci) {
+		Mob mob = (Mob) (Object) this;
+
+		if (mob instanceof EnderDragon) {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDER_DRAGON.enabled)) {
+				return;
+			}
+
+			DragonPhaseInstance dragonPhaseInstance = ((EnderDragon) mob).getPhaseManager().getCurrentPhase();
+
+			if (dragonPhaseInstance.getPhase() == EnderDragonPhase.HOLDING_PATTERN) {
+				if (mob.getRandom().nextDouble() < UnfairCraftConfig.ENDER_DRAGON.aggressionChance.get().floatValue()) {
+					((EnderDragon) mob).getPhaseManager().setPhase(EnderDragonPhase.STRAFE_PLAYER);
+				}
+			}
+
+			if (dragonPhaseInstance.getPhase() == EnderDragonPhase.LANDING_APPROACH) {
+				if (mob.getRandom().nextDouble() < UnfairCraftConfig.ENDER_DRAGON.aggressionChance.get().floatValue()) {
+					((EnderDragon) mob).getPhaseManager().setPhase(EnderDragonPhase.CHARGING_PLAYER);
 				}
 			}
 		}

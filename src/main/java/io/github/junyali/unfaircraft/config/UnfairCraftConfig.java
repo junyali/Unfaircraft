@@ -47,6 +47,7 @@ public class UnfairCraftConfig {
 	public static final Block BLOCK;
 	public static final Ghast GHAST;
 	public static final Blaze BLAZE;
+	public static final EnderDragon ENDER_DRAGON;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -920,6 +921,30 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class EnderDragon {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> healthMultiplier;
+		public final ModConfigSpec.ConfigValue<Double> speedMultiplier;
+		public final ModConfigSpec.ConfigValue<Double> aggressionChance;
+
+		private EnderDragon(ModConfigSpec.Builder builder) {
+			builder.push("ender_dragon");
+			enabled = builder.comment("Enable Ender Dragon mixin")
+					.translation("unfaircraft.config.ender_dragon.enabled")
+					.define("enabled", true);
+			healthMultiplier = builder.comment("Health Multiplier")
+					.translation("unfaircraft.config.ender_dragon.health_multiplier")
+					.define("health_multiplier", 2.0);
+			speedMultiplier = builder.comment("Speed Multiplier")
+					.translation("unfaircraft.config.ender_dragon.speed_multiplier")
+					.define("speed_multiplier", 2.5);
+			aggressionChance = builder.comment("Chance for Ender Dragon to be more aggressive per tick")
+					.translation("unfaircraft.config.ender_dragon.aggression_chance")
+					.defineInRange("aggression_chance", 0.02, 0.0, 1.0);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -969,6 +994,7 @@ public class UnfairCraftConfig {
 		BLOCK = new Block(BUILDER);
 		GHAST = new Ghast(BUILDER);
 		BLAZE = new Blaze(BUILDER);
+		ENDER_DRAGON = new EnderDragon(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
