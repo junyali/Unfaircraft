@@ -48,6 +48,7 @@ public class UnfairCraftConfig {
 	public static final Ghast GHAST;
 	public static final Blaze BLAZE;
 	public static final EnderDragon ENDER_DRAGON;
+	public static final EndCrystal END_CRYSTAL;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -945,6 +946,26 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class EndCrystal {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> healingMultiplier;
+		public final ModConfigSpec.ConfigValue<Double> explosionPower;
+
+		private EndCrystal(ModConfigSpec.Builder builder) {
+			builder.push("end_crystal");
+			enabled = builder.comment("Enable End Crystal mixin")
+					.translation("unfaircraft.config.end_crystal.enabled")
+					.define("enabled", true);
+			healingMultiplier = builder.comment("Healing Multiplier")
+					.translation("unfaircraft.config.end_crystal.healing_multiplier")
+					.define("healing_multiplier", 3.0);
+			explosionPower = builder.comment("Explosion Power")
+					.translation("unfaircraft.config.end_crystal.explosion_power")
+					.define("explosion_power", 12.0);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -995,6 +1016,7 @@ public class UnfairCraftConfig {
 		GHAST = new Ghast(BUILDER);
 		BLAZE = new Blaze(BUILDER);
 		ENDER_DRAGON = new EnderDragon(BUILDER);
+		END_CRYSTAL = new EndCrystal(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();

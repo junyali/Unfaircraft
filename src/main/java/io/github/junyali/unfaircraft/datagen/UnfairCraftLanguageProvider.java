@@ -250,5 +250,10 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("health_multiplier", "Health Multiplier");
 		addConfig("speed_multiplier", "Speed Multiplier");
 		addConfig("aggression_chance", "Aggression Chance");
+
+		section("end_crystal", "End Crystal");
+		addConfig("enabled", "Enable End Crystal Mixin");
+		addConfig("healing_multiplier", "Healing Multiplier");
+		addConfig("explosion_power", "Explosion Power");
 	}
 }
