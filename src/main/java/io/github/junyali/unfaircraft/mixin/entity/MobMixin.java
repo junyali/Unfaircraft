@@ -6,6 +6,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Phantom;
@@ -17,12 +19,17 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Mob.class)
 public abstract class MobMixin {
+	@Unique
+	private boolean unfaircraft$ironGolemAttributesInitialised = false;
+
 	@Inject(
 			method = "finalizeSpawn",
 			at = @At("RETURN")
@@ -95,6 +102,58 @@ public abstract class MobMixin {
 
 		if (self.getRandom().nextFloat() < UnfairCraftConfig.MOB.hostileDaylightSpawnChance.get().floatValue()) {
 			cir.setReturnValue(true);
+		}
+	}
+
+	@Inject(
+			method = "tick",
+			at = @At("HEAD")
+	)
+	private void unfaircraft$initialiseAttributes(CallbackInfo ci) {
+		Mob mob = (Mob) (Object) this;
+
+		if (mob instanceof IronGolem) {
+			if (!unfaircraft$ironGolemAttributesInitialised) {
+				unfaircraft$ironGolemAttributesInitialised = true;
+
+				if (UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+					AttributeInstance maxHealth = mob.getAttribute(Attributes.MAX_HEALTH);
+					if (maxHealth != null) {
+						maxHealth.setBaseValue(200.0);
+						mob.setHealth(200.0f);
+					}
+
+					AttributeInstance movementSpeed = mob.getAttribute(Attributes.MOVEMENT_SPEED);
+					if (movementSpeed != null) {
+						movementSpeed.setBaseValue(0.35);
+					}
+
+					AttributeInstance attackDamage = mob.getAttribute(Attributes.ATTACK_DAMAGE);
+					if (attackDamage != null) {
+						attackDamage.setBaseValue(20.0);
+					}
+
+					AttributeInstance attackKnockback = mob.getAttribute(Attributes.ATTACK_KNOCKBACK);
+					if (attackKnockback != null) {
+						attackKnockback.setBaseValue(2.0);
+					}
+
+					AttributeInstance interactionRange = mob.getAttribute(Attributes.ENTITY_INTERACTION_RANGE);
+					if (interactionRange != null) {
+						interactionRange.setBaseValue(6.0);
+					}
+
+					AttributeInstance waterMovement = mob.getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY);
+					if (waterMovement != null) {
+						waterMovement.setBaseValue(1.0);
+					}
+
+					AttributeInstance followRange = mob.getAttribute(Attributes.FOLLOW_RANGE);
+					if (followRange != null) {
+						followRange.setBaseValue(32.0);
+					}
+				}
+			}
 		}
 	}
 }

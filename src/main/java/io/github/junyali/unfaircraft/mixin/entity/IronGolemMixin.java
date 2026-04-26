@@ -4,7 +4,6 @@ import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.player.Player;
@@ -18,26 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class IronGolemMixin {
 	@Inject(
 			method = "createAttributes",
-			at = @At("RETURN"),
-			cancellable = true
+			at = @At("RETURN")
 	)
 	private static void unfaircraft$buffGolemAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-		try {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
-				return;
-			}
-		} catch (Exception e) {
-			return;
-		}
-
-		AttributeSupplier.Builder builder = cir.getReturnValue();
-		builder.add(Attributes.MAX_HEALTH, 200.0D)
-				.add(Attributes.MOVEMENT_SPEED, 0.35D)
-				.add(Attributes.ATTACK_DAMAGE, 20.0D)
-				.add(Attributes.ATTACK_KNOCKBACK, 2.0D)
-				.add(Attributes.ENTITY_INTERACTION_RANGE, 6.0F)
-				.add(Attributes.WATER_MOVEMENT_EFFICIENCY, 1.0D)
-				.add(Attributes.FOLLOW_RANGE, 32.0D);
+		cir.getReturnValue().add(Attributes.WATER_MOVEMENT_EFFICIENCY, 0.0);
 	}
 
 	@Inject(
