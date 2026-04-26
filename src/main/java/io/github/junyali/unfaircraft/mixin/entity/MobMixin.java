@@ -61,6 +61,10 @@ public abstract class MobMixin {
 				return;
 			}
 
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PHANTOM.enabled)) {
+				return;
+			}
+
 			float summonChance = UnfairCraftConfig.PHANTOM.summonChance.get().floatValue();
 
 			if (serverLevel.random.nextDouble() < summonChance) {
