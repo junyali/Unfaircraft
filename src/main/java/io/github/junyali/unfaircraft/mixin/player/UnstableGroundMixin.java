@@ -29,7 +29,8 @@ public abstract class UnstableGroundMixin {
 			return;
 		}
 
-		if (!(self.getDeltaMovement().horizontalDistanceSqr() > 1.0E-8)) {
+		double horizontalSpeed = self.getDeltaMovement().horizontalDistanceSqr();
+		if (horizontalSpeed < 0.0001) {
 			return;
 		}
 
