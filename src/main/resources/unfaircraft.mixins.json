@@ -49,6 +49,7 @@
     "player.DrunkJumpingMixin",
     "player.FallDamageMixin",
     "player.FoodRotMixin",
+    "player.LadderSlipMixin",
     "player.MiningMoraleMixin",
     "player.PlayerTickMixin",
     "player.SetFireMixin",
