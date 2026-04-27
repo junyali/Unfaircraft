@@ -31,7 +31,7 @@ public class ScaffoldingMixin {
 	)
 	private void unfaircraft$scaffoldingCollapse(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo ci) {
 		if (state.getBlock() instanceof ScaffoldingBlock scaffoldingBlock) {
-			if (UnfairCraftConfig.isEnabled(UnfairCraftConfig.SCAFFOLDING.enabled)) {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SCAFFOLDING.enabled)) {
 				return;
 			}
 
