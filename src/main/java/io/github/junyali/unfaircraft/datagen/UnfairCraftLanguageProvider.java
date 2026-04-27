@@ -271,5 +271,10 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("smelt_theft_chance", "Smelt Theft Chance");
 		addConfig("explosion_threshold", "Explosion Threshold");
 		addConfig("explosion_chance", "Explosion Chance");
+
+		section("scaffolding", "Scaffolding");
+		addConfig("enabled", "Enable Scaffolding Mixin");
+		addConfig("collapse_chance", "Collapse Chance");
+		addConfig("collapse_delay", "Collapse Delay");
 	}
 }
