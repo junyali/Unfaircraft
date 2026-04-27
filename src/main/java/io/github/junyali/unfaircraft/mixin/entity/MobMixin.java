@@ -116,7 +116,7 @@ public abstract class MobMixin {
 				}
 			}
 		} else if (mob instanceof Blaze) {
-			if (spawnType != MobSpawnType.NATURAL) {
+			if (spawnType != MobSpawnType.SPAWNER) {
 				return;
 			}
 
