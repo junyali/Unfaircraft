@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LadderSlipMixin {
 	@Inject(
 			method = "tick",
-			at = @At("TAIL")
+			at = @At("HEAD")
 	)
 	private void unfaircraft$ladderSlip(CallbackInfo ci) {
 		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
@@ -31,7 +31,8 @@ public abstract class LadderSlipMixin {
 
 		if (self.getRandom().nextFloat() < UnfairCraftConfig.PLAYER.ladderSlipChance.get().floatValue()) {
 			Vec3 current = self.getDeltaMovement();
-			self.setDeltaMovement(current.x, -0.4, current.z);
+			self.setDeltaMovement(current.x, -3.0, current.z);
+			self.hurtMarked = true;
 		}
 	}
 }

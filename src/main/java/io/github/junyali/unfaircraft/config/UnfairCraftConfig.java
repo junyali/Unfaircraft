@@ -154,7 +154,7 @@ public class UnfairCraftConfig {
 					.defineInRange("low_mining_morale_chance", 0.1, 0.0, 1.0);
 			ladderSlipChance = builder.comment("Ladder Slip Chance")
 					.translation("unfaircraft.config.player.ladder_slip_chance")
-					.defineInRange("ladder_slip_chance", 0.005, 0.0, 1.0);
+					.defineInRange("ladder_slip_chance", 0.1, 0.0, 1.0);
 			builder.pop();
 		}
 	}
