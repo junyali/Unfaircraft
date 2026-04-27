@@ -264,5 +264,12 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		section("door", "Door");
 		addConfig("enabled", "Enable Door Mixin");
 		addConfig("jam_chance", "Door Jam Chance");
+
+		section("furnace", "Furnace");
+		addConfig("enabled", "Enable Furnace Mixin");
+		addConfig("fuel_theft_chance", "Fuel Theft Chance");
+		addConfig("smelt_theft_chance", "Smelt Theft Chance");
+		addConfig("explosion_threshold", "Explosion Threshold");
+		addConfig("explosion_chance", "Explosion Chance");
 	}
 }

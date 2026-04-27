@@ -16,6 +16,7 @@
     "entity.EndCrystalMixin",
     "entity.EnderDragonEntityMixin",
     "entity.EndermanMixin",
+    "entity.FurnaceEntityMixin",
     "entity.IronGolemMixin",
     "entity.MobMixin",
     "entity.MobRegenMixin",

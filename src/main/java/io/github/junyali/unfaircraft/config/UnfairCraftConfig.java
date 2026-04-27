@@ -51,6 +51,7 @@ public class UnfairCraftConfig {
 	public static final EndCrystal END_CRYSTAL;
 	public static final Shulker SHULKER;
 	public static final Door DOOR;
+	public static final Furnace FURNACE;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -1005,6 +1006,34 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Furnace {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> fuelTheftChance;
+		public final ModConfigSpec.ConfigValue<Double> smeltTheftChance;
+		public final ModConfigSpec.ConfigValue<Integer> explosionThreshold;
+		public final ModConfigSpec.ConfigValue<Double> explosionChance;
+
+		private Furnace(ModConfigSpec.Builder builder) {
+			builder.push("furnace");
+			enabled = builder.comment("Enable Furnace mixin")
+					.translation("unfaircraft.config.furnace.enabled")
+					.define("enabled", true);
+			fuelTheftChance = builder.comment("Fuel Theft Chance")
+					.translation("unfaircraft.config.furnace.fuel_theft_chance")
+					.defineInRange("fuel_theft_chance", 0.02, 0.0, 1.0);
+			smeltTheftChance = builder.comment("Smelt Theft Chance")
+					.translation("unfaircraft.config.furnace.smelt_theft_chance")
+					.defineInRange("smelt_theft_chance", 0.05, 0.0, 1.0);
+			explosionThreshold = builder.comment("Explosion Threshold")
+					.translation("unfaircraft.config.furnace.explosion_threshold")
+					.define("explosion_threshold", 1200);
+			explosionChance = builder.comment("Explosion Chance per tick")
+					.translation("unfaircraft.config.furnace.explosion_chance")
+					.defineInRange("explosion_chance", 0.01, 0.0, 1.0);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -1058,6 +1087,7 @@ public class UnfairCraftConfig {
 		END_CRYSTAL = new EndCrystal(BUILDER);
 		SHULKER = new Shulker(BUILDER);
 		DOOR = new Door(BUILDER);
+		FURNACE = new Furnace(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
