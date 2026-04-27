@@ -20,14 +20,28 @@ public abstract class EndCrystalMixin {
 					target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
 			)
 	)
-	private Explosion unfaircraft$modifyCrystalExplosion(Level instance, Entity source, DamageSource damageSource, ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Level.ExplosionInteraction explosionInteraction) {
+	private Explosion unfaircraft$modifyCrystalExplosion(
+			Level instance,
+			Entity source,
+			DamageSource damageSource,
+			ExplosionDamageCalculator damageCalculator,
+			double x,
+			double y,
+			double z,
+			float radius,
+			boolean fire,
+			Level.ExplosionInteraction explosionInteraction
+	) {
 		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.END_CRYSTAL.enabled)) {
 			return instance.explode(
 					source,
+					damageSource,
+					damageCalculator,
 					x,
 					y,
 					z,
 					radius,
+					fire,
 					explosionInteraction
 			);
 		}
@@ -35,10 +49,13 @@ public abstract class EndCrystalMixin {
 		float modifiedPower = UnfairCraftConfig.END_CRYSTAL.explosionRadius.get().floatValue();
 		return instance.explode(
 				source,
+				damageSource,
+				damageCalculator,
 				x,
 				y,
 				z,
 				modifiedPower,
+				fire,
 				explosionInteraction
 		);
 	}
