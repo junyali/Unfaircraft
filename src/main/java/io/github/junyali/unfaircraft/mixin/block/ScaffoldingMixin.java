@@ -43,10 +43,6 @@ public class ScaffoldingMixin {
 				return;
 			}
 
-			if (!player.onGround()) {
-				return;
-			}
-
 			long now = level.getGameTime();
 
 			if (!unfaircraft$collapsing.containsKey(pos)) {
