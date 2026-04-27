@@ -53,6 +53,7 @@ public class UnfairCraftConfig {
 	public static final Door DOOR;
 	public static final Furnace FURNACE;
 	public static final Scaffolding SCAFFOLDING;
+	public static final Glass GLASS;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -1055,6 +1056,22 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Glass {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> breakChance;
+
+		private Glass(ModConfigSpec.Builder builder) {
+			builder.push("glass");
+			enabled = builder.comment("Enable Glass mixin")
+					.translation("unfaircraft.config.glass.enabled")
+					.define("enabled", true);
+			breakChance = builder.comment("Break Chance")
+					.translation("unfaircraft.config.glass.break_chance")
+					.defineInRange("break_chance", 0.10, 0.0, 1.0);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -1110,6 +1127,7 @@ public class UnfairCraftConfig {
 		DOOR = new Door(BUILDER);
 		FURNACE = new Furnace(BUILDER);
 		SCAFFOLDING = new Scaffolding(BUILDER);
+		GLASS = new Glass(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
