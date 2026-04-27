@@ -52,7 +52,6 @@ public class UnfairCraftConfig {
 	public static final Shulker SHULKER;
 	public static final Door DOOR;
 	public static final Furnace FURNACE;
-	public static final Scaffolding SCAFFOLDING;
 	public static final Glass GLASS;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
@@ -1040,26 +1039,6 @@ public class UnfairCraftConfig {
 		}
 	}
 
-	public static class Scaffolding {
-		public final ModConfigSpec.ConfigValue<Boolean> enabled;
-		public final ModConfigSpec.ConfigValue<Double> collapseChance;
-		public final ModConfigSpec.ConfigValue<Integer> collapseDelay;
-
-		private Scaffolding(ModConfigSpec.Builder builder) {
-			builder.push("scaffolding");
-			enabled = builder.comment("Enable Scaffolding mixin")
-					.translation("unfaircraft.config.scaffolding.enabled")
-					.define("enabled", true);
-			collapseChance = builder.comment("Collapse Chance")
-					.translation("unfaircraft.config.scaffolding.collapse_chance")
-					.defineInRange("collapse_chance", 0.10, 0.0, 1.0);
-			collapseDelay = builder.comment("Collapse Delay")
-					.translation("unfaircraft.config.scaffolding.collapse_delay")
-					.define("collapse_delay", 60);
-			builder.pop();
-		}
-	}
-
 	public static class Glass {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Double> breakChance;
@@ -1130,7 +1109,6 @@ public class UnfairCraftConfig {
 		SHULKER = new Shulker(BUILDER);
 		DOOR = new Door(BUILDER);
 		FURNACE = new Furnace(BUILDER);
-		SCAFFOLDING = new Scaffolding(BUILDER);
 		GLASS = new Glass(BUILDER);
 	}
 

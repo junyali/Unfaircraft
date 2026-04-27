@@ -8,7 +8,6 @@
     "block.FortuneMixin",
     "block.GlassMixin",
     "block.MimicOreMixin",
-    "block.ScaffoldingMixin",
     "block.SilkTouchMixin",
     "block.VeinCollapseMixin",
     "combat.DamageReflectionMixin",
