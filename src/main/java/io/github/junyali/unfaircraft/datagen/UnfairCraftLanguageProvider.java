@@ -260,5 +260,9 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enabled", "Enable Shulker Mixin");
 		addConfig("bullet_movement_vector", "Bullet Movement Vector");
 		addConfig("bullet_distance_target", "Bullet Distance Target");
+
+		section("door", "Door");
+		addConfig("enabled", "Enable Door Mixin");
+		addConfig("jam_chance", "Door Jam Chance");
 	}
 }

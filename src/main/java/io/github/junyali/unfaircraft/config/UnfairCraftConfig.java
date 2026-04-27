@@ -50,6 +50,7 @@ public class UnfairCraftConfig {
 	public static final EnderDragon ENDER_DRAGON;
 	public static final EndCrystal END_CRYSTAL;
 	public static final Shulker SHULKER;
+	public static final Door DOOR;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -988,6 +989,22 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Door {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> jamChance;
+
+		private Door(ModConfigSpec.Builder builder) {
+			builder.push("door");
+			enabled = builder.comment("Enable Door mixin")
+					.translation("unfaircraft.config.door.enabled")
+					.define("enabled", true);
+			jamChance = builder.comment("Chance for the door to jam")
+					.translation("unfaircraft.config.door.jam_chance")
+					.defineInRange("jam_chance", 0.2, 0.0, 1.0);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -1040,6 +1057,7 @@ public class UnfairCraftConfig {
 		ENDER_DRAGON = new EnderDragon(BUILDER);
 		END_CRYSTAL = new EndCrystal(BUILDER);
 		SHULKER = new Shulker(BUILDER);
+		DOOR = new Door(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
