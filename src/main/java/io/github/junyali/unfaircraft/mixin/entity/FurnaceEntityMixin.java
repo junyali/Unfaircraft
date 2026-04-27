@@ -2,6 +2,8 @@ package io.github.junyali.unfaircraft.mixin.entity;
 
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -65,7 +67,8 @@ public abstract class FurnaceEntityMixin {
 			}
 		}
 
-		if (self.unfaircraft$continuousCookTime >= UnfairCraftConfig.FURNACE.explosionThreshold.get()) {
+		int threshold = UnfairCraftConfig.FURNACE.explosionThreshold.get();
+		if (self.unfaircraft$continuousCookTime >= threshold) {
 			if (level.getRandom().nextFloat() < UnfairCraftConfig.FURNACE.explosionChance.get().floatValue()) {
 				self.unfaircraft$continuousCookTime = 0;
 				level.explode(
@@ -76,6 +79,27 @@ public abstract class FurnaceEntityMixin {
 						3.0f,
 						Level.ExplosionInteraction.BLOCK
 				);
+			} else {
+				if (level instanceof ServerLevel serverLevel) {
+					int overThreshold = self.unfaircraft$continuousCookTime - threshold;
+					int particleCount = Math.min(1 + (overThreshold / 20), 10);
+					for (int i = 0; i < particleCount; i++) {
+						double offsetX = (level.getRandom().nextDouble() - 0.5) * 0.5;
+						double offsetZ = (level.getRandom().nextDouble() - 0.5) * 0.5;
+						double velocityY = 0.05 + (level.getRandom().nextDouble() * 0.5);
+						serverLevel.sendParticles(
+								ParticleTypes.LARGE_SMOKE,
+								pos.getX() + 0.5 + offsetX,
+								pos.getY() + 1.0,
+								pos.getZ() + 0.5 + offsetZ,
+								1,
+								0.0,
+								velocityY,
+								0.0,
+								0.01
+						);
+					}
+				}
 			}
 		}
 	}
