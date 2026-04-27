@@ -277,5 +277,9 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enabled", "Enable Scaffolding Mixin");
 		addConfig("collapse_chance", "Collapse Chance");
 		addConfig("collapse_delay", "Collapse Delay");
+
+		section("glass", "Glass");
+		addConfig("enabled", "Enable Glass Mixin");
+		addConfig("break_chance", "Break Chance");
 	}
 }
