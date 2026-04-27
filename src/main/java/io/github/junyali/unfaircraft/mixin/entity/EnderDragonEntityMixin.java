@@ -14,12 +14,19 @@ public abstract class EnderDragonEntityMixin {
 	@Unique
 	private float unfaircraft$previousHeath = -1f;
 
+	@Unique
+	private boolean unfaircraft$isSettingHealth = false;
+
 	@Inject(
 			method = "setHealth",
 			at = @At("HEAD"),
 			cancellable = true
 	)
 	private void unfaircraft$modifyHealing(float health, CallbackInfo ci) {
+		if (unfaircraft$isSettingHealth) {
+			return;
+		}
+
 		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.END_CRYSTAL.enabled)) {
 			return;
 		}
@@ -29,22 +36,19 @@ public abstract class EnderDragonEntityMixin {
 			return;
 		}
 
-		float currentHealth = dragon.getHealth();
+		if (unfaircraft$previousHeath >= 0 && health > unfaircraft$previousHeath) {
+			float healAmount = health - unfaircraft$previousHeath;
+			float modifiedAmount = healAmount * UnfairCraftConfig.END_CRYSTAL.healingMultiplier.get().floatValue();
+			float newHealth = unfaircraft$previousHeath + modifiedAmount;
 
-		if (unfaircraft$previousHeath < 0) {
-			unfaircraft$previousHeath = currentHealth;
-			return;
-		}
+			unfaircraft$isSettingHealth = true;
+			entity.setHealth(newHealth);
+			unfaircraft$isSettingHealth = false;
 
-		if (health > currentHealth) {
-			float delta = health - currentHealth;
-			float multiplier = UnfairCraftConfig.END_CRYSTAL.healingMultiplier.get().floatValue();
-			float boosted = currentHealth + (delta * multiplier);
-
+			unfaircraft$previousHeath = newHealth;
 			ci.cancel();
-			dragon.setHealth(Math.min(boosted, dragon.getMaxHealth()));
+		} else {
+			unfaircraft$previousHeath = health;
 		}
-
-		unfaircraft$previousHeath = dragon.getHealth();
 	}
 }
