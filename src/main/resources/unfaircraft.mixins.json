@@ -19,6 +19,7 @@
     "entity.MobMixin",
     "entity.MobRegenMixin",
     "entity.NeutralMobMixin",
+    "entity.ShulkerBulletMixin",
     "entity.SkeletonMixin",
     "entity.VillagerEntityMixin",
     "entity.VillagerMixin",

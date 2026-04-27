@@ -255,5 +255,10 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enabled", "Enable End Crystal Mixin");
 		addConfig("healing_multiplier", "Healing Multiplier");
 		addConfig("explosion_radius", "Explosion Radius");
+
+		section("shulker", "Shulker");
+		addConfig("enabled", "Enable Shulker Mixin");
+		addConfig("bullet_movement_vector", "Bullet Movement Vector");
+		addConfig("bullet_distance_target", "Bullet Distance Target");
 	}
 }

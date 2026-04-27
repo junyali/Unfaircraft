@@ -49,6 +49,7 @@ public class UnfairCraftConfig {
 	public static final Blaze BLAZE;
 	public static final EnderDragon ENDER_DRAGON;
 	public static final EndCrystal END_CRYSTAL;
+	public static final Shulker SHULKER;
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
@@ -966,6 +967,27 @@ public class UnfairCraftConfig {
 		}
 	}
 
+	public static class Shulker {
+		public final ModConfigSpec.ConfigValue<Boolean> enabled;
+		public final ModConfigSpec.ConfigValue<Double> bulletMovementVector;
+		public final ModConfigSpec.ConfigValue<Integer> bulletDistanceTarget;
+
+
+		private Shulker(ModConfigSpec.Builder builder) {
+			builder.push("shulker");
+			enabled = builder.comment("Enable Shulker mixin")
+					.translation("unfaircraft.config.shulker.enabled")
+					.define("enabled", true);
+			bulletMovementVector = builder.comment("Shulker Bullet Movement Vector per tick")
+					.translation("unfaircraft.config.shulker.bullet_movement_vector")
+					.define("bullet_movement_vector", 2.2);
+			bulletDistanceTarget = builder.comment("Shulker Bullet maximum targetting distance")
+					.translation("unfaircraft.config.shulker.bullet_distance_target")
+					.define("bullet_distance_target", 128);
+			builder.pop();
+		}
+	}
+
 	static {
 		BUILDER.push("general");
 		ENABLE_UNFAIR_MODE = BUILDER.comment("Master toggle for UnfairCraft")
@@ -1017,6 +1039,7 @@ public class UnfairCraftConfig {
 		BLAZE = new Blaze(BUILDER);
 		ENDER_DRAGON = new EnderDragon(BUILDER);
 		END_CRYSTAL = new EndCrystal(BUILDER);
+		SHULKER = new Shulker(BUILDER);
 	}
 
 	public static final ModConfigSpec SPEC = BUILDER.build();
