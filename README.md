@@ -11,9 +11,13 @@
     <br><br>
 </h1>
 
+**Minecraft, but everything hates you.**
+
 **Unfaircraft** is a Minecraft mod that makes the game... well, *unfair*.
-This mod introduces subtle (and not-so-subtle) modified vanilla behaviours that makes the game UNFAIR!
-You shall feel frustration, pain, and suffering - but the challenge is on!
+
+This mod tweaks vanilla mechanics and behaviours in the most frustrating ways possible to make the game UNFAIR!
+
+Nothing is safe. Not your tools, not your food, not your chests, not even the cows O.o
 
 ## What to look out for
 
@@ -22,6 +26,7 @@ You shall feel frustration, pain, and suffering - but the challenge is on!
 These "features" (if you can even call them one) are simple inconveniences. Deal with it.
 
 - INTENTIONAL GAME DESIGNs sometimes apply to the overworld. I'd be careful about sleeping in your house!
+- Animals and villagers have had enough of your antics! Prepare for some retaliation >:D
 - Combat is botched. Bows might misfire or backfire. Swords might not even deal damage. Forgot to go to the gym?
 - Your legs are on steroids.
 - Spelunking adventures may take a few more hours (or IRL days! Depends on your luck).
@@ -39,37 +44,39 @@ For those who need MORE FRUSTRATION to fuel the ANGER!!! Every tick is now a lot
 - It's raining TNT! From outta the sky. TNT. No need to ask why.
 - Zeus called. He wants to play with you.
 
-There's more but my 2am sleep deprived brain cannot be bothered to write more :D
-
 *Nightmare Mode is disabled by default.*
 
 ## Preview
 
-![Nightmare Mode Event - TNT Rain](./images/tnt_rain.png)
-![Unfair Mode - Hungry Chests](./images/the_chest.png)
-![Nightmare Mode Event - Mob Swarm](./images/mob_swarm.png)
+| Image                                                                            | Feature                       |
+|----------------------------------------------------------------------------------|-------------------------------|
+| ![Nightmare Mode Events - TNT Rain/Thunder Strike](./images/nightmare_event.png) | TNT Rain / Thunder Strike     |
+| ![Unfair Mode - Aggressive Endermen](./images/endermen_swarm.png)                | Endermen swarm aggressively   |
+| ![Unfair Mode - Deadly Creepers](./images/deadly_creepers.png)                   | Creepers are deadlier         |
+| ![Unfair Mode - Passive Retaliation](./images/passive_retaliation.png)           | Animals attack back           |
+| ![Unfair Mode - Explosive Furnaces](./images/explosive_furnaces.png)             | Furnaces overheat and explode |
 
 ## How to Run / Build
 
 ### Requirements
 
-**NeoForge**: This mod was built on NeoForge version 21.1.226 for 1.21.1
+**NeoForge**: This mod was built on NeoForge version 21.1.228 for 1.21.1
 
 ### Running
 
-1. Download the latest release [here](https://github.com/junyali/unfaircraft/releases).
+1. Download the latest release [here](https://github.com/junyali/unfaircraft/releases) or from your favourite mod distribution platform (CurseForge and Modrinth).
 2. Drop it in your `mods` directory
 3. Boot up Minecraft
 4. Immediately regret your decisions
 
-You may configure how the mod modifies vanilla behaviour in `unfaircraft.toml` under the `config` directory.
+You may configure how the mod modifies vanilla behaviour in `unfaircraft.toml` under the `config` directory (or alternatively use a mod like [Configured](www.curseforge.com/minecraft/mc-mods/configured)).
 - Disable specific tortures (but where's the fun in that?)
 - Adjust event probabilities
 - Enable Nightmare Mode
 
 ### Building
 
-This mod was developed on Intellij IDEA Ultimate, though may work with over Java IDEs that support the Gradle Build Tool.
+This mod was developed on IntelliJ IDEA Ultimate, though may work with over Java IDEs that support the Gradle Build Tool.
 Importing from `build.gradle`, run:
 
 ```console
