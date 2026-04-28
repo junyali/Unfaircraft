@@ -11,6 +11,11 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.enderdragon.phases.DragonPhaseInstance;
@@ -19,6 +24,7 @@ import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Phantom;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -37,6 +43,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MobMixin {
 	@Unique
 	private boolean unfaircraft$ironGolemAttributesInitialised = false;
+
+	@Unique
+	private boolean unfaircraft$animalAttributesInitialised = false;
 
 	@Inject(
 			method = "finalizeSpawn",
@@ -241,6 +250,19 @@ public abstract class MobMixin {
 					}
 				}
 			}
+		} else if (mob instanceof Animal) {
+			if (!unfaircraft$animalAttributesInitialised) {
+				unfaircraft$animalAttributesInitialised = true;
+				if (UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.passiveRetaliationEnabled)) {
+					AttributeInstance attackDamage = mob.getAttribute(Attributes.ATTACK_DAMAGE);
+					if (attackDamage != null) {
+						attackDamage.setBaseValue(1.0);
+					}
+
+					mob.goalSelector.addGoal(1, new MeleeAttackGoal((PathfinderMob) mob, 1.2D, true));
+					mob.targetSelector.addGoal(1, new HurtByTargetGoal((PathfinderMob) mob));
+				}
+			}
 		}
 	}
 
@@ -269,6 +291,30 @@ public abstract class MobMixin {
 					((EnderDragon) mob).getPhaseManager().setPhase(EnderDragonPhase.CHARGING_PLAYER);
 				}
 			}
+		}
+	}
+
+	@Inject(
+			method = "registerGoals",
+			at = @At("TAIL")
+	)
+	private void unfaircraft$registerGoals(CallbackInfo ci) {
+		Mob self = (Mob) (Object) this;
+
+		if (self instanceof IronGolem ironGolem) {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+				return;
+			}
+
+			ironGolem.goalSelector.addGoal(0, new FloatGoal(ironGolem));
+			ironGolem.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(ironGolem, Player.class, true));
+		} else if (self instanceof Animal animal) {
+			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.passiveRetaliationEnabled)) {
+				return;
+			}
+
+			animal.goalSelector.addGoal(1, new MeleeAttackGoal(animal, 1.2D, true));
+			animal.targetSelector.addGoal(1, new HurtByTargetGoal(animal));
 		}
 	}
 }

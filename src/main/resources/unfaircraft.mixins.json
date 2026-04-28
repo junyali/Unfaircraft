@@ -13,6 +13,7 @@
     "combat.DamageReflectionMixin",
     "combat.KnockbackMixin",
     "combat.PlayerCombatMixin",
+    "entity.AnimalEntityMixin",
     "entity.CreeperMixin",
     "entity.EndCrystalMixin",
     "entity.EnderDragonEntityMixin",

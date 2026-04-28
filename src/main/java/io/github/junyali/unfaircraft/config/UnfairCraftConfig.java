@@ -788,6 +788,7 @@ public class UnfairCraftConfig {
 
 	public static class Mob {
 		public final ModConfigSpec.ConfigValue<Boolean> hostileRegardlessEnabled;
+		public final ModConfigSpec.ConfigValue<Boolean> passiveRetaliationEnabled;
 		public final ModConfigSpec.ConfigValue<Boolean> allowHostileDaylightSpawn;
 		public final ModConfigSpec.ConfigValue<Double> hostileDaylightSpawnChance;
 
@@ -796,6 +797,9 @@ public class UnfairCraftConfig {
 			hostileRegardlessEnabled = builder.comment("Make all passive mobs hostile")
 					.translation("unfaircraft.config.mob.hostile_regardless_enabled")
 					.define("hostile_regardless_enabled", true);
+			passiveRetaliationEnabled = builder.comment("Allow passive mobs to be able to retaliate")
+					.translation("unfaircraft.config.mob.passive_retaliation_enabled")
+					.define("passive_retaliation_enabled", true);
 			allowHostileDaylightSpawn = builder.comment("Allow hostile mobs to spawn in daylight")
 					.translation("unfaircraft.config.mob.allow_hostile_daylight_spawn")
 					.define("allow_hostile_daylight_spawn", true);
