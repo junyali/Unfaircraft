@@ -60,7 +60,7 @@ For those who need MORE FRUSTRATION to fuel the ANGER!!! Every tick is now a lot
 
 ### Requirements
 
-**Fabric**: This mod was built on Fabric with Fabric API version 0.116.11+1.21.1 for 1.21.1
+**Fabric**: This mod was built on Fabric Loader version 0.19.2 for 1.21.1
 
 **owo-lib**: This mod uses owo-lib version 0.12.15.4+1.21 and is a required dependency to provide the config library for Unfaircraft
 
