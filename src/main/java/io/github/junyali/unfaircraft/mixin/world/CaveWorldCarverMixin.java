@@ -38,7 +38,7 @@ public class CaveWorldCarverMixin {
 
 		for (BlockPos adjacentPos : adjacentPositions) {
 			BlockState state = chunkAccess.getBlockState(adjacentPos);
-			if (state.isSolid() && !state.is(Blocks.BEDROCK)) {
+			if (state.canOcclude() && !state.is(Blocks.BEDROCK)) {
 				return true;
 			}
 		}
