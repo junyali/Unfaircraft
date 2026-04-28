@@ -15,7 +15,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.github.junyali.unfaircraft.Unfaircraft"
+			"io.github.junyali.unfaircraft.UnfairCraft"
 		]
 	},
 	"mixins": [
