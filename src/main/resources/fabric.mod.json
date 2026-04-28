@@ -27,5 +27,6 @@
 		"java": ">=21",
 		"fabric-api": "*",
 		"owo": ">=0.12.8 <0.13"
-	}
+	},
+	"accessWidener": "unfaircraft.accesswidener"
 }
