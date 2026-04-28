@@ -32,6 +32,11 @@ public class UnfairCraftLanguageProvider extends FabricLanguageProvider {
 		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".option.enableUnfairMode", "Enable Unfair Mode");
 		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".option.enableNightmareMode", "Enable Nightmare Mode");
 
+		// Mod Menu support
+		translationBuilder.add("modmenu.nameTranslation." + UnfairCraft.MOD_ID, "Unfaircraft");
+		translationBuilder.add("modmenu.descriptionTranslation." + UnfairCraft.MOD_ID, "Minecraft, but everything hates you");
+		translationBuilder.add("modmenu.summaryTranslation." + UnfairCraft.MOD_ID, "Minecraft, but everything hates you");
+
 		translateSection(translationBuilder, "nightmareEvent", "Nightmare Event");
 		translateConfig(translationBuilder, "chance", "Nightmare Event Chance");
 
