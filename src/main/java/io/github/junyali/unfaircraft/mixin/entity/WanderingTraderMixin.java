@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -38,7 +39,7 @@ public abstract class WanderingTraderMixin {
 			at = @At("RETURN")
 	)
 	private void unfaircraft$scamTrades(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MERCHANT_OFFER.wanderingTraderScamEnabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.merchantOffer.wanderingTraderScamEnabled())) {
 			return;
 		}
 
@@ -53,7 +54,7 @@ public abstract class WanderingTraderMixin {
 		MerchantOffers modifiedOffers = new MerchantOffers();
 
 		Item[] scamItems = unfaircraft$scam_items.keySet().toArray(new Item[0]);
-		float scamChance = UnfairCraftConfig.MERCHANT_OFFER.wanderingTraderScamChance.get().floatValue();
+		float scamChance = (float) UnfairCraft.CONFIG.merchantOffer.wanderingTraderScamChance();
 
 		for (MerchantOffer original : offers) {
 			if (random.nextFloat() < scamChance) {

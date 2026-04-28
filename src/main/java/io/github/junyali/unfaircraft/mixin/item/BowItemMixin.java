@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.item;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -24,12 +25,12 @@ public class BowItemMixin {
 			at = @At("TAIL")
 	)
 	private void afterBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BOW.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.bow.enabled())) {
 			return;
 		}
 
 		if (!level.isClientSide && entity instanceof Player player) {
-			if (level.random.nextFloat() < UnfairCraftConfig.BOW.wonkyChance.get().floatValue()) {
+			if (level.random.nextFloat() < UnfairCraft.CONFIG.bow.wonkyChance()) {
 				MinecraftServer server = ((ServerLevel) level).getServer();
 				for (int delay = 1; delay <= 5; delay++) {
 					final int tickDelay = delay;
@@ -40,9 +41,9 @@ public class BowItemMixin {
 							.forEach(arrow -> {
 								Vec3 currentMotion = arrow.getDeltaMovement();
 								Vec3 wonkyMotion = new Vec3(
-										currentMotion.x + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get(),
-										currentMotion.y + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get(),
-										currentMotion.z + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get()
+										currentMotion.x + (level.random.nextDouble() - 0.5) * UnfairCraft.CONFIG.bow.projectileDeviation(),
+										currentMotion.y + (level.random.nextDouble() - 0.5) * UnfairCraft.CONFIG.bow.projectileDeviation(),
+										currentMotion.z + (level.random.nextDouble() - 0.5) * UnfairCraft.CONFIG.bow.projectileDeviation()
 								);
 								arrow.setDeltaMovement(wonkyMotion);
 								arrow.hasImpulse = true;
@@ -61,17 +62,17 @@ public class BowItemMixin {
 			cancellable = true
 	)
 	private void onBowRelease(ItemStack stack, Level level, LivingEntity entity, int timeLeft, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BOW.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.bow.enabled())) {
 			return;
 		}
 
 		if (!level.isClientSide && entity instanceof Player player) {
-			if (level.random.nextFloat() < UnfairCraftConfig.BOW.misfireChance.get().floatValue()) {
+			if (level.random.nextFloat() < UnfairCraft.CONFIG.bow.misfireChance()) {
 				ci.cancel();
 
-				if (level.random.nextFloat() < UnfairCraftConfig.BOW.backfireChance.get().floatValue()) {
+				if (level.random.nextFloat() < UnfairCraft.CONFIG.bow.backfireChance()) {
 					// maths idk
-					float damage = UnfairCraftConfig.BOW.backfireDamageMin.get().floatValue() + level.random.nextFloat() * (UnfairCraftConfig.BOW.backfireDamageMax.get().floatValue() - UnfairCraftConfig.BOW.backfireDamageMin.get().floatValue());
+					float damage = (float) (UnfairCraft.CONFIG.bow.backfireDamageMin() + level.random.nextFloat() * (UnfairCraft.CONFIG.bow.backfireDamageMax() - UnfairCraft.CONFIG.bow.backfireDamageMin()));
 
 					player.hurt(level.damageSources().generic(), damage);
 					level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1.0f, 1.0f);

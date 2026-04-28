@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.vehicle;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,11 +25,11 @@ public abstract class MinecartMixin extends Entity {
 			ordinal = 0
 	)
 	private Vec3 modifyMinecartVelocity(Vec3 velocity) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MINECART.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.minecart.enabled())) {
 			return velocity;
 		}
 
-		double slowdownFactor = UnfairCraftConfig.MINECART.slowdownFactor.get();
+		double slowdownFactor = UnfairCraft.CONFIG.minecart.slowdownFactor();
 		return velocity.multiply(slowdownFactor, 1.0, slowdownFactor);
 	}
 
@@ -37,15 +38,15 @@ public abstract class MinecartMixin extends Entity {
 			at = @At("TAIL")
 	)
 	private void onMinecartTick(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MINECART.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.minecart.enabled())) {
 			return;
 		}
 
-		if (!level().isClientSide && Math.random() < UnfairCraftConfig.MINECART.stopChance.get().floatValue()) {
+		if (!level().isClientSide && Math.random() < UnfairCraft.CONFIG.minecart.stopChance()) {
 			setDeltaMovement(0, getDeltaMovement().y, 0);
 		}
 
-		if (!level().isClientSide && Math.random() < UnfairCraftConfig.MINECART.reverseChance.get().floatValue()) {
+		if (!level().isClientSide && Math.random() < UnfairCraft.CONFIG.minecart.reverseChance()) {
 			Vec3 motion = getDeltaMovement();
 			setDeltaMovement(motion.multiply(-1.0, 1.0, -1.0));
 		}

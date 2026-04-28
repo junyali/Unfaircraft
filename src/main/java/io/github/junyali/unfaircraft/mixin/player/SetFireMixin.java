@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +19,7 @@ public abstract class SetFireMixin {
 			at = @At("TAIL")
 	)
 	private void setFire(CallbackInfo info) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.TOTEM.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.setFire.enabled())) {
 			return;
 		}
 
@@ -32,14 +33,14 @@ public abstract class SetFireMixin {
 			return;
 		}
 
-		int radius = UnfairCraftConfig.SET_FIRE.radius.get();
+		int radius = UnfairCraft.CONFIG.setFire.radius();
 		BlockPos playerPos = player.blockPosition();
 
 		for (BlockPos pos: BlockPos.betweenClosed(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))) {
 			BlockState blockState = player.level().getBlockState(pos);
 			if (blockState.is(Blocks.FIRE) || blockState.is(Blocks.LAVA) || blockState.is(Blocks.MAGMA_BLOCK)) {
-				if (player.level().random.nextFloat() < UnfairCraftConfig.SET_FIRE.chance.get()) {
-					player.igniteForSeconds(UnfairCraftConfig.SET_FIRE.initialDuration.get());
+				if (player.level().random.nextFloat() < UnfairCraft.CONFIG.setFire.chance()) {
+					player.igniteForSeconds(UnfairCraft.CONFIG.setFire.initialDuration());
 					return;
 				}
 			}
@@ -51,7 +52,7 @@ public abstract class SetFireMixin {
 			at = @At("TAIL")
 	)
 	private void onPlayerTickTail(CallbackInfo info) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.TOTEM.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.setFire.enabled())) {
 			return;
 		}
 
@@ -65,13 +66,13 @@ public abstract class SetFireMixin {
 			return;
 		}
 
-		int radius = UnfairCraftConfig.SET_FIRE.radius.get();
+		int radius = UnfairCraft.CONFIG.setFire.radius();
 		BlockPos playerPos = player.blockPosition();
 
 		for (BlockPos pos: BlockPos.betweenClosed(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))) {
 			BlockState blockState = player.level().getBlockState(pos);
 			if (blockState.is(Blocks.FIRE) || blockState.is(Blocks.LAVA) || blockState.is(Blocks.MAGMA_BLOCK)) {
-				player.setRemainingFireTicks(player.getRemainingFireTicks() + UnfairCraftConfig.SET_FIRE.durationIncrease.get());
+				player.setRemainingFireTicks(player.getRemainingFireTicks() + UnfairCraft.CONFIG.setFire.durationIncrease());
 				return;
 			}
 		}

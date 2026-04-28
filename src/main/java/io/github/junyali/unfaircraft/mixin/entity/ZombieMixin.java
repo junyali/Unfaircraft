@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +24,7 @@ public class ZombieMixin {
 			at = @At("TAIL")
 	)
 	private void onSetBaby(boolean baby, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ZOMBIE.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.zombie.enabled())) {
 			return;
 		}
 
@@ -54,7 +55,7 @@ public class ZombieMixin {
 			at = @At("HEAD")
 	)
 	private void onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ZOMBIE.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.zombie.enabled())) {
 			return;
 		}
 
@@ -68,7 +69,7 @@ public class ZombieMixin {
 			return;
 		}
 
-		if (zombie.level().random.nextFloat() < UnfairCraftConfig.ZOMBIE.summonChance.get()) {
+		if (zombie.level().random.nextFloat() < UnfairCraft.CONFIG.zombie.summonChance()) {
 			unfaircraft$summonZombies(zombie);
 		}
 
@@ -78,8 +79,8 @@ public class ZombieMixin {
 	@Unique
 	private void unfaircraft$summonZombies(Zombie zombie) {
 		ServerLevel level = (ServerLevel) zombie.level();
-		int minZombies = UnfairCraftConfig.ZOMBIE.summonMin.get();
-		int maxZombies = UnfairCraftConfig.ZOMBIE.summonMax.get();
+		int minZombies = UnfairCraft.CONFIG.zombie.summonMin();
+		int maxZombies = UnfairCraft.CONFIG.zombie.summonMax();
 		int zombiesToSummon = minZombies + level.random.nextInt(maxZombies - minZombies + 1);
 		int summonRadius = 5;
 

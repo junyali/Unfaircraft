@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.item;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -70,7 +71,7 @@ public class PotionItemMixin {
 			at = @At("RETURN")
 	)
 	private void onPotionDrink(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.POTION.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.potion.enabled())) {
 			return;
 		}
 
@@ -78,7 +79,7 @@ public class PotionItemMixin {
 			return;
 		}
 
-		if (level.random.nextFloat() < UnfairCraftConfig.POTION.backfireChance.get()) {
+		if (level.random.nextFloat() < UnfairCraft.CONFIG.potion.backfireChance()) {
 			PotionContents potionContents = unfaircraft$savedPotionContents;
 			if (potionContents == null) {
 				return;

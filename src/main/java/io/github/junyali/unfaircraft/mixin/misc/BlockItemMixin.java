@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
@@ -17,11 +18,11 @@ public class BlockItemMixin {
 			cancellable = true
 	)
 	private void fakeLagPlacement(BlockPlaceContext context, CallbackInfoReturnable<InteractionResult> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK_INTERACTION.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.blockInteraction.enabled())) {
 			return;
 		}
 
-		if (context.getLevel().random.nextFloat() < UnfairCraftConfig.BLOCK_INTERACTION.placeFailChance.get().floatValue()) {
+		if (context.getLevel().random.nextFloat() < UnfairCraft.CONFIG.blockInteraction.placeFailChance()) {
 			cir.setReturnValue(InteractionResult.FAIL);
 		}
 	}

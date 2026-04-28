@@ -1,6 +1,8 @@
 package io.github.junyali.unfaircraft.mixin.combat;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import io.github.junyali.unfaircraft.config.UnfaircraftConfig;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -18,21 +20,21 @@ public abstract class KnockbackMixin {
 			at = @At("HEAD")
 	)
 	private void knockbackPlayer(double strength, double x, double z, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.KNOCKBACK.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.knockback.enabled())) {
 			return;
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
 
 		if (entity.getLastHurtByMob() instanceof Player player) {
-			if (entity.level().random.nextFloat() < UnfairCraftConfig.KNOCKBACK.chance.get().floatValue()) {
+			if (entity.level().random.nextFloat() < UnfairCraft.CONFIG.knockback.chance()) {
 				ItemStack heldItem = player.getMainHandItem();
 				int knockbackLevel = heldItem.getEnchantmentLevel(player.level().registryAccess()
 						.registryOrThrow(Registries.ENCHANTMENT)
 						.getHolderOrThrow(Enchantments.KNOCKBACK));
 
 				double knockbackMultiplier = 1.0 + (knockbackLevel * 0.5);
-				double modifiedStrength = strength * knockbackMultiplier * UnfairCraftConfig.KNOCKBACK.multiplier.get();
+				double modifiedStrength = strength * knockbackMultiplier * UnfairCraft.CONFIG.knockback.multiplier();
 
 				player.knockback(modifiedStrength, -x, -z);
 			}

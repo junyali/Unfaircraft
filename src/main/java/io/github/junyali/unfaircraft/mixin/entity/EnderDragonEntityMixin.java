@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
@@ -27,7 +28,7 @@ public abstract class EnderDragonEntityMixin {
 			return;
 		}
 
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.END_CRYSTAL.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.endCrystal.enabled())) {
 			return;
 		}
 
@@ -38,7 +39,7 @@ public abstract class EnderDragonEntityMixin {
 
 		if (unfaircraft$previousHeath >= 0 && health > unfaircraft$previousHeath) {
 			float healAmount = health - unfaircraft$previousHeath;
-			float modifiedAmount = healAmount * UnfairCraftConfig.END_CRYSTAL.healingMultiplier.get().floatValue();
+			float modifiedAmount = (float) (healAmount * UnfairCraft.CONFIG.endCrystal.healingMultiplier());
 			float newHealth = unfaircraft$previousHeath + modifiedAmount;
 
 			unfaircraft$isSettingHealth = true;

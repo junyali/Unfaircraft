@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -75,7 +76,7 @@ public abstract class MimicOreMixin {
 			return;
 		}
 
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.block.enabled())) {
 			return;
 		}
 
@@ -87,7 +88,7 @@ public abstract class MimicOreMixin {
 			return;
 		}
 
-		if (level.random.nextFloat() < UnfairCraftConfig.BLOCK.mimicSpawnChance.get().floatValue()) {
+		if (level.random.nextFloat() < UnfairCraft.CONFIG.block.mimicSpawnChance()) {
 			Entity mob = EntityType.SILVERFISH.create(level);
 			if (mob == null) {
 				return;

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +18,7 @@ public abstract class VillagerEntityMixin {
 			at = @At("HEAD")
 	)
 	private void unfaircraft$villagerHostileOnHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MERCHANT_OFFER.villageRetaliation)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.merchantOffer.villagerRetaliation())) {
 			return;
 		}
 

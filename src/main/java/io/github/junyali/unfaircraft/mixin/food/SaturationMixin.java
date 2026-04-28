@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.food;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ public abstract class SaturationMixin {
 			ordinal = 0
 	)
 	private FoodProperties diminishSaturation(FoodProperties foodProperties) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.food.enabled())) {
 			return foodProperties;
 		}
 

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.TickTask;
@@ -51,7 +52,7 @@ public class NightmareEventMixin {
 			at = @At("TAIL")
 	)
 	private void triggerNightmareEvent(BooleanSupplier hasTimeLeft, CallbackInfo ci) {
-		if (!UnfairCraftConfig.ENABLE_NIGHTMARE_MODE.get()) {
+		if (!UnfairCraft.CONFIG.enableNightmareMode()) {
 			return;
 		}
 
@@ -59,7 +60,7 @@ public class NightmareEventMixin {
 
 		if (level.getGameTime() % 20 != 0 ) return;
 
-		if (level.random.nextFloat() < UnfairCraftConfig.NIGHTMARE_EVENT.chance.get().floatValue()) {
+		if (level.random.nextFloat() < UnfairCraft.CONFIG.nightmareEvent.chance()) {
 			unfaircraft$triggerRandomEvent(level);
 		}
 	}

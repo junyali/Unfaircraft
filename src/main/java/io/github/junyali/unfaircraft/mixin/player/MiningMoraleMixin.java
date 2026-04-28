@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,7 +22,7 @@ public abstract class MiningMoraleMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$miningFatigueWave(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return;
 		}
 
@@ -49,7 +50,7 @@ public abstract class MiningMoraleMixin {
 			return;
 		}
 
-		if (self.getRandom().nextFloat() < UnfairCraftConfig.PLAYER.lowMiningMoraleChance.get().floatValue()) {
+		if (self.getRandom().nextFloat() < UnfairCraft.CONFIG.player.lowMiningMoraleChance()) {
 			self.addEffect(
 					new MobEffectInstance(
 							MobEffects.DIG_SLOWDOWN,

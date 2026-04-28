@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -25,12 +26,12 @@ public abstract class AnvilMenuMixin {
 			ordinal = 0
 	)
 	private int modifyRepairCost(int originalCost) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ANVIL.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.anvil.enabled())) {
 			return originalCost;
 		}
 
-		if (originalCost > 0 && Math.random() < UnfairCraftConfig.ANVIL.costIncreaseChance.get().floatValue()) {
-			int multiplier = (int) (UnfairCraftConfig.ANVIL.costMultiplierMin.get().floatValue() + (float) (Math.random() * (UnfairCraftConfig.ANVIL.costMultiplierMax.get().floatValue() - UnfairCraftConfig.ANVIL.costMultiplierMin.get().floatValue() + 1)));
+		if (originalCost > 0 && Math.random() < UnfairCraft.CONFIG.anvil.costIncreaseChance()) {
+			int multiplier = (int) (UnfairCraft.CONFIG.anvil.costMultiplierMin() + (float) (Math.random() * (UnfairCraft.CONFIG.anvil.costMultiplierMax() - UnfairCraft.CONFIG.anvil.costMultiplierMin() + 1)));
 			return originalCost * multiplier;
 		}
 
@@ -42,11 +43,11 @@ public abstract class AnvilMenuMixin {
 			at = @At("HEAD")
 	)
 	private void onAnvilUse(Player player, ItemStack stack, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ANVIL.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.anvil.enabled())) {
 			return;
 		}
 
-		if (Math.random() < UnfairCraftConfig.ANVIL.instantBreakChance.get().floatValue()) {
+		if (Math.random() < UnfairCraft.CONFIG.anvil.instantBreakChance()) {
 			if (player.level() instanceof ServerLevel serverLevel) {
 				BlockPos playerPos = player.blockPosition();
 				for (int x = -2; x <= 2; x++) {

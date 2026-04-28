@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -15,7 +16,7 @@ public abstract class LadderSlipMixin {
 			at = @At("HEAD")
 	)
 	private void unfaircraft$ladderSlip(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return;
 		}
 
@@ -29,7 +30,7 @@ public abstract class LadderSlipMixin {
 			return;
 		}
 
-		if (self.getRandom().nextFloat() < UnfairCraftConfig.PLAYER.ladderSlipChance.get().floatValue()) {
+		if (self.getRandom().nextFloat() < UnfairCraft.CONFIG.player.ladderSlipChance()) {
 			Vec3 current = self.getDeltaMovement();
 			self.setDeltaMovement(current.x, -3.0, current.z);
 			self.hurtMarked = true;

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
@@ -17,7 +18,7 @@ public interface NeutralMobMixin {
 			cancellable = true
 	)
 	private void unfaircraft$alwaysAngry(LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.hostileRegardlessEnabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mob.hostileRegardlessEnabled())) {
 			return;
 		}
 

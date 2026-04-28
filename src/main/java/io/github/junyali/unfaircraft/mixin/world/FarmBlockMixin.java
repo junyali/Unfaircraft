@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -20,11 +21,11 @@ public class FarmBlockMixin {
 			at = @At("HEAD")
 	)
 	private void revertFarmland(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource random, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SAPLING.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.farmland.enabled())) {
 			return;
 		}
 
-		if (random.nextFloat() < UnfairCraftConfig.FARMLAND.revertChance.get().floatValue()) {
+		if (random.nextFloat() < UnfairCraft.CONFIG.farmland.revertChance()) {
 			level.setBlock(blockPos, Blocks.DIRT.defaultBlockState(), 3);
 
 			BlockPos abovePos = blockPos.above();

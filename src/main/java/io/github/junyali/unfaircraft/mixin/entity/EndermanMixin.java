@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -22,14 +23,14 @@ public abstract class EndermanMixin {
 			at = @At("HEAD")
 	)
 	private void proximityAggro(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDERMAN.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.enderman.enabled())) {
 			return;
 		}
 
 		EnderMan enderman = (EnderMan) (Object) this;
 		if (enderman.getTarget() == null && !enderman.level().isClientSide) {
-			double range = UnfairCraftConfig.ENDERMAN.proximityAggroRange.get();
-			double chance = UnfairCraftConfig.ENDERMAN.proximityAggroChance.get();
+			double range = UnfairCraft.CONFIG.enderman.proximityAggroRange();
+			double chance = UnfairCraft.CONFIG.enderman.proximityAggroChance();
 
 			List<Player> nearbyPlayers = enderman.level().getEntitiesOfClass(
 					Player.class,

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -32,7 +33,8 @@ public abstract class EndCrystalMixin {
 			boolean fire,
 			Level.ExplosionInteraction explosionInteraction
 	) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.END_CRYSTAL.enabled)) {
+
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.endCrystal.enabled())) {
 			return instance.explode(
 					source,
 					damageSource,
@@ -46,7 +48,7 @@ public abstract class EndCrystalMixin {
 			);
 		}
 
-		float modifiedPower = UnfairCraftConfig.END_CRYSTAL.explosionRadius.get().floatValue();
+		float modifiedPower = (float) UnfairCraft.CONFIG.endCrystal.explosionRadius();
 		return instance.explode(
 				source,
 				damageSource,

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.food;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,12 +17,12 @@ public class FoodDataMixin {
 			)
 	)
 	private void increaseHungerExhaustion(FoodData instance, float exhaustion) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD_DATA.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.foodData.enabled())) {
 			instance.addExhaustion(exhaustion);
 			return;
 		}
 
-		float multiplier = UnfairCraftConfig.FOOD_DATA.exhaustionMultiplier.get().floatValue();
+		float multiplier = (float) UnfairCraft.CONFIG.foodData.exhaustionMultiplier();
 		instance.addExhaustion(exhaustion * multiplier);
 	}
 }

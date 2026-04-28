@@ -1,6 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import io.github.junyali.unfaircraft.UnfairCraft;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,7 +27,7 @@ public abstract class AnimalEntityMixin {
 
 		LivingEntity self = (LivingEntity) (Object) this;
 		if (self instanceof Animal animal) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.passiveRetaliationEnabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mob.passiveRetaliationEnabled())) {
 				return;
 			}
 

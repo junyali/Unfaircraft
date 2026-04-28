@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,11 +15,11 @@ public class SkeletonMixin {
 			ordinal = 0
 	)
 	private double improveAccuracyX(double inaccuracy) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.skeleton.enabled())) {
 			return inaccuracy;
 		}
 
-		return inaccuracy / UnfairCraftConfig.SKELETON.accuracyMultiplier.get().floatValue();
+		return inaccuracy / UnfairCraft.CONFIG.skeleton.accuracyMultiplier();
 	}
 
 	@ModifyVariable(
@@ -27,11 +28,11 @@ public class SkeletonMixin {
 			ordinal = 1
 	)
 	private double improveAccuracyZ(double inaccuracy) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.skeleton.enabled())) {
 			return inaccuracy;
 		}
 
-		return inaccuracy / UnfairCraftConfig.SKELETON.accuracyMultiplier.get().floatValue();
+		return inaccuracy / UnfairCraft.CONFIG.skeleton.accuracyMultiplier();
 	}
 
 	@ModifyVariable(
@@ -40,10 +41,10 @@ public class SkeletonMixin {
 			ordinal = 2
 	)
 	private double improveAccuracyY(double inaccuracy) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.skeleton.enabled())) {
 			return inaccuracy;
 		}
 
-		return inaccuracy / UnfairCraftConfig.SKELETON.accuracyMultiplier.get().floatValue();
+		return inaccuracy / UnfairCraft.CONFIG.skeleton.accuracyMultiplier();
 	}
 }

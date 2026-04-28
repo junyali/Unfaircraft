@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.item;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
@@ -16,16 +17,16 @@ public class ItemStackMixin {
 			ordinal = 0
 	)
 	private int modifyDurabilityDamage(int amount) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ITEM_DURABILITY.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.itemDurability.enabled())) {
 			return amount;
 		}
 
 		ItemStack stack = (ItemStack) (Object) this;
 
 		if (stack.getItem() instanceof TieredItem) {
-			if (Math.random() < UnfairCraftConfig.ITEM_DURABILITY.lossChance.get().floatValue()) {
+			if (Math.random() < UnfairCraft.CONFIG.itemDurability.lossChance()) {
 				// more maths owo
-				int durabilityLoss = UnfairCraftConfig.ITEM_DURABILITY.damageMin.get() + (int) (Math.random() * (UnfairCraftConfig.ITEM_DURABILITY.damageMax.get() - UnfairCraftConfig.ITEM_DURABILITY.damageMin.get() + 1));
+				int durabilityLoss = UnfairCraft.CONFIG.itemDurability.damageMin() + (int) (Math.random() * (UnfairCraft.CONFIG.itemDurability.damageMax() - UnfairCraft.CONFIG.itemDurability.damageMin() + 1));
 
 				return amount + durabilityLoss;
 			}

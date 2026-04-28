@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -76,7 +77,7 @@ public abstract class VeinCollapseMixin {
 			return;
 		}
 
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.block.enabled())) {
 			return;
 		}
 
@@ -84,7 +85,7 @@ public abstract class VeinCollapseMixin {
 			return;
 		}
 
-		if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.veinCollapseChance.get().floatValue()) {
+		if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.block.veinCollapseChance()) {
 			Queue<BlockPos> queue = new LinkedList<>();
 			Set<BlockPos> visited = new HashSet<>();
 

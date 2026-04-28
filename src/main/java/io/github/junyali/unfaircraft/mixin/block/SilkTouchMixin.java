@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -30,7 +31,7 @@ public abstract class SilkTouchMixin {
 			cancellable = true
 	)
 	private static void unfaircraft$silkTouchFail(BlockState state, ServerLevel level, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack tool, CallbackInfoReturnable<List<ItemStack>> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.block.enabled())) {
 			return;
 		}
 
@@ -42,7 +43,7 @@ public abstract class SilkTouchMixin {
 			return;
 		}
 
-		if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.silkTouchFailChance.get().floatValue()) {
+		if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.block.silkTouchFailChance()) {
 			ItemStack stripped = tool.copy();
 			stripped.remove(DataComponents.ENCHANTMENTS);
 			List<ItemStack> normalDrops = Block.getDrops(state, level, pos, blockEntity, entity, stripped);

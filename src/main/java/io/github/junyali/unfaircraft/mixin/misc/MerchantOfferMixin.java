@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -15,13 +16,13 @@ public class MerchantOfferMixin {
 			at = @At("RETURN")
 	)
 	private void unfaircraft$gougeCostA(CallbackInfoReturnable<ItemStack> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MERCHANT_OFFER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.merchantOffer.enabled())) {
 			return;
 		}
 
 		ItemStack cost = cir.getReturnValue();
 		if (!cost.isEmpty()) {
-			int multiplier = UnfairCraftConfig.MERCHANT_OFFER.multiplier.get();
+			int multiplier = UnfairCraft.CONFIG.merchantOffer.multiplier();
 			int newCount = Math.min(cost.getMaxStackSize(), cost.getCount() * multiplier);
 			cost.setCount(newCount);
 		}

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -21,7 +22,7 @@ public abstract class DoorMixin {
 			cancellable = true
 	)
 	private void unfaircraft$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.DOOR.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.door.enabled())) {
 			return;
 		}
 
@@ -29,7 +30,7 @@ public abstract class DoorMixin {
 			return;
 		}
 
-		if (level.getRandom().nextFloat() < UnfairCraftConfig.DOOR.jamChance.get().floatValue()) {
+		if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.door.jamChance()) {
 			cir.setReturnValue(InteractionResult.CONSUME);
 		}
 	}

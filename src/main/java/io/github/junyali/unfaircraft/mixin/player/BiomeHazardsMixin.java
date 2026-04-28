@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -23,7 +24,7 @@ public abstract class BiomeHazardsMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$biomeHazards(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled) || !UnfairCraftConfig.PLAYER.enableBiomeHazards.get()) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled() && UnfairCraft.CONFIG.player.enableBiomeHazards())) {
 			return;
 		}
 

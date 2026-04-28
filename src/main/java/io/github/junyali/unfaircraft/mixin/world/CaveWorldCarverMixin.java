@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -82,7 +83,7 @@ public class CaveWorldCarverMixin {
 			Function<BlockPos, Holder<Biome>> biomeAccessor, RandomSource random,
 			Aquifer aquifer, ChunkPos chunkPos, CarvingMask carvingMask, CallbackInfoReturnable<Boolean> cir
 	) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CAVE_CARVER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.caveCarver.enabled())) {
 			return;
 		}
 
@@ -90,7 +91,7 @@ public class CaveWorldCarverMixin {
 		long chunkSeed = (long) chunkPos.x * 123456789L + (long) chunkPos.z * 987654321;
 		RandomSource chunkRandom = RandomSource.create(chunkSeed);
 
-		if (chunkRandom.nextFloat() < UnfairCraftConfig.CAVE_CARVER.extraLavaPocketChance.get().floatValue()) {
+		if (chunkRandom.nextFloat() < UnfairCraft.CONFIG.caveCarver.extraLavaPocketChance()) {
 			int pocketCount = 1;
 			if (random.nextFloat() < 0.3f) pocketCount = 2;
 			if (random.nextFloat() < 0.1f) pocketCount = 3;

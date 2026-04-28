@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,10 +18,10 @@ public class NearestAttackableTargetGoalMixin {
 			index = 2
 	)
 	private static int increaseDetectionRange(int originalRange) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_DETECTION.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mobDetection.enabled())) {
 			return originalRange;
 		}
 
-		return (int) (originalRange * UnfairCraftConfig.MOB_DETECTION.rangeMultiplier.get().floatValue());
+		return (int) (originalRange * UnfairCraft.CONFIG.mobDetection.rangeMultiplier());
 	}
 }

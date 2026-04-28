@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -74,7 +75,7 @@ public abstract class GlassMixin {
 	)
 	private void unfaircraft$glassBreak(Level level, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
 		if (unfaircraft$getGlassBlocks().contains(state.getBlock())) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.GLASS.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.glass.enabled())) {
 				return;
 			}
 
@@ -90,7 +91,7 @@ public abstract class GlassMixin {
 			boolean isLanding = livingEntity.fallDistance > 0.5f;
 
 			if (isSprinting || isLanding) {
-				if (level.random.nextFloat() < UnfairCraftConfig.GLASS.breakChance.get().floatValue()) {
+				if (level.random.nextFloat() < UnfairCraft.CONFIG.glass.breakChance()) {
 					level.destroyBlock(pos, false);
 					level.playSound(
 							null,

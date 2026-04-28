@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -44,7 +45,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 			at = @At("HEAD")
 	)
 	private void unfaircraft$hostileVillager(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MERCHANT_OFFER.villageRetaliation)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.merchantOffer.villagerRetaliation())) {
 			return;
 		}
 

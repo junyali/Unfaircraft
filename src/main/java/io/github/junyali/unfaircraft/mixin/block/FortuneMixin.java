@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -31,7 +32,7 @@ public abstract class FortuneMixin {
 			cancellable = true
 	)
 	private static void unfaircraft$fortuneReversal(BlockState state, ServerLevel level, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack tool, CallbackInfoReturnable<List<ItemStack>> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.block.enabled())) {
 			return;
 		}
 
@@ -43,7 +44,7 @@ public abstract class FortuneMixin {
 			return;
 		}
 
-		if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.fortuneReversalChance.get().floatValue()) {
+		if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.block.fortuneReversalChance()) {
 			List<ItemStack> drops = cir.getReturnValue();
 			List<ItemStack> reduced = new ArrayList<>();
 

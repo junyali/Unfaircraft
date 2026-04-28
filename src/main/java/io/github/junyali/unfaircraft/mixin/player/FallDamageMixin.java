@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +17,7 @@ public abstract class FallDamageMixin {
 			ordinal = 0
 	)
 	private float increaseFallDamage(float fallDistance) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return fallDistance;
 		}
 
@@ -26,8 +27,8 @@ public abstract class FallDamageMixin {
 			return fallDistance;
 		}
 
-		if (fallDistance > UnfairCraftConfig.PLAYER.fallDamageDistance.get().floatValue()) {
-			return fallDistance * UnfairCraftConfig.PLAYER.fallDamageMultiplier.get().floatValue();
+		if (fallDistance > UnfairCraft.CONFIG.player.fallDamageDistance()) {
+			return (float) (fallDistance * UnfairCraft.CONFIG.player.fallDamageMultiplier());
 		}
 
 		return fallDistance;

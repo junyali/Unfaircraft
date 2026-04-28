@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
@@ -60,7 +61,7 @@ public class LootTableMixin {
 			cancellable = true
 	)
 	private void trollLootTable(LootContext context, CallbackInfoReturnable<ObjectArrayList<ItemStack>> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.LOOT_TABLE.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.lootTable.enabled())) {
 			return;
 		}
 
@@ -69,7 +70,7 @@ public class LootTableMixin {
 		if (unfaircraft$isStructureLootTable(lootTableId)) {
 			ObjectArrayList<ItemStack> originalLoot = cir.getReturnValue();
 
-			if (!originalLoot.isEmpty() && context.getRandom().nextFloat() < UnfairCraftConfig.LOOT_TABLE.trollChance.get().floatValue()) {
+			if (!originalLoot.isEmpty() && context.getRandom().nextFloat() < UnfairCraft.CONFIG.lootTable.trollChance()) {
 				ObjectArrayList<ItemStack> trollLoot = new ObjectArrayList<>(unfaircraft$createTrollLoot(context.getRandom()));
 				cir.setReturnValue(trollLoot);
 			}

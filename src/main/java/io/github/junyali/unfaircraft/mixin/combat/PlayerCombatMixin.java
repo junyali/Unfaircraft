@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.combat;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,7 +21,7 @@ public abstract class PlayerCombatMixin {
 			cancellable = true
 	)
 	private void beforeAttack(Entity target, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return;
 		}
 
@@ -34,18 +35,18 @@ public abstract class PlayerCombatMixin {
 				!player.isPassenger();
 
 		if (isCritical) {
-			if (player.level().random.nextFloat() < UnfairCraftConfig.PLAYER.critFailChance.get().floatValue()) {
+			if (player.level().random.nextFloat() <UnfairCraft.CONFIG.player.critFailChance()) {
 				ci.cancel();
 			}
 		}
 
-		if (player.level().random.nextFloat() < UnfairCraftConfig.PLAYER.selfAttackChance.get().floatValue()) {
+		if (player.level().random.nextFloat() < UnfairCraft.CONFIG.player.selfAttackChance()) {
 			float damage = 1.0f + player.level().random.nextFloat() * 2.0f;
 			player.hurt(player.level().damageSources().generic(), damage);
 			player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
 
-		if (player.level().random.nextFloat() < UnfairCraftConfig.PLAYER.attackExhaustionChance.get().floatValue()) {
+		if (player.level().random.nextFloat() < UnfairCraft.CONFIG.player.attackExhaustionChance()) {
 			player.causeFoodExhaustion(4.0f);
 		}
 	}
@@ -56,13 +57,13 @@ public abstract class PlayerCombatMixin {
 			cancellable = true
 	)
 	private void vanishItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return;
 		}
 
 		Player player = (Player) (Object) this;
 
-		if (!player.level().isClientSide() && player.level().random.nextFloat() < UnfairCraftConfig.PLAYER.pickupFailChance.get().floatValue()) {
+		if (!player.level().isClientSide() && player.level().random.nextFloat() < UnfairCraft.CONFIG.player.pickupFailChance()) {
 			cir.setReturnValue(false);
 		}
 	}

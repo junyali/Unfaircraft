@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ShulkerBullet;
@@ -24,10 +25,10 @@ public abstract class ShulkerBulletMixin {
 			)
 	)
 	private void unfaircraft$modifyBulletMovement(ShulkerBullet instance, Vec3 vec3) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SHULKER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.shulker.enabled())) {
 			instance.setDeltaMovement(vec3);
 		} else {
-			instance.setDeltaMovement(vec3.scale(UnfairCraftConfig.SHULKER.bulletMovementVector.get().floatValue()));
+			instance.setDeltaMovement(vec3.scale(UnfairCraft.CONFIG.shulker.bulletMovementVector()));
 		}
 	}
 
@@ -38,7 +39,7 @@ public abstract class ShulkerBulletMixin {
 	private void unfaircraft$extendTracking(CallbackInfo ci) {
 		ShulkerBullet self = (ShulkerBullet) (Object) this;
 		Entity target = self.getOwner();
-		if (target != null && self.distanceTo(target) < UnfairCraftConfig.SHULKER.bulletDistanceTarget.get()) {
+		if (target != null && self.distanceTo(target) < UnfairCraft.CONFIG.shulker.bulletDistanceTarget()) {
 			this.flightSteps = 0;
 		}
 	}

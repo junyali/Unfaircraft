@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,7 +34,7 @@ public abstract class FurnaceEntityMixin {
 			at = @At("TAIL")
 	)
 	private static void unfaircraft$furnaceMalfunction(Level level, BlockPos pos, BlockState state, AbstractFurnaceBlockEntity blockEntity, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FURNACE.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.furnace.enabled())) {
 			return;
 		}
 
@@ -53,12 +54,12 @@ public abstract class FurnaceEntityMixin {
 
 		self.unfaircraft$continuousCookTime++;
 
-		if (level.getRandom().nextFloat() < UnfairCraftConfig.FURNACE.fuelTheftChance.get().floatValue()) {
+		if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.furnace.fuelTheftChance()) {
 			self.cookingProgress = Math.max(0, self.cookingProgress - 10);
 		}
 
 		if (self.cookingProgress >= self.cookingTotalTime) {
-			if (level.getRandom().nextFloat() < UnfairCraftConfig.FURNACE.smeltTheftChance.get().floatValue()) {
+			if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.furnace.smeltTheftChance()) {
 				ItemStack outputSlot = blockEntity.getItem(2);
 				if (!outputSlot.isEmpty()) {
 					outputSlot.setCount(0);
@@ -67,9 +68,9 @@ public abstract class FurnaceEntityMixin {
 			}
 		}
 
-		int threshold = UnfairCraftConfig.FURNACE.explosionThreshold.get();
+		int threshold = UnfairCraft.CONFIG.furnace.explosionThreshold();
 		if (self.unfaircraft$continuousCookTime >= threshold) {
-			if (level.getRandom().nextFloat() < UnfairCraftConfig.FURNACE.explosionChance.get().floatValue()) {
+			if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.furnace.explosionChance()) {
 				self.unfaircraft$continuousCookTime = 0;
 				level.explode(
 						null,

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.item;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,14 +24,14 @@ public class BucketItemMixin {
 			cancellable = true
 	)
 	private void failWaterBucket(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BUCKET.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.bucket.enabled())) {
 			return;
 		}
 
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (stack.getItem() == Items.WATER_BUCKET) {
-			if (level.random.nextFloat() < UnfairCraftConfig.BUCKET.waterFailChance.get().floatValue()) {
+			if (level.random.nextFloat() < UnfairCraft.CONFIG.bucket.waterFailChance()) {
 				if (!player.getAbilities().instabuild) {
 					player.setItemInHand(hand, new ItemStack(Items.BUCKET));
 				}

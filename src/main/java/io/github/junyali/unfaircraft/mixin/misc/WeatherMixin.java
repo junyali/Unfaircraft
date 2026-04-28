@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -18,7 +19,7 @@ public abstract class WeatherMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$weatherEscalation(BooleanSupplier hasTimeLeft, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.WEATHER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.weather.enabled())) {
 			return;
 		}
 
@@ -31,7 +32,7 @@ public abstract class WeatherMixin {
 		RandomSource random = self.getRandom();
 
 		if (serverLevelData.isRaining() && !serverLevelData.isThundering()) {
-			if (random.nextFloat() < UnfairCraftConfig.WEATHER.escalateThunderChance.get().floatValue()) {
+			if (random.nextFloat() < UnfairCraft.CONFIG.weather.escalateThunderChance()) {
 				serverLevelData.setThunderTime(random.nextIntBetweenInclusive(12000, 24000));
 				serverLevelData.setThundering(true);
 			}
@@ -39,7 +40,7 @@ public abstract class WeatherMixin {
 
 		if (serverLevelData.isThundering()) {
 			int currentThunderTime = serverLevelData.getThunderTime();
-			if (currentThunderTime < 1000 && random.nextFloat() < UnfairCraftConfig.WEATHER.remainThunderChance.get().floatValue()) {
+			if (currentThunderTime < 1000 && random.nextFloat() < UnfairCraft.CONFIG.weather.remainThunderChance()) {
 				serverLevelData.setThunderTime(random.nextIntBetweenInclusive(6000, 12000));
 			}
 		}

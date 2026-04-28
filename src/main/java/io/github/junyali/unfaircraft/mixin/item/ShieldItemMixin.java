@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.item;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,12 +21,12 @@ public class ShieldItemMixin {
 			cancellable = true
 	)
 	private void onShieldUse(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SHIELD.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.shield.enabled())) {
 			return;
 		}
 
 		if (!level.isClientSide) {
-			if (level.random.nextFloat() < UnfairCraftConfig.SHIELD.failChance.get().floatValue()) {
+			if (level.random.nextFloat() < UnfairCraft.CONFIG.shield.failChance()) {
 				cir.setReturnValue(InteractionResultHolder.fail(player.getItemInHand(hand)));
 			}
 		}

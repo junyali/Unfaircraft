@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.food;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -26,7 +27,7 @@ public abstract class FoodDebuffMixin {
 			at = @At("HEAD")
 	)
 	private void onEatHead(Level level, ItemStack stack, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.food.enabled())) {
 			return;
 		}
 
@@ -46,7 +47,7 @@ public abstract class FoodDebuffMixin {
 			at = @At("RETURN")
 	)
 	private void onEat(Level level, ItemStack stack, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.food.enabled())) {
 			return;
 		}
 
@@ -62,7 +63,7 @@ public abstract class FoodDebuffMixin {
 
 		LivingEntity entity = (LivingEntity) (Object) this;
 		if (entity instanceof Player) {
-			if (entity.level().random.nextFloat() < UnfairCraftConfig.FOOD.debuffChance.get().floatValue()) {
+			if (entity.level().random.nextFloat() < UnfairCraft.CONFIG.food.debuffChance()) {
 				boolean givePoison = entity.level().random.nextBoolean();
 				if (givePoison) {
 					entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));

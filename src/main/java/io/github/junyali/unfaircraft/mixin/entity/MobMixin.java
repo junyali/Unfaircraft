@@ -60,7 +60,7 @@ public abstract class MobMixin {
 		Mob mob = (Mob) (Object) this;
 
 		if (mob instanceof IronGolem) {
-			if (UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.ironGolem.enabled())) {
 				ItemStack boots = new ItemStack((Items.LEATHER_BOOTS));
 				boots.enchant(
 						level.registryAccess()
@@ -78,15 +78,15 @@ public abstract class MobMixin {
 				return;
 			}
 
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PHANTOM.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.phantom.enabled())) {
 				return;
 			}
 
-			float summonChance = UnfairCraftConfig.PHANTOM.summonChance.get().floatValue();
+			float summonChance = (float) UnfairCraft.CONFIG.phantom.summonChance();
 
 			if (serverLevel.random.nextDouble() < summonChance) {
-				int minPhantoms = UnfairCraftConfig.PHANTOM.summonMin.get();
-				int maxPhantoms = UnfairCraftConfig.PHANTOM.summonMax.get();
+				int minPhantoms = UnfairCraft.CONFIG.phantom.summonMin();
+				int maxPhantoms = UnfairCraft.CONFIG.phantom.summonMax();
 				int extras = minPhantoms + serverLevel.random.nextInt(maxPhantoms - minPhantoms + 1);
 
 				for (int i = 0; i < extras; i++) {
@@ -104,15 +104,15 @@ public abstract class MobMixin {
 				return;
 			}
 
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.GHAST.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.ghast.enabled())) {
 				return;
 			}
 
-			float summonChance = UnfairCraftConfig.GHAST.summonChance.get().floatValue();
+			float summonChance = (float) UnfairCraft.CONFIG.ghast.summonChance();
 
 			if (serverLevel.random.nextDouble() < summonChance) {
-				int minGhasts = UnfairCraftConfig.GHAST.summonMin.get();
-				int maxGhasts = UnfairCraftConfig.GHAST.summonMax.get();
+				int minGhasts = UnfairCraft.CONFIG.ghast.summonMin();
+				int maxGhasts = UnfairCraft.CONFIG.ghast.summonMax();
 				int extras = minGhasts + serverLevel.random.nextInt(maxGhasts - minGhasts + 1);
 
 				for (int i = 0; i < extras; i++) {
@@ -130,15 +130,15 @@ public abstract class MobMixin {
 				return;
 			}
 
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLAZE.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.blaze.enabled())) {
 				return;
 			}
 
-			float summonChance = UnfairCraftConfig.BLAZE.summonChance.get().floatValue();
+			float summonChance = (float) UnfairCraft.CONFIG.blaze.summonChance();
 
 			if (serverLevel.random.nextDouble() < summonChance) {
-				int minBlazes = UnfairCraftConfig.BLAZE.summonMin.get();
-				int maxBlazes = UnfairCraftConfig.BLAZE.summonMax.get();
+				int minBlazes = UnfairCraft.CONFIG.blaze.summonMin();
+				int maxBlazes = UnfairCraft.CONFIG.blaze.summonMax();
 				int extras = minBlazes + serverLevel.random.nextInt(maxBlazes - minBlazes + 1);
 
 				for (int i = 0; i < extras; i++) {
@@ -152,15 +152,15 @@ public abstract class MobMixin {
 				}
 			}
 		} else if (mob instanceof EnderDragon) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDER_DRAGON.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.enderDragon.enabled())) {
 				return;
 			}
 
 			AttributeInstance health = mob.getAttribute(Attributes.MAX_HEALTH);
 			if (health != null) {
 				health.addPermanentModifier(new AttributeModifier(
-						ResourceLocation.fromNamespaceAndPath(UnfairCraft.MODID, "dragon_health"),
-						(UnfairCraftConfig.ENDER_DRAGON.healthMultiplier.get().floatValue() * 100),
+						ResourceLocation.fromNamespaceAndPath(UnfairCraft.MOD_ID, "dragon_health"),
+						(UnfairCraft.CONFIG.enderDragon.healthMultiplier() * 100),
 						AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
 				));
 				mob.setHealth(mob.getMaxHealth());
@@ -169,8 +169,8 @@ public abstract class MobMixin {
 			AttributeInstance speed = mob.getAttribute(Attributes.MOVEMENT_SPEED);
 			if (speed != null) {
 				speed.addPermanentModifier(new AttributeModifier(
-						ResourceLocation.fromNamespaceAndPath(UnfairCraft.MODID, "dragon_speed"),
-						(UnfairCraftConfig.ENDER_DRAGON.speedMultiplier.get().floatValue()) - 1.0,
+						ResourceLocation.fromNamespaceAndPath(UnfairCraft.MOD_ID, "dragon_speed"),
+						(UnfairCraft.CONFIG.enderDragon.speedMultiplier()) - 1.0,
 						AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
 				));
 			}
@@ -183,7 +183,7 @@ public abstract class MobMixin {
 			cancellable = true
 	)
 	private void unfaircraft$daytimeSpawn(LevelAccessor level, MobSpawnType reason, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.allowHostileDaylightSpawn)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mob.allowHostileDaylightSpawn())) {
 			return;
 		}
 
@@ -197,7 +197,7 @@ public abstract class MobMixin {
 			return;
 		}
 
-		if (self.getRandom().nextFloat() < UnfairCraftConfig.MOB.hostileDaylightSpawnChance.get().floatValue()) {
+		if (self.getRandom().nextFloat() < UnfairCraft.CONFIG.mob.hostileDaylightSpawnChance()) {
 			cir.setReturnValue(true);
 		}
 	}
@@ -213,7 +213,7 @@ public abstract class MobMixin {
 			if (!unfaircraft$ironGolemAttributesInitialised) {
 				unfaircraft$ironGolemAttributesInitialised = true;
 
-				if (UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+				if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.ironGolem.enabled())) {
 					AttributeInstance maxHealth = mob.getAttribute(Attributes.MAX_HEALTH);
 					if (maxHealth != null) {
 						maxHealth.setBaseValue(200.0);
@@ -254,7 +254,7 @@ public abstract class MobMixin {
 		} else if (mob instanceof Animal) {
 			if (!unfaircraft$animalAttributesInitialised) {
 				unfaircraft$animalAttributesInitialised = true;
-				if (UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.passiveRetaliationEnabled)) {
+				if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mob.passiveRetaliationEnabled())) {
 					AttributeInstance attackDamage = mob.getAttribute(Attributes.ATTACK_DAMAGE);
 					if (attackDamage != null) {
 						attackDamage.setBaseValue(1.0);
@@ -275,20 +275,20 @@ public abstract class MobMixin {
 		Mob mob = (Mob) (Object) this;
 
 		if (mob instanceof EnderDragon) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ENDER_DRAGON.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.enderDragon.enabled())) {
 				return;
 			}
 
 			DragonPhaseInstance dragonPhaseInstance = ((EnderDragon) mob).getPhaseManager().getCurrentPhase();
 
 			if (dragonPhaseInstance.getPhase() == EnderDragonPhase.HOLDING_PATTERN) {
-				if (mob.getRandom().nextDouble() < UnfairCraftConfig.ENDER_DRAGON.aggressionChance.get().floatValue()) {
+				if (mob.getRandom().nextDouble() < UnfairCraft.CONFIG.enderDragon.aggressionChance()) {
 					((EnderDragon) mob).getPhaseManager().setPhase(EnderDragonPhase.STRAFE_PLAYER);
 				}
 			}
 
 			if (dragonPhaseInstance.getPhase() == EnderDragonPhase.LANDING_APPROACH) {
-				if (mob.getRandom().nextDouble() < UnfairCraftConfig.ENDER_DRAGON.aggressionChance.get().floatValue()) {
+				if (mob.getRandom().nextDouble() < UnfairCraft.CONFIG.enderDragon.aggressionChance()) {
 					((EnderDragon) mob).getPhaseManager().setPhase(EnderDragonPhase.CHARGING_PLAYER);
 				}
 			}
@@ -303,14 +303,14 @@ public abstract class MobMixin {
 		Mob self = (Mob) (Object) this;
 
 		if (self instanceof IronGolem ironGolem) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.IRON_GOLEM.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.ironGolem.enabled())) {
 				return;
 			}
 
 			ironGolem.goalSelector.addGoal(0, new FloatGoal(ironGolem));
 			ironGolem.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(ironGolem, Player.class, true));
 		} else if (self instanceof Animal animal) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB.passiveRetaliationEnabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mob.passiveRetaliationEnabled())) {
 				return;
 			}
 

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -20,11 +21,11 @@ public class SaplingBlockMixin {
 			cancellable = true
 	)
 	private void killSapling(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource random, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SAPLING.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.sapling.enabled())) {
 			return;
 		}
 
-		if (random.nextFloat() < UnfairCraftConfig.SAPLING.deathChance.get().floatValue()) {
+		if (random.nextFloat() < UnfairCraft.CONFIG.sapling.deathChance()) {
 			level.setBlock(blockPos, Blocks.DEAD_BUSH.defaultBlockState(), 3);
 			ci.cancel();
 		}

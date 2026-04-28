@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -23,14 +24,14 @@ public class ChestBlockEntityMixin {
 			at = @At("TAIL")
 	)
 	private void onChestOpen(Player player, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CHEST.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.chest.enabled())) {
 			return;
 		}
 
 		ChestBlockEntity chest = (ChestBlockEntity) (Object) this;
 		Level level = chest.getLevel();
 
-		if (level != null && !level.isClientSide() && level.random.nextFloat() < UnfairCraftConfig.CHEST.eatChance.get().floatValue()) {
+		if (level != null && !level.isClientSide() && level.random.nextFloat() < UnfairCraft.CONFIG.chest.eatChance()) {
 			List<Integer> nonEmptySlots = new ArrayList<>();
 			for (int i = 0; i < chest.getContainerSize(); i++) {
 				if (!chest.getItem(i).isEmpty()) {
@@ -42,8 +43,8 @@ public class ChestBlockEntityMixin {
 				int slotIndex = nonEmptySlots.get(level.random.nextInt(nonEmptySlots.size()));
 				ItemStack stack = chest.getItem(slotIndex);
 
-				int minEat = UnfairCraftConfig.CHEST.eatItemMin.get();
-				int maxEat = Math.min(UnfairCraftConfig.CHEST.eatItemMax.get(), stack.getCount());
+				int minEat = UnfairCraft.CONFIG.chest.eatItemMin();
+				int maxEat = Math.min(UnfairCraft.CONFIG.chest.eatItemMax(), stack.getCount());
 				int toEat = minEat;
 
 				if (maxEat > minEat) {

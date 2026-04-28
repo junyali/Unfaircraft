@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.food;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,12 +20,12 @@ public class FoodItemMixin {
 			cancellable = true
 	)
 	private void onEatFood(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.FOOD.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.food.enabled())) {
 			return;
 		}
 
 		if (stack.getItem().getFoodProperties(stack, entity) != null && entity instanceof Player player) {
-			if (level.random.nextFloat() < UnfairCraftConfig.FOOD.failChance.get()) {
+			if (level.random.nextFloat() < UnfairCraft.CONFIG.food.failChance()) {
 				if (!level.isClientSide) {
 					ItemStack result = stack.copy();
 					result.shrink(1);

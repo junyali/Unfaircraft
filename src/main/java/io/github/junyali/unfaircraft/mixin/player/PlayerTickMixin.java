@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,7 +28,7 @@ public abstract class PlayerTickMixin {
 			at = @At("TAIL")
 	)
 	private void onPlayerTick(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return;
 		}
 
@@ -37,7 +38,7 @@ public abstract class PlayerTickMixin {
 			return;
 		}
 
-		if (!player.level().isClientSide() && player.level().random.nextFloat() < UnfairCraftConfig.PLAYER.randomDropChance.get().floatValue()) {
+		if (!player.level().isClientSide() && player.level().random.nextFloat() < UnfairCraft.CONFIG.player.randomDropChance()) {
 			ItemStack mainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND);
 			if (!mainHandItem.isEmpty()) {
 				unfaircraft$dropItemAndPlaySound(player, mainHandItem);

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
@@ -28,12 +29,12 @@ public class RangedAttackGoalMixin {
 		RangedAttackGoal goal = (RangedAttackGoal) (Object) this;
 
 		if (this.mob instanceof AbstractSkeleton) {
-			if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.SKELETON.enabled)) {
+			if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.skeleton.enabled())) {
 				return;
 			}
 
 			if (this.attackTime > 0) {
-				int speedIncrease = UnfairCraftConfig.SKELETON.attackSpeedIncrease.get();
+				int speedIncrease = UnfairCraft.CONFIG.skeleton.attackSpeedIncrease();
 				this.attackTime = Math.max(0, this.attackTime - speedIncrease);
 			}
 		}

@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.block;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -36,12 +37,12 @@ public abstract class CaveInMixin {
 			return;
 		}
 
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.block.enabled())) {
 			return;
 		}
 
 		if (pos.getY() < 32) {
-			if (level.getRandom().nextFloat() < UnfairCraftConfig.BLOCK.caveInChance.get().floatValue()) {
+			if (level.getRandom().nextFloat() < UnfairCraft.CONFIG.block.caveInChance()) {
 				int radius = 3;
 				for (int x = -radius; x <= radius; x++) {
 					for (int z = -radius; z <= radius; z++) {

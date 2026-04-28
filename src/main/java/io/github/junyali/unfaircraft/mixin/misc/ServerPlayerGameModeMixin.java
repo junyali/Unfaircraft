@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -21,11 +22,11 @@ public class ServerPlayerGameModeMixin {
 			cancellable = true
 	)
 	private void fakeLagDestroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.BLOCK_INTERACTION.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.blockInteraction.enabled())) {
 			return;
 		}
 
-		if (level.random.nextFloat() < UnfairCraftConfig.BLOCK_INTERACTION.breakFailChance.get().floatValue()) {
+		if (level.random.nextFloat() < UnfairCraft.CONFIG.blockInteraction.breakFailChance()) {
 			cir.setReturnValue(false);
 		}
 	}

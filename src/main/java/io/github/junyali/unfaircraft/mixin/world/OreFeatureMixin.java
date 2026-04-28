@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -50,19 +51,19 @@ public class OreFeatureMixin {
 	@Unique
 	private float unfaircraft$getReplacementChance(Block block) {
 		if (block == Blocks.ANCIENT_DEBRIS) {
-			return UnfairCraftConfig.ORE.ancientDebrisReplacementChance.get().floatValue();
+			return (float) UnfairCraft.CONFIG.ore.ancientDebrisReplacementChance();
 		}
 		else if (block == Blocks.DIAMOND_ORE || block == Blocks.DEEPSLATE_DIAMOND_ORE) {
-			return UnfairCraftConfig.ORE.diamondReplacementChance.get().floatValue();
+			return (float) UnfairCraft.CONFIG.ore.diamondReplacementChance();
 		}
 		else if (block== Blocks.EMERALD_ORE || block == Blocks.DEEPSLATE_EMERALD_ORE) {
-			return UnfairCraftConfig.ORE.emeraldReplacementChance.get().floatValue();
+			return (float) UnfairCraft.CONFIG.ore.emeraldReplacementChance();
 		}
 		else if (block == Blocks.GOLD_ORE || block == Blocks.DEEPSLATE_GOLD_ORE) {
-			return UnfairCraftConfig.ORE.goldReplacementChance.get().floatValue();
+			return (float) UnfairCraft.CONFIG.ore.goldReplacementChance();
 		}
 		else {
-			return UnfairCraftConfig.ORE.defaultReplacementChance.get().floatValue();
+			return (float) UnfairCraft.CONFIG.ore.defaultReplacementChance();
 		}
 	}
 
@@ -71,7 +72,7 @@ public class OreFeatureMixin {
 			at = @At("RETURN")
 	)
 	private void afterOrePlace(FeaturePlaceContext<OreConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.ORE.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.ore.enabled())) {
 			return;
 		}
 

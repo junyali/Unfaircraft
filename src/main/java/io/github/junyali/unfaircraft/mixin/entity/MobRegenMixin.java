@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +21,7 @@ public abstract class MobRegenMixin {
 			at = @At("HEAD")
 	)
 	private void onMobTick(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_REGEN.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mobRegen.enabled())) {
 			return;
 		}
 
@@ -37,13 +38,13 @@ public abstract class MobRegenMixin {
 
 		unfaircraft$ticksSinceLastDamage++;
 
-		int regenDelay = UnfairCraftConfig.MOB_REGEN.delay.get();
+		int regenDelay = UnfairCraft.CONFIG.mobRegen.delay();
 		if (unfaircraft$ticksSinceLastDamage < regenDelay) {
 			return;
 		}
-		int regenRate = UnfairCraftConfig.MOB_REGEN.rate.get();
+		int regenRate = UnfairCraft.CONFIG.mobRegen.rate();
 		if (unfaircraft$ticksSinceLastDamage % regenRate == 0) {
-			float regenAmount = UnfairCraftConfig.MOB_REGEN.amount.get().floatValue();
+			float regenAmount = (float) UnfairCraft.CONFIG.mobRegen.amount();
 			entity.heal(regenAmount);
 		}
 	}
@@ -53,7 +54,7 @@ public abstract class MobRegenMixin {
 			at = @At("HEAD")
 	)
 	private void onMobHurt(DamageSource source, float amount, CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.MOB_REGEN.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.mobRegen.enabled())) {
 			return;
 		}
 

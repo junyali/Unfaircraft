@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +17,7 @@ public abstract class UnstableGroundMixin {
 			at = @At("TAIL")
 	)
 	private void unfaircraft$unstableGround(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.PLAYER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.player.enabled())) {
 			return;
 		}
 
@@ -34,7 +35,7 @@ public abstract class UnstableGroundMixin {
 			return;
 		}
 
-		if (self.getRandom().nextFloat() < UnfairCraftConfig.PLAYER.groundBreakChance.get().floatValue()) {
+		if (self.getRandom().nextFloat() < UnfairCraft.CONFIG.player.groundBreakChance()) {
 			BlockPos below = self.blockPosition().below();
 			BlockState state = self.level().getBlockState(below);
 

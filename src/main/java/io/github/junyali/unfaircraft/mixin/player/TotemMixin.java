@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +23,7 @@ public abstract class TotemMixin {
 			cancellable = true
 	)
 	private void makeTotemFail(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.TOTEM.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.totem.enabled())) {
 			return;
 		}
 
@@ -40,7 +41,7 @@ public abstract class TotemMixin {
 			}
 		}
 
-		if (totemStack != null && entity.level().random.nextFloat() < UnfairCraftConfig.TOTEM.failChance.get().floatValue()) {
+		if (totemStack != null && entity.level().random.nextFloat() < UnfairCraft.CONFIG.totem.failChance()) {
 			totemStack.shrink(1);
 			entity.level().playSound(null, entity.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0F, 0.5F + entity.level().random.nextFloat() * 0.2F);
 			cir.setReturnValue(false);

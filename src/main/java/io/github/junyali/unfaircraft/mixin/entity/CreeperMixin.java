@@ -1,5 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
+import io.github.junyali.unfaircraft.UnfairCraft;
 import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.monster.Creeper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,14 +23,14 @@ public class CreeperMixin {
 			at = @At("HEAD")
 	)
 	private void reduceFusetime(CallbackInfo ci) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CREEPER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.creeper.enabled())) {
 			return;
 		}
 
 		Creeper creeper = (Creeper) (Object) this;
 
 		if (this.swell > 0) {
-			float fuseSpeedMultiplier = UnfairCraftConfig.CREEPER.fuseSpeedMultiplier.get().floatValue();
+			float fuseSpeedMultiplier = (float) UnfairCraft.CONFIG.creeper.fuseSpeedMultiplier();
 			int additionalTicks = (int) Math.ceil(fuseSpeedMultiplier - 1.0f);
 
 			this.swell += additionalTicks;
@@ -46,10 +47,10 @@ public class CreeperMixin {
 			ordinal = 0
 	)
 	private float increaseExplosionRadius(float originalRadius) {
-		if (!UnfairCraftConfig.isEnabled(UnfairCraftConfig.CREEPER.enabled)) {
+		if (!(UnfairCraft.CONFIG.enableUnfairMode() && UnfairCraft.CONFIG.creeper.enabled())) {
 			return originalRadius;
 		}
 
-		return originalRadius * UnfairCraftConfig.CREEPER.explosionRadiusMultiplier.get().floatValue();
+		return (float) (originalRadius * UnfairCraft.CONFIG.creeper.explosionRadiusMultiplier());
 	}
 }
