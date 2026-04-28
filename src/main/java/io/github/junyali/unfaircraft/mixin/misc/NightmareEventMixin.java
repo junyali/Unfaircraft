@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +36,7 @@ public class NightmareEventMixin {
 		if (players.isEmpty()) return;
 
 		Player randomPlayer = players.get(level.random.nextInt(players.size()));
-		int eventType = level.random.nextInt(4);
+		int eventType = level.random.nextInt(5);
 
 		switch (eventType) {
 			case 0 -> unfaircraft$tntRain(level, randomPlayer);
@@ -140,7 +141,7 @@ public class NightmareEventMixin {
 			}
 			spawnPos = spawnPos.above();
 
-			int mobType = level.random.nextInt(2);
+			int mobType = level.random.nextInt(4);
 			switch (mobType) {
 				case 0 -> unfaircraft$spawnArmouredZombie(level, spawnPos);
 				case 1 -> unfaircraft$spawnArmouredSkeleton(level, spawnPos);

@@ -739,9 +739,9 @@ public class UnfairCraftConfig {
 
 		private NightmareEvent(ModConfigSpec.Builder builder) {
 			builder.push("nightmare_event");
-			chance = builder.comment("Chance for a nightmare event to happen")
+			chance = builder.comment("Chance for a nightmare event to happen every second")
 					.translation("unfaircraft.config.nightmare_event.chance")
-					.defineInRange("chance", 0.0001, 0.0, 1.0);
+					.defineInRange("chance", 0.05, 0.0, 1.0);
 			builder.pop();
 		}
 	}
