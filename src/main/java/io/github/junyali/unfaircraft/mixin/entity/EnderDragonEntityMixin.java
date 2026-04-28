@@ -32,7 +32,7 @@ public abstract class EnderDragonEntityMixin {
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
-		if (!(entity instanceof EnderDragon dragon)) {
+		if (!(entity instanceof EnderDragon)) {
 			return;
 		}
 

@@ -16,13 +16,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Mixin(OreFeature.class)
 public class OreFeatureMixin {
 	@Unique
-	private static final Block unfaircraft$getReplacement(Block block) {
+	private static Block unfaircraft$getReplacement(Block block) {
 		if (block == Blocks.DIAMOND_ORE) return Blocks.COAL_ORE;
 		if (block == Blocks.DEEPSLATE_DIAMOND_ORE) return Blocks.DEEPSLATE_COAL_ORE;
 

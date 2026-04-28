@@ -33,25 +33,23 @@ public class BowItemMixin {
 				MinecraftServer server = ((ServerLevel) level).getServer();
 				for (int delay = 1; delay <= 5; delay++) {
 					final int tickDelay = delay;
-					server.tell(new net.minecraft.server.TickTask(tickDelay, () -> {
-						level.getEntitiesOfClass(AbstractArrow.class, player.getBoundingBox().inflate(10.0f))
-								.stream()
-								.filter(arrow -> arrow.getOwner() == player)
-								.filter(arrow -> arrow.tickCount < 10)
-								.forEach(arrow -> {
-									Vec3 currentMotion = arrow.getDeltaMovement();
-									Vec3 wonkyMotion = new Vec3(
-											currentMotion.x + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get(),
-											currentMotion.y + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get(),
-											currentMotion.z + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get()
-									);
-									arrow.setDeltaMovement(wonkyMotion);
-									arrow.hasImpulse = true;
-									if (tickDelay == 1) {
-										level.playSound(null, arrow.getX(), arrow.getY(), arrow.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 0.5f, 0.7f);
-									}
-								});
-					}));
+					server.tell(new net.minecraft.server.TickTask(tickDelay, () -> level.getEntitiesOfClass(AbstractArrow.class, player.getBoundingBox().inflate(10.0f))
+							.stream()
+							.filter(arrow -> arrow.getOwner() == player)
+							.filter(arrow -> arrow.tickCount < 10)
+							.forEach(arrow -> {
+								Vec3 currentMotion = arrow.getDeltaMovement();
+								Vec3 wonkyMotion = new Vec3(
+										currentMotion.x + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get(),
+										currentMotion.y + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get(),
+										currentMotion.z + (level.random.nextDouble() - 0.5) * UnfairCraftConfig.BOW.projectileDeviation.get()
+								);
+								arrow.setDeltaMovement(wonkyMotion);
+								arrow.hasImpulse = true;
+								if (tickDelay == 1) {
+									level.playSound(null, arrow.getX(), arrow.getY(), arrow.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 0.5f, 0.7f);
+								}
+							})));
 				}
 			}
 		}

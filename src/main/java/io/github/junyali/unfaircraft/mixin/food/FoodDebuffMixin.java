@@ -54,28 +54,14 @@ public abstract class FoodDebuffMixin {
 			return;
 		}
 
-		Item item = stack.getItem();
-
-		boolean isCooked =
-				item == Items.COOKED_BEEF       ||
-						item == Items.COOKED_CHICKEN    ||
-						item == Items.COOKED_COD        ||
-						item == Items.COOKED_MUTTON     ||
-						item == Items.COOKED_RABBIT     ||
-						item == Items.COOKED_PORKCHOP   ||
-						item == Items.COOKED_SALMON     ||
-						item == Items.BAKED_POTATO      ||
-						item == Items.BREAD             ||
-						item == Items.CAKE              ||
-						item == Items.COOKIE            ||
-						item == Items.PUMPKIN_PIE;
+		boolean isCooked = unfaircraft$isCooked(stack);
 
 		if (!isCooked) {
 			return;
 		}
 
 		LivingEntity entity = (LivingEntity) (Object) this;
-		if (entity instanceof Player player) {
+		if (entity instanceof Player) {
 			if (entity.level().random.nextFloat() < UnfairCraftConfig.FOOD.debuffChance.get().floatValue()) {
 				boolean givePoison = entity.level().random.nextBoolean();
 				if (givePoison) {
@@ -97,5 +83,23 @@ public abstract class FoodDebuffMixin {
 			}
 			unfaircraft$hungerBeforeEat = -1;
 		}
+	}
+
+	@Unique
+	private static boolean unfaircraft$isCooked(ItemStack stack) {
+		Item item = stack.getItem();
+
+		return item == Items.COOKED_BEEF       ||
+				item == Items.COOKED_CHICKEN    ||
+				item == Items.COOKED_COD        ||
+				item == Items.COOKED_MUTTON     ||
+				item == Items.COOKED_RABBIT     ||
+				item == Items.COOKED_PORKCHOP   ||
+				item == Items.COOKED_SALMON     ||
+				item == Items.BAKED_POTATO      ||
+				item == Items.BREAD             ||
+				item == Items.CAKE              ||
+				item == Items.COOKIE            ||
+				item == Items.PUMPKIN_PIE;
 	}
 }

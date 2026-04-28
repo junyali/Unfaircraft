@@ -18,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,8 +41,8 @@ public class NightmareEventMixin {
 			case 0 -> unfaircraft$tntRain(level, randomPlayer);
 			case 1 -> unfaircraft$instantSmite(level, randomPlayer);
 			case 2 -> unfaircraft$spawnArmouredMobs(level, randomPlayer);
-			case 3 -> unfaircraft$inventoryDrop(level, randomPlayer);
-			case 4 -> unfaircraft$launchPlayer(level, randomPlayer);
+			case 3 -> unfaircraft$inventoryDrop(randomPlayer);
+			case 4 -> unfaircraft$launchPlayer(randomPlayer);
 		}
 	}
 
@@ -251,7 +250,7 @@ public class NightmareEventMixin {
 	}
 
 	@Unique
-	private void unfaircraft$inventoryDrop(ServerLevel level, Player player) {
+	private void unfaircraft$inventoryDrop(Player player) {
 		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 			ItemStack stack = player.getInventory().getItem(i);
 			if (!stack.isEmpty()) {
@@ -262,7 +261,7 @@ public class NightmareEventMixin {
 	}
 
 	@Unique
-	private void unfaircraft$launchPlayer(ServerLevel level, Player player) {
+	private void unfaircraft$launchPlayer(Player player) {
 		player.setDeltaMovement(player.getDeltaMovement().add(0, 5.0, 0));
 		player.hasImpulse = true;
 	}

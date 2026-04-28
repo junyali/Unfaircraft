@@ -42,7 +42,7 @@ public abstract class UnstableGroundMixin {
 				return;
 			}
 
-			if (state.liquid()) {
+			if (state.getFluidState().isEmpty()) {
 				return;
 			}
 

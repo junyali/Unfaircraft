@@ -44,16 +44,13 @@ public abstract class AnimalEntityMixin {
 			AABB alertBox = self.getBoundingBox().inflate(8.0);
 			animal.level().getEntitiesOfClass(animal.getClass(), alertBox, nearby ->
 					nearby != self && nearby.getTarget() == null
-			).forEach(nearby -> {
-				nearby.setTarget(player);
-			});
+			).forEach(nearby -> nearby.setTarget(player));
 		}
 	}
 
 	@Inject(
 			method = "createLivingAttributes",
-			at = @At("RETURN"),
-			cancellable = true
+			at = @At("RETURN")
 	)
 	private static void unfaircraft$addAttackAttribute(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
 		cir.getReturnValue().add(Attributes.ATTACK_DAMAGE, 1.0f);

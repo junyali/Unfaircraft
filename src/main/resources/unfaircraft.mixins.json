@@ -46,6 +46,7 @@
     "misc.NightmareEventMixin",
     "misc.RangedAttackGoalMixin",
     "misc.ServerPlayerGameModeMixin",
+    "misc.WeatherMixin",
     "player.BiomeHazardsMixin",
     "player.DrunkJumpingMixin",
     "player.FallDamageMixin",

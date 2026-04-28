@@ -66,7 +66,7 @@ public class LootTableMixin {
 
 		ResourceLocation lootTableId = context.getQueriedLootTableId();
 
-		if (lootTableId != null && unfaircraft$isStructureLootTable(lootTableId)) {
+		if (unfaircraft$isStructureLootTable(lootTableId)) {
 			ObjectArrayList<ItemStack> originalLoot = cir.getReturnValue();
 
 			if (!originalLoot.isEmpty() && context.getRandom().nextFloat() < UnfairCraftConfig.LOOT_TABLE.trollChance.get().floatValue()) {
