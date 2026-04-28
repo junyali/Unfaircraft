@@ -14,6 +14,8 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 	private void section(String section, String translation) {
 		this.currentSection = section;
 		add(UnfairCraft.MODID + ".configuration." + currentSection, translation);
+		add(UnfairCraft.MODID + ".configuration." + currentSection + ".button", translation);
+		add(UnfairCraft.MODID + ".configuration." + currentSection + ".tooltip", translation + " Configuration");
 	}
 
 	private void addConfig(String key, String translation) {
@@ -22,7 +24,9 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
-		add("pack.unfaircraft.description", "Unfaircraft");
+		add("pack." + UnfairCraft.MODID + ".description", "Unfaircraft");
+		add(UnfairCraft.MODID + ".configuration.section." + UnfairCraft.MODID + ".toml.title", "Unfaircraft");
+		add(UnfairCraft.MODID + ".configuration.section." + UnfairCraft.MODID + ".toml", "Unfaircraft");
 
 		section("general", "General");
 		addConfig("enable_unfair_mode", "Enable Unfair Mode");
