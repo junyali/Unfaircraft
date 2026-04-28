@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "description": "UnfairCraft Resource Pack",
+    "pack_format": 34,
+    "supported_formats": {
+      "min_inclusive": 15,
+      "max_inclusive": 64
+    }
+  }
+}
