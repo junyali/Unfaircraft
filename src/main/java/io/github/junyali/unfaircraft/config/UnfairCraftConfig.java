@@ -8,6 +8,7 @@ public class UnfairCraftConfig {
 	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_UNFAIR_MODE;
 	public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_NIGHTMARE_MODE;
 
+	public static final NightmareEvent NIGHTMARE_EVENT;
 	public static final Bed BED;
 	public static final Shield SHIELD;
 	public static final Player PLAYER;
@@ -38,7 +39,6 @@ public class UnfairCraftConfig {
 	public static final SetFire SET_FIRE;
 	public static final FoodData FOOD_DATA;
 	public static final DrunkJumping DRUNK_JUMPING;
-	public static final NightmareEvent NIGHTMARE_EVENT;
 	public static final MerchantOffer MERCHANT_OFFER;
 	public static final IronGolem IRON_GOLEM;
 	public static final Mob MOB;
@@ -56,6 +56,18 @@ public class UnfairCraftConfig {
 
 	public static boolean isEnabled(ModConfigSpec.ConfigValue<Boolean> featureToggle) {
 		return ENABLE_UNFAIR_MODE.get() && featureToggle.get();
+	}
+
+	public static class NightmareEvent {
+		public final ModConfigSpec.ConfigValue<Double> chance;
+
+		private NightmareEvent(ModConfigSpec.Builder builder) {
+			builder.push("nightmare_event");
+			chance = builder.comment("Chance for a nightmare event to happen every second")
+					.translation("unfaircraft.config.nightmare_event.chance")
+					.defineInRange("chance", 0.05, 0.0, 1.0);
+			builder.pop();
+		}
 	}
 
 	public static class Bed {
@@ -734,18 +746,6 @@ public class UnfairCraftConfig {
 		}
 	}
 
-	public static class NightmareEvent {
-		public final ModConfigSpec.ConfigValue<Double> chance;
-
-		private NightmareEvent(ModConfigSpec.Builder builder) {
-			builder.push("nightmare_event");
-			chance = builder.comment("Chance for a nightmare event to happen every second")
-					.translation("unfaircraft.config.nightmare_event.chance")
-					.defineInRange("chance", 0.05, 0.0, 1.0);
-			builder.pop();
-		}
-	}
-
 	public static class MerchantOffer {
 		public final ModConfigSpec.ConfigValue<Boolean> enabled;
 		public final ModConfigSpec.ConfigValue<Integer> multiplier;
@@ -1069,6 +1069,7 @@ public class UnfairCraftConfig {
 				.define("enable_nightmare_mode", false);
 		BUILDER.pop();
 
+		NIGHTMARE_EVENT = new NightmareEvent(BUILDER);
 		BED = new Bed(BUILDER);
 		SHIELD = new Shield(BUILDER);
 		PLAYER = new Player(BUILDER);
@@ -1099,7 +1100,6 @@ public class UnfairCraftConfig {
 		SET_FIRE = new SetFire(BUILDER);
 		FOOD_DATA = new FoodData(BUILDER);
 		DRUNK_JUMPING = new DrunkJumping(BUILDER);
-		NIGHTMARE_EVENT = new NightmareEvent(BUILDER);
 		MERCHANT_OFFER = new MerchantOffer(BUILDER);
 		IRON_GOLEM = new IronGolem(BUILDER);
 		MOB = new Mob(BUILDER);

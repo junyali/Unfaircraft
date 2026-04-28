@@ -28,6 +28,9 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 		addConfig("enable_unfair_mode", "Enable Unfair Mode");
 		addConfig("enable_nightmare_mode", "Enable Nightmare Mode");
 
+		section("nightmare_event", "Nightmare Event");
+		addConfig("chance", "Nightmare Event Chance");
+
 		section("bed", "Bed");
 		addConfig("enabled", "Enable Bed Mixin");
 		addConfig("explosion_chance", "Bed Explosion Chance");
@@ -196,9 +199,6 @@ public class UnfairCraftLanguageProvider extends LanguageProvider {
 
 		section("drunk_jumping", "Drunk Jumping");
 		addConfig("enabled", "Enable Drunk Jumping Mixin");
-
-		section("nightmare_event", "Nightmare Event");
-		addConfig("chance", "Nightmare Event Chance");
 
 		section("merchant_offer", "Merchant Offer");
 		addConfig("enabled", "Enable Merchant Offer Mixin");
