@@ -11,7 +11,7 @@ public class UnfairCraftLanguageProvider extends FabricLanguageProvider {
 	private String currentSection;
 
 	protected UnfairCraftLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
-		super(dataOutput, "enus", registryLookup);
+		super(dataOutput, "en_us", registryLookup);
 	}
 
 	private void translateSection(TranslationBuilder translationBuilder, String section, String translation) {
