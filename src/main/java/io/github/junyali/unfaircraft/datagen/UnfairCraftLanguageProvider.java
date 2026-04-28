@@ -16,20 +16,21 @@ public class UnfairCraftLanguageProvider extends FabricLanguageProvider {
 
 	private void translateSection(TranslationBuilder translationBuilder, String section, String translation) {
 		this.currentSection = section;
-		translationBuilder.add("text.autoconfig." + UnfairCraft.MOD_ID + ".category." + section, translation);
+		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".section." + section, translation);
+		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".category." + section, translation);
 	}
 
 	private void translateConfig(TranslationBuilder translationBuilder, String key, String translation) {
-		translationBuilder.add("text.autoconfig." + UnfairCraft.MOD_ID + ".option." + currentSection + "." + key, translation);
+		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".option." + currentSection + "." + key, translation);
 	}
 
 	@Override
 	public void generateTranslations(HolderLookup.Provider wrapperLookup, TranslationBuilder translationBuilder) {
-		translationBuilder.add("text.autoconfig" + UnfairCraft.MOD_ID + ".title", "Unfaircraft");
+		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".title", "Unfaircraft");
 		
 		translateSection(translationBuilder, "general", "General");
-		translateConfig(translationBuilder, "enableUnfairMode", "Enable Unfair Mode");
-		translateConfig(translationBuilder, "enableNightmareMode", "Enable Nightmare Mode");
+		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".option.enableUnfairMode", "Enable Unfair Mode");
+		translationBuilder.add("text.config." + UnfairCraft.MOD_ID + ".option.enableNightmareMode", "Enable Nightmare Mode");
 
 		translateSection(translationBuilder, "nightmareEvent", "Nightmare Event");
 		translateConfig(translationBuilder, "chance", "Nightmare Event Chance");
