@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"io.github.junyali.unfaircraft.UnfairCraft"
+		],
+		"fabric-datagen": [
+			"io.github.junyali.unfaircraft.datagen.DataGenerators"
 		]
 	},
 	"mixins": [
