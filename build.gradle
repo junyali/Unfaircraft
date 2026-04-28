@@ -15,6 +15,26 @@ repositories {
 	maven { url 'https://maven.wispforest.io/releases/' }
 }
 
+base {
+	archivesName = "${mod_version}-${mod_id}-${minecraft_version}-fabric"
+}
+
+tasks.withType(Jar).configureEach {
+	archiveVersion.set('')
+}
+
+tasks.named('remapJar') {
+	archiveVersion.set('')
+}
+
+tasks.named('remapJar') {
+	archiveVersion.set('')
+}
+
+tasks.named('remapSourcesJar') {
+	archiveVersion.set('')
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
