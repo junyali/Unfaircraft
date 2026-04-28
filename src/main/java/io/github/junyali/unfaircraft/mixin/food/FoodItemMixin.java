@@ -1,7 +1,7 @@
 package io.github.junyali.unfaircraft.mixin.food;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -24,7 +24,7 @@ public class FoodItemMixin {
 			return;
 		}
 
-		if (stack.getItem().getFoodProperties(stack, entity) != null && entity instanceof Player player) {
+		if (stack.has(DataComponents.FOOD) && entity instanceof Player player) {
 			if (level.random.nextFloat() < UnfairCraft.CONFIG.food.failChance()) {
 				if (!level.isClientSide) {
 					ItemStack result = stack.copy();

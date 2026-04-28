@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;

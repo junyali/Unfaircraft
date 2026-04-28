@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

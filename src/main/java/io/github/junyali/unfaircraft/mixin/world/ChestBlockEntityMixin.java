@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.world;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

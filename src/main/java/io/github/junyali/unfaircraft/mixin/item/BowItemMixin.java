@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.item;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.entity;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import org.spongepowered.asm.mixin.Mixin;

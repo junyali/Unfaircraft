@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.player;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,7 +51,7 @@ public abstract class FoodRotMixin {
 			Item item = stack.getItem();
 
 			if (item == Items.ROTTEN_FLESH) continue;
-			if (stack.getFoodProperties(player) == null) continue;
+			if (!stack.has(DataComponents.FOOD)) continue;
 
 			CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
 			int rot = tag.getInt(unfaircraft$rot_tag) + 20;

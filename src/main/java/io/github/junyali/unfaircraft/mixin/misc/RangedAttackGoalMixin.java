@@ -1,7 +1,6 @@
 package io.github.junyali.unfaircraft.mixin.misc;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import io.github.junyali.unfaircraft.config.UnfairCraftConfig;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
