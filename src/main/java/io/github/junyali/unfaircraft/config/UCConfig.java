@@ -4,7 +4,7 @@ import io.wispforest.owo.config.annotation.*;
 
 @Modmenu(modId = "unfaircraft")
 @Config(name = "unfaircraft", wrapperName = "UnfaircraftConfig")
-public class UnfairCraftConfig {
+public class UCConfig {
 	@SectionHeader("general")
 	public boolean enableUnfairMode = true;
 	public boolean enableNightmareMode = false;
