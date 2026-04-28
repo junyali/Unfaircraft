@@ -1,285 +1,284 @@
 package io.github.junyali.unfaircraft.datagen;
 
 import io.github.junyali.unfaircraft.UnfairCraft;
-import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.core.HolderLookup;
 
-public class UnfairCraftLanguageProvider extends LanguageProvider {
+import java.util.concurrent.CompletableFuture;
+
+public class UnfairCraftLanguageProvider extends FabricLanguageProvider {
 	private String currentSection;
 
-	public UnfairCraftLanguageProvider(PackOutput output, String locale) {
-		super(output, UnfairCraft.MODID, locale);
+	protected UnfairCraftLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+		super(dataOutput, "enus", registryLookup);
 	}
 
-	private void section(String section, String translation) {
+	private void translateSection(TranslationBuilder translationBuilder, String section, String translation) {
 		this.currentSection = section;
-		add(UnfairCraft.MODID + ".configuration." + currentSection, translation);
-		add(UnfairCraft.MODID + ".configuration." + currentSection + ".button", translation);
-		add(UnfairCraft.MODID + ".configuration." + currentSection + ".tooltip", translation + " Configuration");
+		translationBuilder.add("text.autoconfig." + UnfairCraft.MOD_ID + ".category." + section, translation);
 	}
 
-	private void addConfig(String key, String translation) {
-		add(UnfairCraft.MODID + ".config." + currentSection + "." + key, translation);
+	private void translateConfig(TranslationBuilder translationBuilder, String key, String translation) {
+		translationBuilder.add("text.autoconfig." + UnfairCraft.MOD_ID + ".option." + currentSection + "." + key, translation);
 	}
 
 	@Override
-	protected void addTranslations() {
-		add("pack." + UnfairCraft.MODID + ".description", "Unfaircraft");
-		add(UnfairCraft.MODID + ".configuration.section." + UnfairCraft.MODID + ".toml.title", "Unfaircraft");
-		add(UnfairCraft.MODID + ".configuration.section." + UnfairCraft.MODID + ".toml", "Unfaircraft");
+	public void generateTranslations(HolderLookup.Provider wrapperLookup, TranslationBuilder translationBuilder) {
+		translationBuilder.add("text.autoconfig" + UnfairCraft.MOD_ID + ".title", "Unfaircraft");
+		
+		translateSection(translationBuilder, "general", "General");
+		translateConfig(translationBuilder, "enableUnfairMode", "Enable Unfair Mode");
+		translateConfig(translationBuilder, "enableNightmareMode", "Enable Nightmare Mode");
 
-		section("general", "General");
-		addConfig("enable_unfair_mode", "Enable Unfair Mode");
-		addConfig("enable_nightmare_mode", "Enable Nightmare Mode");
+		translateSection(translationBuilder, "nightmareEvent", "Nightmare Event");
+		translateConfig(translationBuilder, "chance", "Nightmare Event Chance");
 
-		section("nightmare_event", "Nightmare Event");
-		addConfig("chance", "Nightmare Event Chance");
+		translateSection(translationBuilder, "bed", "Bed");
+		translateConfig(translationBuilder, "enabled", "Enable Bed Mixin");
+		translateConfig(translationBuilder, "explosionChance", "Bed Explosion Chance");
+		translateConfig(translationBuilder, "explosionRadius", "Bed Explosion Radius");
+		translateConfig(translationBuilder, "fireChance", "Bed Fire Chance");
+		translateConfig(translationBuilder, "fireDuration", "Bed Fire Duration");
 
-		section("bed", "Bed");
-		addConfig("enabled", "Enable Bed Mixin");
-		addConfig("explosion_chance", "Bed Explosion Chance");
-		addConfig("explosion_radius", "Bed Explosion Radius");
-		addConfig("fire_chance", "Bed Fire Chance");
-		addConfig("fire_duration", "Bed Fire Duration");
+		translateSection(translationBuilder, "shield", "Shield");
+		translateConfig(translationBuilder, "enabled", "Enable Shield Mixin");
+		translateConfig(translationBuilder, "failChance", "Shield Fail Chance");
 
-		section("shield", "Shield");
-		addConfig("enabled", "Enable Shield Mixin");
-		addConfig("fail_chance", "Shield Fail Chance");
+		translateSection(translationBuilder, "player", "Player");
+		translateConfig(translationBuilder, "enabled", "Enable Player Mixin");
+		translateConfig(translationBuilder, "critFailChance", "Crit Fail Chance");
+		translateConfig(translationBuilder, "selfAttackChance", "Self Attack Chance");
+		translateConfig(translationBuilder, "attackExhaustionChance", "Attack Exhaustion Chance");
+		translateConfig(translationBuilder, "randomDropChance", "Random Item Drop Chance");
+		translateConfig(translationBuilder, "fallDamageDistance", "Fall Damage Distance");
+		translateConfig(translationBuilder, "fallDamageMultiplier", "Fall Damage Multiplier");
+		translateConfig(translationBuilder, "pickupFailChance", "Item Pickup Fail Chance");
+		translateConfig(translationBuilder, "enableBiomeHazards", "Enable Biome Hazards");
+		translateConfig(translationBuilder, "groundBreakChance", "Ground Break Chance");
+		translateConfig(translationBuilder, "lowMiningMoraleChance", "Low Mining Morale Chance");
+		translateConfig(translationBuilder, "ladderSlipChance", "Ladder Slip Chance");
 
-		section("player", "Player");
-		addConfig("enabled", "Enable Player Mixin");
-		addConfig("crit_fail_chance", "Crit Fail Chance");
-		addConfig("self_attack_chance", "Self Attack Chance");
-		addConfig("attack_exhaustion_chance", "Attack Exhaustion Chance");
-		addConfig("random_drop_chance", "Random Item Drop Chance");
-		addConfig("fall_damage_distance", "Fall Damage Distance");
-		addConfig("fall_damage_multiplier", "Fall Damage Multiplier");
-		addConfig("pickup_fail_chance", "Item Pickup Fail Chance");
-		addConfig("enable_biome_hazards", "Enable Biome Hazards");
-		addConfig("ground_break_chance", "Ground Break Chance");
-		addConfig("low_mining_morale_chance", "Low Mining Morale Chance");
-		addConfig("ladder_slip_chance", "Ladder Slip Chance");
+		translateSection(translationBuilder, "itemDurability", "Item Durability");
+		translateConfig(translationBuilder, "enabled", "Enable Item Durability Mixin");
+		translateConfig(translationBuilder, "lossChance", "Durability Loss Chance");
+		translateConfig(translationBuilder, "damageMin", "Min Extra Durability Damage");
+		translateConfig(translationBuilder, "damageMax", "Max Extra Durability Damage");
 
-		section("item_durability", "Item Durability");
-		addConfig("enabled", "Enable Item Durability Mixin");
-		addConfig("loss_chance", "Durability Loss Chance");
-		addConfig("damage_min", "Min Extra Durability Damage");
-		addConfig("damage_max", "Max Extra Durability Damage");
+		translateSection(translationBuilder, "bow", "Bow");
+		translateConfig(translationBuilder, "enabled", "Enable Bow Mixin");
+		translateConfig(translationBuilder, "wonkyChance", "Wonky Arrow Chance");
+		translateConfig(translationBuilder, "projectileDeviation", "Arrow Deviation Amount");
+		translateConfig(translationBuilder, "misfireChance", "Bow Misfire Chance");
+		translateConfig(translationBuilder, "backfireChance", "Bow Backfire Chance");
+		translateConfig(translationBuilder, "backfireDamageMin", "Min Backfire Damage");
+		translateConfig(translationBuilder, "backfireDamageMax", "Max Backfire Damage");
 
-		section("bow", "Bow");
-		addConfig("enabled", "Enable Bow Mixin");
-		addConfig("wonky_chance", "Wonky Arrow Chance");
-		addConfig("projectile_deviation", "Arrow Deviation Amount");
-		addConfig("misfire_chance", "Bow Misfire Chance");
-		addConfig("backfire_chance", "Bow Backfire Chance");
-		addConfig("backfire_damage_min", "Min Backfire Damage");
-		addConfig("backfire_damage_max", "Max Backfire Damage");
+		translateSection(translationBuilder, "chest", "Chest");
+		translateConfig(translationBuilder, "enabled", "Enable Chest Mixin");
+		translateConfig(translationBuilder, "eatChance", "Chest Eat Chance");
+		translateConfig(translationBuilder, "eatItemMin", "Min Items Eaten");
+		translateConfig(translationBuilder, "eatItemMax", "Max Items Eaten");
 
-		section("chest", "Chest");
-		addConfig("enabled", "Enable Chest Mixin");
-		addConfig("eat_chance", "Chest Eat Chance");
-		addConfig("eat_item_min", "Min Items Eaten");
-		addConfig("eat_item_max", "Max Items Eaten");
+		translateSection(translationBuilder, "anvil", "Anvil");
+		translateConfig(translationBuilder, "enabled", "Enable Anvil Mixin");
+		translateConfig(translationBuilder, "instantBreakChance", "Instant Break Chance");
+		translateConfig(translationBuilder, "costIncreaseChance", "Cost Increase Chance");
+		translateConfig(translationBuilder, "costMultiplierMin", "Min Cost Multiplier");
+		translateConfig(translationBuilder, "costMultiplierMax", "Max Cost Multiplier");
 
-		section("anvil", "Anvil");
-		addConfig("enabled", "Enable Anvil Mixin");
-		addConfig("instant_break_chance", "Instant Break Chance");
-		addConfig("cost_increase_chance", "Cost Increase Chance");
-		addConfig("cost_multiplier_min", "Min Cost Multiplier");
-		addConfig("cost_multiplier_max", "Max Cost Multiplier");
+		translateSection(translationBuilder, "minecart", "Minecart");
+		translateConfig(translationBuilder, "enabled", "Enable Minecart Mixin");
+		translateConfig(translationBuilder, "slowdownFactor", "Slowdown Factor");
+		translateConfig(translationBuilder, "stopChance", "Random Stop Chance");
+		translateConfig(translationBuilder, "reverseChance", "Random Reverse Chance");
 
-		section("minecart", "Minecart");
-		addConfig("enabled", "Enable Minecart Mixin");
-		addConfig("slowdown_factor", "Slowdown Factor");
-		addConfig("stop_chance", "Random Stop Chance");
-		addConfig("reverse_chance", "Random Reverse Chance");
+		translateSection(translationBuilder, "food", "Food");
+		translateConfig(translationBuilder, "enabled", "Enable Food Mixin");
+		translateConfig(translationBuilder, "failChance", "Food Fail Chance");
+		translateConfig(translationBuilder, "debuffChance", "Food Debuff Chance");
 
-		section("food", "Food");
-		addConfig("enabled", "Enable Food Mixin");
-		addConfig("fail_chance", "Food Fail Chance");
-		addConfig("debuff_chance", "Food Debuff Chance");
+		translateSection(translationBuilder, "caveCarver", "Cave Carver");
+		translateConfig(translationBuilder, "enabled", "Enable Cave Carver Mixin");
+		translateConfig(translationBuilder, "extraLavaPocketChance", "Extra Lava Pocket Chance");
 
-		section("cave_carver", "Cave Carver");
-		addConfig("enabled", "Enable Cave Carver Mixin");
-		addConfig("extra_lava_pocket_chance", "Extra Lava Pocket Chance");
+		translateSection(translationBuilder, "ore", "Ore");
+		translateConfig(translationBuilder, "enabled", "Enable Ore Mixin");
+		translateConfig(translationBuilder, "defaultReplacementChance", "Default Ore Replacement Chance");
+		translateConfig(translationBuilder, "goldReplacementChance", "Gold Ore Replacement Chance");
+		translateConfig(translationBuilder, "emeraldReplacementChance", "Emerald Ore Replacement Chance");
+		translateConfig(translationBuilder, "diamondReplacementChance", "Diamond Ore Replacement Chance");
+		translateConfig(translationBuilder, "ancientDebrisReplacementChance", "Ancient Debris Replacement Chance");
 
-		section("ore", "Ore");
-		addConfig("enabled", "Enable Ore Mixin");
-		addConfig("default_replacement_chance", "Default Ore Replacement Chance");
-		addConfig("gold_replacement_chance", "Gold Ore Replacement Chance");
-		addConfig("emerald_replacement_chance", "Emerald Ore Replacement Chance");
-		addConfig("diamond_replacement_chance", "Diamond Ore Replacement Chance");
-		addConfig("ancient_debris_replacement_chance", "Ancient Debris Replacement Chance");
+		translateSection(translationBuilder, "lootTable", "Loot Table");
+		translateConfig(translationBuilder, "enabled", "Enable Loot Table Mixin");
+		translateConfig(translationBuilder, "trollChance", "Troll Loot Chance");
 
-		section("loot_table", "Loot Table");
-		addConfig("enabled", "Enable Loot Table Mixin");
-		addConfig("troll_chance", "Troll Loot Chance");
+		translateSection(translationBuilder, "sapling", "Sapling");
+		translateConfig(translationBuilder, "enabled", "Enable Sapling Mixin");
+		translateConfig(translationBuilder, "deathChance", "Sapling Death Chance");
 
-		section("sapling", "Sapling");
-		addConfig("enabled", "Enable Sapling Mixin");
-		addConfig("death_chance", "Sapling Death Chance");
+		translateSection(translationBuilder, "farmland", "Farmland");
+		translateConfig(translationBuilder, "enabled", "Enable Farmland Mixin");
+		translateConfig(translationBuilder, "revertChance", "Farmland Revert Chance");
 
-		section("farmland", "Farmland");
-		addConfig("enabled", "Enable Farmland Mixin");
-		addConfig("revert_chance", "Farmland Revert Chance");
+		translateSection(translationBuilder, "mobDetection", "Mob Detection");
+		translateConfig(translationBuilder, "enabled", "Enable Mob Detection Mixin");
+		translateConfig(translationBuilder, "rangeMultiplier", "Detection Range Multiplier");
 
-		section("mob_detection", "Mob Detection");
-		addConfig("enabled", "Enable Mob Detection Mixin");
-		addConfig("range_multiplier", "Detection Range Multiplier");
+		translateSection(translationBuilder, "blockInteraction", "Block Interaction");
+		translateConfig(translationBuilder, "enabled", "Enable Block Interaction Mixin");
+		translateConfig(translationBuilder, "placeFailChance", "Block Place Fail Chance");
+		translateConfig(translationBuilder, "breakFailChance", "Block Break Fail Chance");
 
-		section("block_interaction", "Block Interaction");
-		addConfig("enabled", "Enable Block Interaction Mixin");
-		addConfig("place_fail_chance", "Block Place Fail Chance");
-		addConfig("break_fail_chance", "Block Break Fail Chance");
+		translateSection(translationBuilder, "bucket", "Bucket");
+		translateConfig(translationBuilder, "enabled", "Enable Bucket Mixin");
+		translateConfig(translationBuilder, "waterFailChance", "Water Bucket Fail Chance");
 
-		section("bucket", "Bucket");
-		addConfig("enabled", "Enable Bucket Mixin");
-		addConfig("water_fail_chance", "Water Bucket Fail Chance");
+		translateSection(translationBuilder, "armour", "Armour");
+		translateConfig(translationBuilder, "enabled", "Enable Armour Mixin");
+		translateConfig(translationBuilder, "protectionFailChance", "Protection Fail Chance");
+		translateConfig(translationBuilder, "durabilityLossChance", "Durability Loss Chance");
+		translateConfig(translationBuilder, "durabilityDamageMin", "Min Extra Durability Damage");
+		translateConfig(translationBuilder, "durabilityDamageMax", "Max Extra Durability Damage");
 
-		section("armour", "Armour");
-		addConfig("enabled", "Enable Armour Mixin");
-		addConfig("protection_fail_chance", "Protection Fail Chance");
-		addConfig("durability_loss_chance", "Durability Loss Chance");
-		addConfig("durability_damage_min", "Min Extra Durability Damage");
-		addConfig("durability_damage_max", "Max Extra Durability Damage");
+		translateSection(translationBuilder, "totem", "Totem");
+		translateConfig(translationBuilder, "enabled", "Enable Totem Mixin");
+		translateConfig(translationBuilder, "failChance", "Totem Fail Chance");
 
-		section("totem", "Totem");
-		addConfig("enabled", "Enable Totem Mixin");
-		addConfig("fail_chance", "Totem Fail Chance");
+		translateSection(translationBuilder, "knockback", "Knockback");
+		translateConfig(translationBuilder, "enabled", "Enable Knockback Mixin");
+		translateConfig(translationBuilder, "chance", "Knockback Chance");
+		translateConfig(translationBuilder, "multiplier", "Knockback Multiplier");
 
-		section("knockback", "Knockback");
-		addConfig("enabled", "Enable Knockback Mixin");
-		addConfig("chance", "Knockback Chance");
-		addConfig("multiplier", "Knockback Multiplier");
+		translateSection(translationBuilder, "damageReflection", "Damage Reflection");
+		translateConfig(translationBuilder, "enabled", "Enable Damage Reflection Mixin");
+		translateConfig(translationBuilder, "chance", "Reflection Chance");
+		translateConfig(translationBuilder, "percentageMin", "Min Reflection Percentage");
+		translateConfig(translationBuilder, "percentageMax", "Max Reflection Percentage");
+		translateConfig(translationBuilder, "ignoreThorns", "Ignore Thorns");
 
-		section("damage_reflection", "Damage Reflection");
-		addConfig("enabled", "Enable Damage Reflection Mixin");
-		addConfig("chance", "Reflection Chance");
-		addConfig("percentage_min", "Min Reflection Percentage");
-		addConfig("percentage_max", "Max Reflection Percentage");
-		addConfig("ignore_thorns", "Ignore Thorns");
+		translateSection(translationBuilder, "creeper", "Creeper");
+		translateConfig(translationBuilder, "enabled", "Enable Creeper Mixin");
+		translateConfig(translationBuilder, "fuseSpeedMultiplier", "Fuse Speed Multiplier");
+		translateConfig(translationBuilder, "explosionRadiusMultiplier", "Explosion Radius Multiplier");
 
-		section("creeper", "Creeper");
-		addConfig("enabled", "Enable Creeper Mixin");
-		addConfig("fuse_speed_multiplier", "Fuse Speed Multiplier");
-		addConfig("explosion_radius_multiplier", "Explosion Radius Multiplier");
+		translateSection(translationBuilder, "skeleton", "Skeleton");
+		translateConfig(translationBuilder, "enabled", "Enable Skeleton Mixin");
+		translateConfig(translationBuilder, "accuracyMultiplier", "Accuracy Multiplier");
+		translateConfig(translationBuilder, "attackSpeedIncrease", "Attack Speed Increase");
 
-		section("skeleton", "Skeleton");
-		addConfig("enabled", "Enable Skeleton Mixin");
-		addConfig("accuracy_multiplier", "Accuracy Multiplier");
-		addConfig("attack_speed_increase", "Attack Speed Increase");
+		translateSection(translationBuilder, "enderman", "Enderman");
+		translateConfig(translationBuilder, "enabled", "Enable Enderman Mixin");
+		translateConfig(translationBuilder, "proximityAggroRange", "Proximity Aggro Range");
+		translateConfig(translationBuilder, "proximityAggroChance", "Proximity Aggro Chance");
 
-		section("enderman", "Enderman");
-		addConfig("enabled", "Enable Enderman Mixin");
-		addConfig("proximity_aggro_range", "Proximity Aggro Range");
-		addConfig("proximity_aggro_chance", "Proximity Aggro Chance");
+		translateSection(translationBuilder, "zombie", "Zombie");
+		translateConfig(translationBuilder, "enabled", "Enable Zombie Mixin");
+		translateConfig(translationBuilder, "summonChance", "Summon Chance");
+		translateConfig(translationBuilder, "summonMin", "Min Zombies Summoned");
+		translateConfig(translationBuilder, "summonMax", "Max Zombies Summoned");
 
-		section("zombie", "Zombie");
-		addConfig("enabled", "Enable Zombie Mixin");
-		addConfig("summon_chance", "Summon Chance");
-		addConfig("summon_min", "Min Zombies Summoned");
-		addConfig("summon_max", "Max Zombies Summoned");
+		translateSection(translationBuilder, "potion", "Potion");
+		translateConfig(translationBuilder, "enabled", "Enable Potion Mixin");
+		translateConfig(translationBuilder, "backfireChance", "Potion Backfire Chance");
 
-		section("potion", "Potion");
-		addConfig("enabled", "Enable Potion Mixin");
-		addConfig("backfire_chance", "Potion Backfire Chance");
+		translateSection(translationBuilder, "mobRegen", "Mob Regen");
+		translateConfig(translationBuilder, "enabled", "Enable Mob Regen Mixin");
+		translateConfig(translationBuilder, "delay", "Regen Delay (ticks)");
+		translateConfig(translationBuilder, "rate", "Regen Rate (ticks)");
+		translateConfig(translationBuilder, "amount", "Regen Amount");
 
-		section("mob_regen", "Mob Regen");
-		addConfig("enabled", "Enable Mob Regen Mixin");
-		addConfig("delay", "Regen Delay (ticks)");
-		addConfig("rate", "Regen Rate (ticks)");
-		addConfig("amount", "Regen Amount");
+		translateSection(translationBuilder, "setFire", "Set Fire");
+		translateConfig(translationBuilder, "enabled", "Enable Set Fire Mixin");
+		translateConfig(translationBuilder, "radius", "Fire Check Radius");
+		translateConfig(translationBuilder, "chance", "Fire Ignite Chance");
+		translateConfig(translationBuilder, "initialDuration", "Initial Fire Duration");
+		translateConfig(translationBuilder, "durationIncrease", "Fire Duration Increase");
 
-		section("set_fire", "Set Fire");
-		addConfig("enabled", "Enable Set Fire Mixin");
-		addConfig("radius", "Fire Check Radius");
-		addConfig("chance", "Fire Ignite Chance");
-		addConfig("initial_duration", "Initial Fire Duration");
-		addConfig("duration_increase", "Fire Duration Increase");
+		translateSection(translationBuilder, "foodData", "Food Data");
+		translateConfig(translationBuilder, "enabled", "Enable Food Exhaustion Mixin");
+		translateConfig(translationBuilder, "exhaustionMultiplier", "Exhaustion Multiplier");
 
-		section("food_data", "Food Data");
-		addConfig("enabled", "Enable Food Exhaustion Mixin");
-		addConfig("exhaustion_multiplier", "Exhaustion Multiplier");
+		translateSection(translationBuilder, "drunkJumping", "Drunk Jumping");
+		translateConfig(translationBuilder, "enabled", "Enable Drunk Jumping Mixin");
 
-		section("drunk_jumping", "Drunk Jumping");
-		addConfig("enabled", "Enable Drunk Jumping Mixin");
+		translateSection(translationBuilder, "merchantOffer", "Merchant Offer");
+		translateConfig(translationBuilder, "enabled", "Enable Merchant Offer Mixin");
+		translateConfig(translationBuilder, "multiplier", "Multiplier for merchant prices");
+		translateConfig(translationBuilder, "wanderingTraderScamEnabled", "Enable Wandering Trader Scam Offers");
+		translateConfig(translationBuilder, "wanderingTraderScamChance", "Wandering Trader Scam Chance");
+		translateConfig(translationBuilder, "villagerRetaliation", "Enable Villager Retaliation");
 
-		section("merchant_offer", "Merchant Offer");
-		addConfig("enabled", "Enable Merchant Offer Mixin");
-		addConfig("multiplier", "Multiplier for merchant prices");
-		addConfig("wandering_trader_scam_enabled", "Enable Wandering Trader Scam Offers");
-		addConfig("wandering_trader_scam_chance", "Wandering Trader Scam Chance");
-		addConfig("villager_retaliation", "Enable Villager Retaliation");
+		translateSection(translationBuilder, "ironGolem", "Iron Golem");
+		translateConfig(translationBuilder, "enabled", "Enable Iron Golem Mixin");
 
-		section("iron_golem", "Iron Golem");
-		addConfig("enabled", "Enable Iron Golem Mixin");
+		translateSection(translationBuilder, "mob", "Mob");
+		translateConfig(translationBuilder, "hostileRegardlessEnabled", "Make all passive mobs hostile");
+		translateConfig(translationBuilder, "passiveRetaliationEnabled", "Passive Retaliation Enabled");
+		translateConfig(translationBuilder, "allowHostileDaylightSpawn", "Allow Hostile Daylight Spawn");
+		translateConfig(translationBuilder, "hostileDaylightSpawnChance", "Hostile Daylight Spawn Chance");
 
-		section("mob", "Mob");
-		addConfig("hostile_regardless_enabled", "Make all passive mobs hostile");
-		addConfig("passive_retaliation_enabled", "Passive Retaliation Enabled");
-		addConfig("allow_hostile_daylight_spawn", "Allow Hostile Daylight Spawn");
-		addConfig("hostile_daylight_spawn_chance", "Hostile Daylight Spawn Chance");
+		translateSection(translationBuilder, "weather", "Weather");
+		translateConfig(translationBuilder, "enabled", "Enable Weather Mixin");
+		translateConfig(translationBuilder, "escalateThunderChance", "Escalate Thunder Chance");
+		translateConfig(translationBuilder, "remainThunderChance", "Remain Thunder Chance");
 
-		section("weather", "Weather");
-		addConfig("enabled", "Enable Weather Mixin");
-		addConfig("escalate_thunder_chance", "Escalate Thunder Chance");
-		addConfig("remain_thunder_chance", "Remain Thunder Chance");
+		translateSection(translationBuilder, "phantom", "Phantom");
+		translateConfig(translationBuilder, "enabled", "Enable Phantom Mixin");
+		translateConfig(translationBuilder, "summonChance", "Additional swarm summon chance");
+		translateConfig(translationBuilder, "summonMin", "Min phantoms summoned");
+		translateConfig(translationBuilder, "summonMax", "Max phantoms summoned");
 
-		section("phantom", "Phantom");
-		addConfig("enabled", "Enable Phantom Mixin");
-		addConfig("summon_chance", "Additional swarm summon chance");
-		addConfig("summon_min", "Min phantoms summoned");
-		addConfig("summon_max", "Max phantoms summoned");
+		translateSection(translationBuilder, "block", "Block");
+		translateConfig(translationBuilder, "enabled", "Enable Block Mixin");
+		translateConfig(translationBuilder, "mimicSpawnChance", "Mimic Spawn Chance");
+		translateConfig(translationBuilder, "caveInChance", "Cave In Chance");
+		translateConfig(translationBuilder, "silkTouchfailChance", "Silk Touch Fail Chance");
+		translateConfig(translationBuilder, "fortuneReversalChance", "Fortune Reversal Chance");
+		translateConfig(translationBuilder, "veinCollapseChance", "Vein Collapse Chance");
 
-		section("block", "Block");
-		addConfig("enabled", "Enable Block Mixin");
-		addConfig("mimic_spawn_chance", "Mimic Spawn Chance");
-		addConfig("cave_in_chance", "Cave In Chance");
-		addConfig("silk_touch_fail_chance", "Silk Touch Fail Chance");
-		addConfig("fortune_reversal_chance", "Fortune Reversal Chance");
-		addConfig("vein_collapse_chance", "Vein Collapse Chance");
+		translateSection(translationBuilder, "ghast", "Ghast");
+		translateConfig(translationBuilder, "enabled", "Enable Ghast Mixin");
+		translateConfig(translationBuilder, "summonChance", "Additional ghast summon chance");
+		translateConfig(translationBuilder, "summonMin", "Min ghasts summoned");
+		translateConfig(translationBuilder, "summonMax", "Max ghasts summoned");
 
-		section("ghast", "Ghast");
-		addConfig("enabled", "Enable Ghast Mixin");
-		addConfig("summon_chance", "Additional ghast summon chance");
-		addConfig("summon_min", "Min ghasts summoned");
-		addConfig("summon_max", "Max ghasts summoned");
+		translateSection(translationBuilder, "blaze", "Blaze");
+		translateConfig(translationBuilder, "enabled", "Enable Blaze Mixin");
+		translateConfig(translationBuilder, "summonChance", "Additional blaze summon chance");
+		translateConfig(translationBuilder, "summonMin", "Min blazes summoned");
+		translateConfig(translationBuilder, "summonMax", "Max blazes summoned");
 
-		section("blaze", "Blaze");
-		addConfig("enabled", "Enable Blaze Mixin");
-		addConfig("summon_chance", "Additional blaze summon chance");
-		addConfig("summon_min", "Min blazes summoned");
-		addConfig("summon_max", "Max blazes summoned");
+		translateSection(translationBuilder, "enderDragon", "Ender Dragon");
+		translateConfig(translationBuilder, "enabled", "Enable Ender Dragon Mixin");
+		translateConfig(translationBuilder, "healthMultiplier", "Health Multiplier");
+		translateConfig(translationBuilder, "speedMultiplier", "Speed Multiplier");
+		translateConfig(translationBuilder, "aggressionChance", "Aggression Chance");
 
-		section("ender_dragon", "Ender Dragon");
-		addConfig("enabled", "Enable Ender Dragon Mixin");
-		addConfig("health_multiplier", "Health Multiplier");
-		addConfig("speed_multiplier", "Speed Multiplier");
-		addConfig("aggression_chance", "Aggression Chance");
+		translateSection(translationBuilder, "endCrystal", "End Crystal");
+		translateConfig(translationBuilder, "enabled", "Enable End Crystal Mixin");
+		translateConfig(translationBuilder, "healingMultiplier", "Healing Multiplier");
+		translateConfig(translationBuilder, "explosionRadius", "Explosion Radius");
 
-		section("end_crystal", "End Crystal");
-		addConfig("enabled", "Enable End Crystal Mixin");
-		addConfig("healing_multiplier", "Healing Multiplier");
-		addConfig("explosion_radius", "Explosion Radius");
+		translateSection(translationBuilder, "shulker", "Shulker");
+		translateConfig(translationBuilder, "enabled", "Enable Shulker Mixin");
+		translateConfig(translationBuilder, "bulletMovementVector", "Bullet Movement Vector");
+		translateConfig(translationBuilder, "bulletDistanceTarget", "Bullet Distance Target");
 
-		section("shulker", "Shulker");
-		addConfig("enabled", "Enable Shulker Mixin");
-		addConfig("bullet_movement_vector", "Bullet Movement Vector");
-		addConfig("bullet_distance_target", "Bullet Distance Target");
+		translateSection(translationBuilder, "door", "Door");
+		translateConfig(translationBuilder, "enabled", "Enable Door Mixin");
+		translateConfig(translationBuilder, "jamChance", "Door Jam Chance");
 
-		section("door", "Door");
-		addConfig("enabled", "Enable Door Mixin");
-		addConfig("jam_chance", "Door Jam Chance");
+		translateSection(translationBuilder, "furnace", "Furnace");
+		translateConfig(translationBuilder, "enabled", "Enable Furnace Mixin");
+		translateConfig(translationBuilder, "fuelTheftChance", "Fuel Theft Chance");
+		translateConfig(translationBuilder, "smeltTheftChance", "Smelt Theft Chance");
+		translateConfig(translationBuilder, "explosionThreshold", "Explosion Threshold");
+		translateConfig(translationBuilder, "explosionChance", "Explosion Chance");
 
-		section("furnace", "Furnace");
-		addConfig("enabled", "Enable Furnace Mixin");
-		addConfig("fuel_theft_chance", "Fuel Theft Chance");
-		addConfig("smelt_theft_chance", "Smelt Theft Chance");
-		addConfig("explosion_threshold", "Explosion Threshold");
-		addConfig("explosion_chance", "Explosion Chance");
-
-		section("glass", "Glass");
-		addConfig("enabled", "Enable Glass Mixin");
-		addConfig("break_chance", "Break Chance");
+		translateSection(translationBuilder, "glass", "Glass");
+		translateConfig(translationBuilder, "enabled", "Enable Glass Mixin");
+		translateConfig(translationBuilder, "breakChance", "Break Chance");
 	}
 }
